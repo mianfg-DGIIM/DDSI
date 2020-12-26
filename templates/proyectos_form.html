@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TEST: Proyectos: {% if data.edit %}Editar{% else %}Crear{% endif %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="container">
+            <br>
+            <br>
+
+            <div class="row align-items-center justify-content-center mb-4">
+                <h1>{% if data.edit %}Editar{% else %}Añadir{% endif %} un proyecto</h1>
+            </div>
+
+            {% if data.error %}
+            <div class="alert alert-danger" role="alert">
+                <strong>Error:</strong> {{ data.error }}
+            </div>
+            {% endif %}
+
+            <form action="{% if data.edit %}/api/proyectos/edit/{{ data.edit_data.id }}{% else %}/api/proyectos/add{% endif %}" id="proyectos-add-form" method="post" class="needs-validation" novalidate>
+                <div class="form-row mb-3">
+                    <label for="nombre">Nombre</label>
+                    <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.nombre }}"{% endif %}
+                        placeholder="Nombre del proyecto" id="nombre" name="nombre" required>
+                    <div class="invalid-feedback">
+                        Debes insertar un nombre para el proyecto
+                    </div>
+                </div>
+                <div class="form-row mb-3">
+                    <label for="descripcion">Descripción</label>
+                    <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.descripcion }}"{% endif %}
+                        placeholder="Descripción del proyecto" id="descripcion" name="descripcion">
+                </div>
+                <div class="form-row mb-3">
+                    <label for="categoria">Categoría</label>
+                    <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.categoria }}"{% endif %}
+                        placeholder="Categoría" id="categoria" name="categoria" required>
+                    <div class="invalid-feedback">
+                        Debes insertar una categoría para el proyecto
+                    </div>
+                </div>
+                <div class="form-row mb-3">
+                    <label for="estado">Estado</label>
+                    <select class="form-control" id="estado" name="estado">
+                        <option value="0" {% if data.edit and data.edit_data.estado.value == 0 %}selected="true"{% endif %}>Inicial</option>
+                        <option value="1" {% if data.edit and data.edit_data.estado.value == 1 %}selected="true"{% endif %}>En proceso</option>
+                        <option value="2" {% if data.edit and data.edit_data.estado.value == 2 %}selected="true"{% endif %}>En pausa</option>
+                        <option value="3" {% if data.edit and data.edit_data.estado.value == 3 %}selected="true"{% endif %}>Finalizado</option>
+                        <option value="4" {% if data.edit and data.edit_data.estado.value == 4 %}selected="true"{% endif %}>Fracaso</option>
+                      </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="float:right" id="submit-button">{% if data.edit %}Actualizar{% else %}Crear{% endif %} proyecto</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js " integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49 "
+        crossorigin="anonymous "></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js " integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy "
+        crossorigin="anonymous "></script>
+
+    <script>
+        // Validación de formularios en Bootstrap
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+                }, false);
+            });
+            }, false);
+        })();
+    </script>
+</body>
+
+</html>
