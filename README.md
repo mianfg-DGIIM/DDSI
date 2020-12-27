@@ -427,6 +427,7 @@ Ya tenemos el back listo para correr:
 ```
 python manage.py runserver
 ```
+> Recordar permitir conexiones en el puerto que escucha el servidor `sudo ufw allow n_port` siendo para flask por defecto n_port = 5000
 
 ----
 
