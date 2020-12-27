@@ -113,6 +113,26 @@ postgres=## exit;
 
 ---
 
+Cambiamos en el archivo `/etc/postgresql/12/main/pg_hba.conf` la linea
+
+```
+local    all            postgres                               peer
+```
+
+por la linea
+
+```
+local    all            postgres                               md5
+```
+
+y reiniciamos PostgreSQL:
+
+```
+sudo service postgresql restart
+```
+
+---
+
 Acceder a la BD:
 
 ```
