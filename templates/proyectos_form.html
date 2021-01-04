@@ -21,13 +21,11 @@
                 <h1>{% if data.edit %}Editar{% else %}Añadir{% endif %} un proyecto</h1>
             </div>
 
-            {% if data.error %}
-            <div class="alert alert-danger" role="alert">
-                <strong>Error:</strong> {{ data.error }}
+            <div class="alert alert-danger" role="alert" id="form-error" hidden>
+                <strong>Error:</strong> <div id="form-error-text"></div>
             </div>
-            {% endif %}
 
-            <form action="{% if data.edit %}/api/proyectos/edit/{{ data.edit_data.id }}{% else %}/api/proyectos/add{% endif %}" id="proyectos-add-form" method="post" class="needs-validation" novalidate>
+            <form action="{% if data.edit %}/api/proyectos/edit/{{ data.edit_data.id }}{% else %}/api/proyectos/add{% endif %}" id="form" method="post" class="needs-validation" novalidate>
                 <div class="form-row mb-3">
                     <label for="nombre">Nombre</label>
                     <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.nombre }}"{% endif %}
@@ -59,8 +57,9 @@
                         <option value="4" {% if data.edit and data.edit_data.estado.value == 4 %}selected="true"{% endif %}>Fracaso</option>
                       </select>
                 </div>
-                <button type="submit" class="btn btn-primary" style="float:right" id="submit-button">{% if data.edit %}Actualizar{% else %}Crear{% endif %} proyecto</button>
+                <button type="button" class="btn btn-primary" style="float:right" id="form-submit">{% if data.edit %}Actualizar{% else %}Crear{% endif %} proyecto</button>
             </form>
+            <button class="btn btn-primary" id="test-button">SEND TEST</button>
         </div>
     </div>
 
@@ -70,24 +69,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js " integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy "
         crossorigin="anonymous "></script>
 
-    <script>
-        // Validación de formularios en Bootstrap
-        (function() {
-            'use strict';
-            window.addEventListener('load', function() {
-            var forms = document.getElementsByClassName('needs-validation');
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                if (form.checkValidity() === false) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                form.classList.add('was-validated');
-                }, false);
-            });
-            }, false);
-        })();
-    </script>
+    <!-- Herramientas JS -->
+    <script src="/static/js/tools.js"></script>
+    <!-- Formularios -->
+    <script src="/static/js/forms.js"></script>
 </body>
 
 </html>
