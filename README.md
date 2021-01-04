@@ -113,6 +113,26 @@ postgres=## exit;
 
 ---
 
+Cambiamos en el archivo `/etc/postgresql/12/main/pg_hba.conf` la linea
+
+```
+local    all            postgres                               peer
+```
+
+por la linea
+
+```
+local    all            postgres                               md5
+```
+
+y reiniciamos PostgreSQL:
+
+```
+sudo service postgresql restart
+```
+
+---
+
 Acceder a la BD:
 
 ```
@@ -407,6 +427,7 @@ Ya tenemos el back listo para correr:
 ```
 python manage.py runserver
 ```
+> Recordar permitir conexiones en el puerto que escucha el servidor `sudo ufw allow n_port` siendo para flask por defecto n_port = 5000
 
 ----
 
