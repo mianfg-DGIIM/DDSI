@@ -1,0 +1,51 @@
+{#
+    Plantilla Formulario
+    ====================
+
+    Plantilla para renderizar formularios de creación/edición
+
+    ~ DATOS A PASAR A PLANTILLA ~
+    | --------------------- | --------------------------------------------- | --------- | ------------- | 
+    | Nombre de parámetro   | Descripción                                   | Tipo      | ¿Heredado?    |
+    | --------------------- | --------------------------------------------- | --------- | ------------- |
+    | title                 | Título de la página                           | string    |       Y       |
+    | error                 | Mensaje de error (ocultará card)              | string    |       Y       |
+    | breadcrumb_title      | Título del breadcrumb                         | string    |       N       |
+    | breadcrumb_subtitle   | Subtítulo del breadcrumb (opcional)           | string    |       N       |
+    | card_title            | Título de la tarjeta                          | string    |       N       |
+    | --------------------- | --------------------------------------------- | --------- | ------------- |
+
+    ~ BLOQUES A EXTENDER ~
+    | ----------------- | --------------------------------------------- |
+    | Nombre de bloque  | Cómo extender                                 |
+    | ----------------- | --------------------------------------------- |
+    | table             | Elemento table con la tabla a mostrar         |
+    | ----------------- | --------------------------------------------- |
+#}
+
+{% extends "skeleton/base.html" %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col-lg-8">
+        <div class="row">
+            <div class="col">
+                <div class="card shadow mb-3">
+                    <div class="card-header py-3">
+                        <p class="text-primary m-0 font-weight-bold">{{ data.card_title }}</p>
+                    </div>
+                    <div class="card-body">
+                        <div id="form-error" class="alert alert-danger" role="alert" hidden><i class="fa fa-warning mr-2"></i><span class="mr-2"><strong>Error:</strong></span><span id="form-error-text">Texto de error</span></div>
+                        {% block form %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block additional_scripts %}
+<script src="/static/js/forms.js"></script>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "skeleton/detail.html" %}
+
+{% block detail %}
+<table class="table mb-0">
+    <tbody>
+        <tr>
+            <th scope="row">ID</th>
+            <td>{{ data.proyecto.id }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Nombre</th>
+            <td>{{ data.proyecto.nombre }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>{{ data.proyecto.descripcion }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Categoría</th>
+            <td>{{ data.proyecto.categoria }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Estado</th>
+            <td>{{ data.proyecto.estado.verbose }}</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

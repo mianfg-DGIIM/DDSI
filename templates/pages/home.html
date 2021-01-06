@@ -1,0 +1,220 @@
+{% extends "skeleton/base.html" %}
+
+{% block content %}
+<hr>
+<div class="d-sm-flex justify-content-left align-items-top mb-4">
+    <i class="fa fa-users mt-2 ml-3 mr-3"></i><div>
+        <h3 class="text-dark mb-0">Recursos Humanos</h3>
+        <p class="mb-0">El departamento de <strong>Recursos Humanos</strong> es [...]</p>
+    </div>
+</div>
+<hr>
+<div class="d-sm-flex justify-content-left align-items-top mb-4">
+    <i class="fas fa-prescription-bottle-alt mt-2 ml-3 mr-3"></i><div>
+        <h3 class="text-dark mb-0">I+D y Producción</h3>
+        <p class="mb-0">El departamento de <strong>I+D (Investigación y Desarrollo) y Producción</strong> es [...]</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-xl-3 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="text-primary font-weight-bold m-0"><i class="fas fa-lightbulb mr-2"></i>Proyectos</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <p class="mb-0">Un <strong>proyecto</strong> es [...]</p>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong><a href="/proyectos/add">Crear proyecto</a></strong></h6><span class="text-xs"></span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-plus"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong><a href="/proyectos">Listado de proyectos</a></strong></h6><span class="text-xs"></span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-list"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong>Ver proyecto</strong> (detalles)</h6><span class="text-xs">Vaya al <a href="/proyectos">listado</a> y pulse en <i class="fa fa-search"></i> en el proyecto que desee ver</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong>Editar proyecto</strong></h6><span class="text-xs">Vaya al <a href="/proyectos">listado</a> y pulse en <i class="fa fa-pencil"></i> en el proyecto que desee editar</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-pencil"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong>Eliminar proyecto</strong></h6><span class="text-xs">Vaya al <a href="/proyectos">listado</a> y pulse en <i class="fa fa-trash"></i> en el proyecto que desee eliminar</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-trash"></i>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="text-primary font-weight-bold m-0"><i class="fas fa-pills mr-2"></i>Productos</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <p class="mb-0">Un <strong>producto</strong> es [...]</p>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong><a href="/productos/add">Crear producto</a></strong></h6><span class="text-xs"></span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-plus"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong><a href="/productos">Listado de productos</a></strong></h6><span class="text-xs"></span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-list"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong>Ver producto</strong> (detalles)</h6><span class="text-xs">Vaya al <a href="/productos">listado</a> y pulse en <i class="fa fa-search"></i> el producto que desee ver</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong>Editar producto</strong></h6><span class="text-xs">Vaya al <a href="/productos">listado</a> y pulse en <i class="fa fa-pencil"></i> el producto que desee editar</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-pencil"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong>Eliminar producto</strong></h6><span class="text-xs">Vaya al <a href="/productos">listado</a> y pulse en <i class="fa fa-trash"></i> el producto que desee eliminar</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-trash"></i>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="text-primary font-weight-bold m-0"><i class="fas fa-dolly-flatbed mr-2"></i>Procesos Productivos</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <p class="mb-0">Un <strong>proceso productivo</strong> es [...]</p>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong><a href="/procesos-productivos/add">Crear proceso productivo</a></strong></h6><span class="text-xs"></span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-plus"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong><a href="/procesos-productivos">Listado de procesos productivos</a></strong></h6><span class="text-xs"></span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-list"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong>Ver proceso productivo</strong> (detalles)</h6><span class="text-xs">Vaya al <a href="/procesos-productivos">listado</a> y pulse en <i class="fa fa-search"></i> en el proceso productivo que desee ver</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong>Editar proceso productivo</strong></h6><span class="text-xs">Vaya al <a href="/procesos-productivos">listado</a> y pulse en <i class="fa fa-pencil"></i> en el proceso productivo que desee editar</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-pencil"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong>Eliminar proceso productivo</strong></h6><span class="text-xs">Vaya al <a href="/procesos-productivos">listado</a> y pulse en <i class="fa fa-trash"></i> en el proceso productivo que desee eliminar</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-trash"></i>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="d-sm-flex justify-content-left align-items-top mb-4">
+    <i class="fas fa-prescription-bottle-alt mt-2 ml-3 mr-3"></i><div>
+        <h3 class="text-dark mb-0">Almacén y Logística</h3>
+        <p class="mb-0">El departamento de <strong>Almacén y Logística</strong> es [...]</p>
+    </div>
+</div>
+<hr>
+<div class="d-sm-flex justify-content-left align-items-top mb-4">
+    <i class="fas fa-prescription-bottle-alt mt-2 ml-3 mr-3"></i><div>
+        <h3 class="text-dark mb-0">Contabilidad</h3>
+        <p class="mb-0">El departamento de <strong>Contabilidad</strong> es [...]</p>
+    </div>
+</div>
+{% endblock %}

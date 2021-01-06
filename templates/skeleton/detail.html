@@ -1,0 +1,53 @@
+{#
+    Plantilla Detalle
+    =================
+
+    Plantilla para renderizar detalles
+
+    ~ DATOS A PASAR A PLANTILLA ~
+    | --------------------- | --------------------------------------------- | --------- | ------------- | 
+    | Nombre de parámetro   | Descripción                                   | Tipo      | ¿Heredado?    |
+    | --------------------- | --------------------------------------------- | --------- | ------------- |
+    | title                 | Título de la página                           | string    |       Y       |
+    | error                 | Mensaje de error (ocultará card)              | string    |       Y       |
+    | breadcrumb_title      | Título del breadcrumb                         | string    |       N       |
+    | breadcrumb_subtitle   | Subtítulo del breadcrumb (opcional)           | string    |       N       |
+    | card_title            | Título de la tarjeta                          | string    |       N       |
+    | edit                  | Formulario de edición (False) o               | boolean   |       N       |
+    |                       | formulario de creación (True)                 |           |               |
+    | edit_data             | Datos de edición (son los datos de la entrada | dict      |       N       |
+    |                       | de la tabla que se mostrarán para modificar,  |           |               |
+    |                       | proporcionar únicamente si edit es True, usar |           |               |
+    |                       | método serialize)                             |           |               |
+    | --------------------- | --------------------------------------------- | --------- | ------------- |
+
+    ~ BLOQUES A EXTENDER ~
+    | ----------------- | --------------------------------------------- |
+    | Nombre de bloque  | Cómo extender                                 |
+    | ----------------- | --------------------------------------------- |
+    | form              | Elemento form con el formulario a usar        |
+    |                   | (importante que las etiquetas correspondan)   |
+    | ----------------- | --------------------------------------------- |
+#}
+
+{% extends "skeleton/base.html" %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col-lg-8">
+        <div class="row">
+            <div class="col">
+                <div class="card shadow mb-3">
+                    <div class="card-header py-3">
+                        <p class="text-primary m-0 font-weight-bold">{{ data.card_title }}</p>
+                    </div>
+                    <div class="card-body">
+                        {% block detail %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

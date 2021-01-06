@@ -1,0 +1,39 @@
+{% extends "skeleton/list.html" %}
+
+{% block table %}
+<table class="table mb-0" id="dataTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Cantidad producida</th>
+            <th>Producto que fabrica</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for proceso_productivo in data.procesos_productivos %}
+        <tr>
+            <td>{{ proceso_productivo.id }}</td>
+            <td>{{ proceso_productivo.nombre }}</td>
+            <td>{{ proceso_productivo.ctd_producida }}</td>
+            <td><a href="/producto/{{ proceso_productivo.fabrica }}">#{{ proceso_productivo.fabrica }}</a></td>
+            <td align="right">
+                <a href="/procesos-productivos/{{ proceso_productivo.id }}"><i class="fa fa-search mr-2"></i></a>
+                <a href="/procesos-productivos/{{ proceso_productivo.id }}/edit"><i class="fa fa-pencil mr-2"></i></a>
+                <a href="#" onclick="deleteItem('procesos-productivos', '{{ proceso_productivo.id }}')"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td><strong>ID</strong></td>
+            <td><strong>Nombre</strong></td>
+            <td><strong>Cantidad producida</strong></td>
+            <td><strong>Producto que fabrica</strong></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}

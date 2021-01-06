@@ -1,0 +1,36 @@
+{% extends "skeleton/detail.html" %}
+
+{% block detail %}
+<table class="table mb-0">
+    <tbody>
+        <tr>
+            <th scope="row">ID</th>
+            <td>{{ data.proceso_productivo.id }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Nombre</th>
+            <td>{{ data.proceso_productivo.nombre }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>{{ data.proceso_productivo.descripcion }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Fecha de Inicio</th>
+            <td>{{ data.proceso_productivo.fecha_inicio }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Fecha de Fin</th>
+            <td>{{ data.proceso_productivo.fecha_fin }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Cantidad Producida</th>
+            <td>{{ data.proceso_productivo.ctd_producida }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Producto que fabrica</th>
+            <td><a href="/productos/{{ data.proceso_productivo.fabrica }}">#{{ data.proceso_productivo.fabrica }}</a></td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

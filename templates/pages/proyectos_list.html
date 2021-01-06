@@ -1,0 +1,39 @@
+{% extends "skeleton/list.html" %}
+
+{% block table %}
+<table class="table mb-0" id="dataTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Estado</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for proyecto in data.proyectos %}
+        <tr>
+            <td>{{ proyecto.id }}</td>
+            <td>{{ proyecto.nombre }}</td>
+            <td>{{ proyecto.categoria }}</td>
+            <td>{{ proyecto.estado.verbose }}</td>
+            <td align="right">
+                <a href="/proyectos/{{ proyecto.id }}"><i class="fa fa-search mr-2"></i></a>
+                <a href="/proyectos/{{ proyecto.id }}/edit"><i class="fa fa-pencil mr-2"></i></a>
+                <a href="#" onclick="deleteItem('proyectos', '{{ proyecto.id }}')"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td><strong>ID</strong></td>
+            <td><strong>Nombre</strong></td>
+            <td><strong>Categoría</strong></td>
+            <td><strong>Estado</strong></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}

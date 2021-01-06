@@ -1,0 +1,32 @@
+{% extends "skeleton/detail.html" %}
+
+{% block detail %}
+<table class="table mb-0">
+    <tbody>
+        <tr>
+            <th scope="row">ID</th>
+            <td>{{ data.producto.id }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Nombre</th>
+            <td>{{ data.producto.nombre }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Descripción</th>
+            <td>{{ data.producto.descripcion }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Código de Distribución</th>
+            <td>{{ data.producto.cod_distribucion }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Precio de Venta</th>
+            <td>{{ data.producto.precio_venta }}€</td>
+        </tr>
+        <tr>
+            <th scope="row">Proyecto Origen</th>
+            <td><a href="/proyectos/{{ data.producto.origen }}">#{{ data.producto.origen }}</a></td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

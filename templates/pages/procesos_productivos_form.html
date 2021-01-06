@@ -1,0 +1,59 @@
+{% extends "skeleton/form.html" %}
+
+{% block form %}
+<form action="{% if data.edit %}/api/procesos-productivos/edit/{{ data.edit_data.id }}{% else %}/api/procesos-productivos/add{% endif %}" id="form" method="post" class="needs-validation" novalidate>
+    <div class="form-row mb-3">
+        {# el ID sólo lo introducimos en creación #}
+        {% if not data.edit %}
+        <div class="col">
+            <label for="id"><strong>ID</strong></label>
+            <input class="form-control" type="text"
+                placeholder="ID del proceso productivo" id="id" name="id">
+        </div>
+        {% endif %}
+        <div class="col">
+            <label for="nombre"><strong>Nombre</strong></label>
+            <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.nombre }}"{% endif %}
+                placeholder="Nombre del proceso productivo" id="nombre" name="nombre">
+        </div>
+    </div>
+    <div class="form-row mb-3">
+        <div class="col">
+            <label for="descripcion"><strong>Descripción</strong></label>
+            <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.descripcion }}"{% endif %}
+                placeholder="Descripción del proceso productivo" id="descripcion" name="descripcion">
+        </div>
+    </div>
+    <div class="form-row mb-3">
+        <div class="col">
+            <label for="fecha_inicio"><strong>Fecha de inicio</strong></label>
+            <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.fecha_inicio }}"{% endif %}
+                placeholder="DD/MM/YYYY" id="fecha_inicio" name="fecha_inicio">
+        </div>
+        <div class="col">
+            <label for="fecha_fin"><strong>Fecha de fin</strong></label>
+            <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.fecha_fin }}"{% endif %}
+                placeholder="DD/MM/YYYY" id="fecha_fin" name="fecha_fin">
+        </div>
+    </div>
+    {% if not data.edit %}
+    <div class="form-row mb-3">
+        <div class="col">
+            <label for="ctd_producida"><strong>Cantidad producida</strong></label>
+            <input class="form-control" type="number" step="0.01" value="{% if data.edit %}{{ data.edit_data.precio_venta }}{% else %}0.00{% endif %}"
+                placeholder="0.00" id="ctd_producida" name="ctd_producida">
+        </div>
+        <div class="col">
+            <label for="fabrica"><strong>Producto que fabrica</strong></label>
+            <input class="form-control" type="text"
+                placeholder="ID de producto que fabrica" id="fabrica" name="fabrica">
+        </div>
+    </div>
+    {% endif %}
+    <div class="form-row">
+        <div class="col">
+            <button type="submit" id="form-submit" class="btn btn-primary btn-sm">{% if data.edit %}Actualizar{% else %}Crear{% endif %} proceso productivo</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

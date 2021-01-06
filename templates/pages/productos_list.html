@@ -1,0 +1,42 @@
+{% extends "skeleton/list.html" %}
+
+{% block table %}
+<table class="table mb-0" id="dataTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Cod. Distribución</th>
+            <th>Precio de venta</th>
+            <th>Proyecto origen</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for producto in data.productos %}
+        <tr>
+            <td>{{ producto.id }}</td>
+            <td>{{ producto.nombre }}</td>
+            <td>{{ producto.cod_distribucion }}</td>
+            <td>{{ producto.precio_venta }}€</td>
+            <td><a href="/proyectos/{{ producto.origen }}">#{{ producto.origen }}</a></td>
+            <td align="right">
+                <a href="/productos/{{ producto.id }}"><i class="fa fa-search mr-2"></i></a>
+                <a href="/productos/{{ producto.id }}/edit"><i class="fa fa-pencil mr-2"></i></a>
+                <a href="#" onclick="deleteItem('productos', '{{ producto.id }}')"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td><strong>ID</strong></td>
+            <td><strong>Nombre</strong></td>
+            <td><strong>Cód. Distribución</strong></td>
+            <td><strong>Precio de venta</strong></td>
+            <td><strong>Proyecto origen</strong></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}
