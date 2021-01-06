@@ -1,0 +1,11 @@
+id,nombre,descripcion,categoria,estado
+VAC10381,Vacuna 10381 SARS-CoV-2,Desarrollo de vacuna 10381 para la inmunoprotección frente al SARS-CoV-2,VACUNA,3
+VAC12333,Vacuna 12333 SARS-CoV-2,Desarrollo de vacuna 12333 para la inmunoprotección frente al SARS-CoV-2,VACUNA,4
+VAC15552,Vacuna 15552 SARS-CoV-2,Desarrollo de vacuna 15552 para la inmunoprotección frente al SARS-CoV-2,VACUNA,2
+ATB11299,Antibiótico 11299 Streptococcus,Desarollo de antobiótico 11299 para curar las infecciones provocadas por bacterias de la familia Streptococcus,ANTIBIÓTICO,3
+ATB12115,Antibiótico 12115 Streptococcus,Desarrollo de antobiótico 12115 para curar las infecciones provocadas por bacterias de la familia Streptococcus,ANTIBIÓTICO,4
+MCL56881,Mucolítico 56881 embarazadas,Desarrollo de mucolítico 56881 de mínimos efectos secundarios para embarazadas,MUCOLÍTICO,1
+ANL23114,Antialérgico 23114 gramíneas,Desarrollo de antialérgico 23114 para gramíneas,ANTIALÉRGICO,2
+ANL24112,Antialérgico 24112 gramíneas,Desarrollo de antialérgico 24112 para gramíneas,ANTIALÉRGICO,4
+ANG31223,Analgésico 31223 general,Desarrollo de analgésico 31223 para dolor general,ANALGÉSICO,3
+VAC55123,Vacuna 55123 meningitis,Desarollo de vacuna 55123 para la inmunoprotección frente a la meningitis,VACUNA,2

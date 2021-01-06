@@ -1,0 +1,11 @@
+id,nombre,descripcion,cod_distribucion,precio_venta,origen
+VAC10381AUEK5718,Pandemic Killer,Vacuna que desarrolla inmunidad frente al SARS-CoV-2,78573869135467910056,43.12,VAC10381
+VAC10381UEMVI673,Pandemic Killer Children,"Vacuna que desarrolla inmunidad frente al SARS-CoV-2, para niños",78567472536597869476,38.76,VAC10381
+VAC10381HYDJM845,Pandemic Killer Senior,"Vacuna que desarrolla inmunidad frente al SARS-CoV-2, para ancianos",78567786752847526567,56.99,VAC10381
+ATB11299THGY6748,Streptono,Antibiótico para curar infecciones causadas por bacterias de la familia Streptococcus,78567485868454235886,12.77,ATB11299
+ATB11299GEY78914,Streptono Children,"Antibiótico para curar infecciones causadas por bacterias de la familia Streptococcus, para niños",78567485868454235886,14.23,ATB11299
+ATB11299YTT67155,Streptono Jarabe,"Antibiótico para curar infecciones causadas por bacterias de la familia Streptococcus, en jarabe",78534267813259789011,13.79,ATB11299
+ATB11299YUY78465,Streptono Plabeco,Versión placebo del antibiótico para curar infecciones causadas por bacterias de la familia Streptococcus,78567653278865489077,2.44,ATB11299
+ANG31223IDM98667,NoPain 300,Analgésico de dolor general,78567234768859379175,9.73,ANG31223
+ANG31223MFF82365,NoPain 500,Analgésico de dolor general,7856728476910267885930002,11.22,ANG31223
+ANG31223GTE67571,NoPain 900,Analgésico de dolor general,7856724567345861378451727,15.52,ANG31223
