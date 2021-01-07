@@ -1,0 +1,33 @@
+{% extends "skeleton/list.html" %}
+
+{% block table %}
+<table class="table mb-0" id="dataTable">
+    <thead>
+        <tr>
+            <th>DNI</th>
+            <th>Nombre</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for empleado in data.empleados %}
+        <tr>
+            <td>{{ empleado.dni }}</td>
+            <td>{{ empleado.nombre }}</td>
+            <td align="right">
+                <a href="/empleados/{{ empleado.dni }}"><i class="fa fa-search mr-2"></i></a>
+                <a href="/empleados/{{ empleado.dni }}/edit"><i class="fa fa-pencil mr-2"></i></a>
+                <a href="#" onclick="deleteItem('empleados', '{{ empleado.dni }}')"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td><strong>DNI</strong></td>
+            <td><strong>Nombre</strong></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}

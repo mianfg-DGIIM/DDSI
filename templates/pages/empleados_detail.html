@@ -1,0 +1,37 @@
+{% extends "skeleton/detail.html" %}
+
+{% block detail %}
+<table class="table mb-0">
+    <tbody>
+        <tr>
+            <th scope="row">DNI</th>
+            <td>{{ data.empleado.dni }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Nombre</th>
+            <td>{{ data.empleado.nombre }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Puesto</th>
+            <td>{{ data.empleado.puesto }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Sueldo</th>
+            <td>{{ data.empleado.sueldo }}€</td>
+        </tr>
+        <tr>
+            <th scope="row">Duración</th>
+            <td>{{ data.empleado.duracion }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Fecha de inicio</th>
+            <td>{{ data.empleado.fechaInicio }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Actividad</th>
+            <td>{{ data.empleado.actividad.verbose }}</td>
+        </tr>
+    </tbody>
+</table>
+<a href="/empleados/{{ data.empleado.dni }}/evals" type="button" class="btn btn-primary btn-sm mt-3">Ver evaluaciones</a>
+{% endblock %}

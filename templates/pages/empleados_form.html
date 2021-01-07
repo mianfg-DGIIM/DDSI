@@ -1,0 +1,57 @@
+{% extends "skeleton/form.html" %}
+
+{% block form %}
+<form action="{% if data.edit %}/api/empleados/edit/{{ data.edit_data.dni }}{% else %}/api/empleados/add{% endif %}" id="form" method="post" class="needs-validation" novalidate>
+    <div class="form-row mb-3">
+        <div class="col">
+            <label for="dni"><strong>DNI</strong></label>
+            <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.dni }}"{% endif %}
+                placeholder="DNI del empleado" id="dni" name="dni" {% if data.edit %}disabled{% endif %}>
+        </div>
+        <div class="col">
+            <label for="nombre"><strong>Nombre</strong></label>
+            <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.nombre }}"{% endif %}
+                placeholder="Nombre del empleado" id="nombre" name="nombre">
+        </div>
+    </div>
+    <div class="form-row mb-3">
+        <div class="col">
+            <label for="puesto"><strong>Puesto</strong></label>
+            <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.puesto }}"{% endif %}
+                placeholder="Puesto del empleado" id="puesto" name="puesto">
+        </div>
+        <div class="col">
+            <label for="sueldo"><strong>Sueldo</strong></label>
+            <input class="form-control" type="number" step="1" value="{% if data.edit %}{{ data.edit_data.sueldo }}{% else %}0.00{% endif %}"
+                placeholder="0.00" id="sueldo" name="sueldo">
+        </div>
+    </div>
+    <div class="form-row mb-3">
+        <div class="col">
+            <label for="fechaInicio"><strong>Fecha de inicio</strong></label>
+            <input class="form-control" type="date" {% if data.edit %}value="{{ data.edit_data.fechaInicio }}"{% endif %}
+                placeholder="Fecha de inicio" id="fechaInicio" name="fechaInicio">
+        </div>
+        <div class="col">
+            <label for="duracion"><strong>Duración</strong></label>
+            <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.duracion }}"{% endif %}
+                placeholder="Duración" id="duracion" name="duracion">
+        </div>
+    </div>
+    <div class="form-row mb-3">
+        <div class="col">
+            <label for="actividad"><strong>Actividad</strong></label>
+            <select class="form-control" id="actividad" name="actividad">
+                <option value="1" {% if data.edit and data.edit_data.actividad.value == 1 %}selected="true"{% endif %}>Activo</option>
+                <option value="0" {% if data.edit and data.edit_data.actividad.value == 0 %}selected="true"{% endif %}>Inactivo</option>
+            </select>
+        </div>
+        <div class="col"></div>
+    </div>
+    <div class="form-row">
+        <div class="col">
+            <button type="submit" id="form-submit" class="btn btn-primary btn-sm">{% if data.edit %}Actualizar{% else %}Crear{% endif %} empleado</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

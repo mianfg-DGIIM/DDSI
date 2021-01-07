@@ -3,14 +3,11 @@
 {% block form %}
 <form action="{% if data.edit %}/api/productos/edit/{{ data.edit_data.id }}{% else %}/api/productos/add{% endif %}" id="form" method="post" class="needs-validation" novalidate>
     <div class="form-row mb-3">
-        {# el ID sólo lo introducimos en creación #}
-        {% if not data.edit %}
         <div class="col">
             <label for="id"><strong>ID</strong></label>
-            <input class="form-control" type="text"
-                placeholder="ID del producto" id="id" name="id">
+            <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.id }}"{% endif %}
+                placeholder="ID del producto" id="id" name="id" {% if data.edit %}disabled{% endif %}>
         </div>
-        {% endif %}
         <div class="col">
             <label for="nombre"><strong>Nombre</strong></label>
             <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.nombre }}"{% endif %}
@@ -36,16 +33,14 @@
                 placeholder="0.00" id="precio_venta" name="precio_venta">
         </div>
     </div>
-    {% if not data.edit %}
     <div class="form-row mb-3">
         <div class="col">
             <label for="origen"><strong>Proyecto Origen</strong></label>
-            <input class="form-control" type="text"
-                placeholder="ID de proyecto origen" id="origen" name="origen">
+            <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.origen }}"{% endif %}
+                placeholder="ID de proyecto origen" id="origen" name="origen" {% if data.edit %}disabled{% endif %}>
         </div>
         <div class="col"></div>
     </div>
-    {% endif %}
     <div class="form-row">
         <div class="col">
             <button type="submit" id="form-submit" class="btn btn-primary btn-sm">{% if data.edit %}Actualizar{% else %}Crear{% endif %} producto</button>

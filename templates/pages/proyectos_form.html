@@ -3,14 +3,11 @@
 {% block form %}
 <form action="{% if data.edit %}/api/proyectos/edit/{{ data.edit_data.id }}{% else %}/api/proyectos/add{% endif %}" id="form" method="post" class="needs-validation" novalidate>
     <div class="form-row mb-3">
-        {# el ID sólo lo introducimos en creación #}
-        {% if not data.edit %}
         <div class="col">
             <label for="id"><strong>ID</strong></label>
-            <input class="form-control" type="text"
-                placeholder="ID del proyecto" id="id" name="id">
+            <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.id }}"{% endif %}
+                placeholder="ID del proyecto" id="id" name="id" {% if data.edit %}disabled{% endif %}>
         </div>
-        {% endif %}
         <div class="col">
             <label for="nombre"><strong>Nombre</strong></label>
             <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.nombre }}"{% endif %}

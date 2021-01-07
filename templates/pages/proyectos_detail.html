@@ -23,6 +23,19 @@
             <th scope="row">Estado</th>
             <td>{{ data.proyecto.estado.verbose }}</td>
         </tr>
+        <tr>
+            <th scope="row">Productos que origina</th>
+            <td>
+                {% if data.proyecto.productos|length == 0 %}
+                <i>Ninguno</i>
+                {% endif %}
+                <ul class="mb-0">
+                    {% for producto in data.proyecto.productos %}
+                    <li><a href="/productos/{{ producto.id }}">#{{ producto.id }}</a></li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
     </tbody>
 </table>
 {% endblock %}

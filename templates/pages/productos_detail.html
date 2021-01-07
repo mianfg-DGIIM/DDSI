@@ -27,6 +27,19 @@
             <th scope="row">Proyecto Origen</th>
             <td><a href="/proyectos/{{ data.producto.origen }}">#{{ data.producto.origen }}</a></td>
         </tr>
+        <tr>
+            <th scope="row">Procesos productivos asociados</th>
+            <td>
+                {% if data.producto.procesos_productivos|length == 0 %}
+                <i>Ninguno</i>
+                {% endif %}
+                <ul class="mb-0">
+                    {% for proceso_productivo in data.producto.procesos_productivos %}
+                    <li><a href="/procesos-productivos/{{ proceso_productivo.id }}">#{{ proceso_productivo.id }}</a></li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
     </tbody>
 </table>
 {% endblock %}

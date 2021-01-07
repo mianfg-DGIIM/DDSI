@@ -1,0 +1,35 @@
+{% extends "skeleton/list.html" %}
+
+{% block table %}
+<table class="table mb-0" id="dataTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>DNI</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for evaluacion in data.evaluaciones %}
+        <tr>
+            <td>{{ evaluacion.dni }}</td>
+            <td>{{ evaluacion.nombre }}</td>
+            <td><a href="/empleados/{{ evaluacion.dni }}">{{ evaluacion.dni }}</a></td>
+            <td align="right">
+                <a href="/evaluaciones/{{ evaluacion.id }}"><i class="fa fa-search mr-2"></i></a>
+                <a href="/evaluaciones/{{ evaluacion.id }}/edit"><i class="fa fa-pencil mr-2"></i></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td><strong>ID</strong></td>
+            <td><strong>Nombre</strong></td>
+            <td><strong>DNI</strong></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}

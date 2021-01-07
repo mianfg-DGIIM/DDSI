@@ -15,21 +15,22 @@
 <body id="page-top">
     <div id="wrapper">
         <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-            <div class="container-fluid d-flex flex-column p-0"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+            <div class="container-fluid d-flex flex-column p-0"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="/">
                     <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-clinic-medical"></i></div>
-                    <div class="sidebar-brand-text mx-3"><span>Pharmagiim</span></div>
+                    <div class="sidebar-brand-text mx-3"><span><span style="font-weight: normal">Pharma</span>GIIM</span></div>
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item"><a class="nav-link" href="/"><i class="fas fa-tachometer-alt"></i><span>Página principal</span></a></li>
-                    <li class="nav-item mt-2"><div class="nav-link text-white"><i class="text-white fa fa-users"></i><span><strong>Recursos Humanos</strong></span></div></li>
-                    <li class="nav-item mt-2"><div class="nav-link text-white"><i class="text-white fas fa-prescription-bottle-alt"></i><span><strong>I+D y Producción</strong></span></div></li>
-                    <li class="nav-item"><a class="nav-link" href="/proyectos"><i class="fas fa-lightbulb"></i><span>Proyectos</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="/productos"><i class="fas fa-pills"></i><span>Productos</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="/procesos-productivos"><i class="fas fa-dolly-flatbed"></i><span>Procesos Productivos</span></a></li>
-                    <li class="nav-item mt-2"><div class="nav-link text-white"><i class="text-white fas fa-prescription-bottle-alt"></i><span><strong>I+D y Producción</strong></span></div></li>
-                    <li class="nav-item mt-2"><div class="nav-link text-white"><i class="text-white fas fa-box"></i><span><strong>Almacén y Logística</strong></span></div></li>
-                    <li class="nav-item mt-2"><div class="nav-link text-white"><i class="text-white fas fa-table"></i><span><strong>Contabilidad</strong></span></div></li>
+                    <li class="nav-item"><a class="nav-link" href="/"><i class="fas fa-tachometer-alt mr-2 ml-2"></i><span>Página principal</span></a></li>
+                    <li class="nav-item mt-2"><div class="nav-link text-white"><i class="text-white fa fa-users mr-2 ml-2"></i><span><strong>Recursos Humanos</strong></span></div></li>
+                    <li class="nav-item"><a class="nav-link" href="/empleados"><i class="fas fa-user mr-2 ml-2"></i><span>Empleados</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/evaluaciones"><i class="fas fa-star-half-alt mr-2 ml-2"></i><span>Evaluaciones</span></a></li>
+                    <li class="nav-item mt-2"><div class="nav-link text-white"><i class="text-white fas fa-prescription-bottle-alt mr-2 ml-2"></i><span><strong>I+D y Producción</strong></span></div></li>
+                    <li class="nav-item"><a class="nav-link" href="/proyectos"><i class="fas fa-lightbulb mr-2 ml-2"></i><span>Proyectos</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/productos"><i class="fas fa-pills mr-2 ml-2"></i><span>Productos</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/procesos-productivos"><i class="fas fa-dolly-flatbed mr-2 ml-2"></i><span>Procesos Productivos</span></a></li>
+                    <li class="nav-item mt-2"><div class="nav-link text-white"><i class="text-white fas fa-box mr-2 ml-2"></i><span><strong>Almacén y Logística</strong></span></div></li>
+                    <li class="nav-item mt-2"><div class="nav-link text-white"><i class="text-white fas fa-table mr-2 ml-2"></i><span><strong>Contabilidad</strong></span></div></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -58,7 +59,7 @@
                                             </p>
                                         </div>
                                         <hr class="mb-0">
-                                        <a class="text-center dropdown-item small text-gray-500" href="https://github.com/mianfg/pharmagiim"><i class="fab fa-github mr-2"></i>Ir a repositorio de GitHub</a>
+                                        <a class="text-center dropdown-item small text-gray-500" href="https://github.com/mianfg/pharmagiim"><i class="fab fa-github mr-2 ml-2"></i>Ir a repositorio de GitHub</a>
                                     </div>
                                 </div>
                                 <div class="shadow dropdown-list dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown"></div>
@@ -67,7 +68,7 @@
                             <li class="nav-item">
                                 <div class="nav-item dropdown no-arrow">
                                     <div class="dropdown-toggle nav-link">
-                                        <span class="d-none d-lg-inline mr-2 text-gray-600 small">Empleado</span><img class="border rounded-circle img-profile" src="/static/img/avatars/avatar.jpeg">
+                                        <span class="d-none d-lg-inline mr-2 ml-2 text-gray-600 small">Empleado</span><img class="border rounded-circle img-profile" src="/static/img/avatars/avatar.jpeg">
                                     </div>
                                 </div>
                             </li>
@@ -76,7 +77,7 @@
                 </nav>
                 <div class="container-fluid">
                     {% if data.error %}
-                    <div id="error" class="alert alert-danger" role="alert"><i class="fa fa-warning mr-3"></i><span class="mr-2"><strong>Error:</strong></span><span id="error-text">{{ data.error }}</span></div>
+                    <div id="error" class="alert alert-danger" role="alert"><i class="fa fa-warning mr-3"></i><span class="mr-2 ml-2"><strong>Error:</strong></span><span id="error-text">{{ data.error }}</span></div>
                     {% else %}
                     <div class="d-sm-flex justify-content-between align-items-center mb-4">
                         <h3 class="text-dark mb-0"><strong>{{ data.breadcrumb_title | safe }}</strong>{% if data.breadcrumb_subtitle %}<i class="fa fa-caret-right ml-3 mr-3"></i>{{ data.breadcrumb_subtitle | safe }}{% endif %}</h3>

@@ -1,0 +1,50 @@
+{% extends "skeleton/form.html" %}
+
+{% block form %}
+<form action="{% if data.edit %}/api/evaluaciones/edit/{{ data.edit_data.id }}{% else %}/api/evaluaciones/add{% endif %}" id="form" method="post" class="needs-validation" novalidate>
+    <div class="form-row mb-3">
+        <div class="col">
+            <label for="nombre"><strong>Nombre</strong></label>
+            <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.nombre }}"{% endif %}
+                placeholder="Nombre de la evaluación" id="nombre" name="nombre">
+        </div>
+        <div class="col">
+            <label for="dni"><strong>DNI</strong></label>
+            <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.dni }}"{% endif %}
+                placeholder="DNI del empleado evaluado" id="dni" name="dni" {% if data.edit %}disabled{% endif %}>
+        </div>
+    </div>
+    <div class="form-row mb-3">
+        <div class="col">
+            <label for="fechaIni"><strong>Fecha de inicio de evaluación</strong></label>
+            <input class="form-control" type="date" {% if data.edit %}value="{{ data.edit_data.fechaIni }}"{% endif %}
+                placeholder="Fecha de inicio" id="fechaIni" name="fechaIni">
+        </div>
+        <div class="col">
+            <label for="fechaFin"><strong>Fecha de final de evaluación</strong></label>
+            <input class="form-control" type="date" {% if data.edit %}value="{{ data.edit_data.fechaFin }}"{% endif %}
+                placeholder="Fecha de fin" id="fechaFin" name="fechaFin">
+        </div>
+    </div>
+    <div class="form-row mb-3">
+        <div class="col">
+            <label for="conclusion"><strong>Conclusión</strong></label>
+            <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.conclusion }}"{% endif %}
+                placeholder="Conclusión de la evaluación" id="conclusion" name="conclusion">
+        </div>
+    </div>
+    <div class="form-row mb-3">
+        <div class="col">
+            <label for="index"><strong>Índice de rendimiento</strong></label>
+            <input class="form-control" type="number" step="1" {% if data.edit %}value="{{ data.edit_data.index }}"{% endif %}
+                placeholder="Índice" id="index" name="index">
+        </div>
+        <div class="col"></div>
+    </div>
+    <div class="form-row">
+        <div class="col">
+            <button type="submit" id="form-submit" class="btn btn-primary btn-sm">{% if data.edit %}Actualizar{% else %}Crear{% endif %} evaluación</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

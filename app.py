@@ -2,10 +2,10 @@ import os, json, datetime
 from flask import Flask, request, jsonify, render_template, redirect, make_response
 from flask_sqlalchemy import SQLAlchemy
 
-
 app = Flask(__name__)
 
-app.config.from_object("config.DevelopmentConfig")  # os.environ['APP_SETTINGS']
+# os.environ['APP_SETTINGS']
+app.config.from_object("config.DevelopmentConfig")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -25,6 +25,274 @@ def home():
         'breadcrumb_button_url':    '#'
     }
     return render_template('pages/home.html', data=data)
+
+# ================================
+# ==== DPTO. RECURSOS HUMANOS ====
+# ================================
+
+# ==== EMPLEADOS ====
+
+@app.route('/empleados/add', methods=['GET'])
+def empleados_add():
+    """
+    Empleados: añadir empleado
+    ----
+    En esta rutina mostraremos una página con un formulario para crear
+    un nuevo empleado.
+    """
+    data = {
+        'title':                    "Añadir empleado",
+        'breadcrumb_title':         "Recursos Humanos",
+        'breadcrumb_subtitle':      '<i class="fas fa-user mr-2"></i>Empleados',
+        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a empleados',
+        'breadcrumb_button_url':    '/empleados',
+        'database_name':            'empleado',
+        'database_name_plural':     'empleados',
+        'card_title':               "Crear nuevo empleado",
+        'edit':                     False,  # el formulario será de creación
+        # no son necesarios más datos en este caso
+    }
+    return render_template('pages/empleados_form.html', data=data)
+
+
+@app.route('/empleados', methods=['GET'])
+def empleados_all():
+    """
+    Empleados: mostrar la información de todos los empleados
+    ----
+    En esta rutina mostraremos la información de todos los empleados
+    """
+    try:
+        empleados = Empleado.query.all()
+        empleados = [empleado.serialize() for empleado in empleados]
+        success = True
+    except:
+        success = False
+
+    data = {
+        'title':                    "Empleados",
+        'breadcrumb_title':         "Recursos Humanos",
+        'breadcrumb_subtitle':      '<i class="fas fa-user mr-2"></i>Empleados',
+        'breadcrumb_button':        '<i class="fas fa-plus fa-sm text-white-50 mr-2"></i>Añadir empleado',
+        'breadcrumb_button_url':    '/empleados/add',
+        'database_name':            'empleado',
+        'database_name_plural':     'empleados',
+        'card_title':               "Listado de empleados",
+        'error':                    f'No hemos podido obtener la información de los empleados' if not success else None,
+        'empleados':                empleados if success else None
+    }
+    return render_template('pages/empleados_list.html', data=data)
+
+
+@app.route('/empleados/<dni>', methods=['GET'])
+def empleados_detail(dni):
+    """
+    Empleados: mostrar información de un empleado
+    ----
+    En esta rutina mostraremos la información de un empleado
+    """
+    # primero recopilamos la información de la BD
+    exists = False
+    try:
+        empleado = Empleado.query.filter_by(dni=dni).first()
+        empleado = empleado.serialize()
+    except:
+        empleado = None
+
+    data = {
+        'title':                    f"Empleado #{dni}",
+        'breadcrumb_title':         "Recursos Humanos",
+        'breadcrumb_subtitle':      '<i class="fas fa-user mr-2"></i>Empleados',
+        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a empleados',
+        'breadcrumb_button_url':    '/empleados',
+        'database_name':            'empleado',
+        'database_name_plural':     'empleados',
+        'card_title':               f"Detalle del empleado #{dni}",
+        # Mostrar un mensaje de error si no existe el empleado
+        'error':                    f'No se ha encontrado un empleado con DNI {dni}' if not empleado else None,
+        'empleado':                 empleado
+    }
+    return render_template('pages/empleados_detail.html', data=data)
+
+
+@app.route('/empleados/<dni>/edit', methods=['GET'])
+def empleados_edit(dni, api_resp=None):
+    """
+    Empleados: editar información de un empleado
+    ----
+    En esta rutina permitiremos la edición de la información de un empleado
+    """
+    # primero recopilamos la información de la BD
+    try:
+        empleado = Empleado.query.filter_by(dni=dni).first()
+        empleado = empleado.serialize()
+    except:
+        empleado = None
+
+    data = {
+        'title':                    f"Editar empleado #{dni}",
+        'breadcrumb_title':         "Recursos Humanos",
+        'breadcrumb_subtitle':      '<i class="fas fa-user mr-2"></i>Empleados',
+        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a empleados',
+        'breadcrumb_button_url':    '/empleados',
+        'database_name':            'empleado',
+        'database_name_plural':     'empleados',
+        'card_title':               f"Editar empleado #{dni}",
+        'error':                    f'No se ha encontrado un empleado con DNI {dni}' if not empleado else None,
+        'edit':                     True,   # el formulario será de edición
+        # cargamos la información existente en el formulario
+        'edit_data':                empleado
+    }
+    return render_template('pages/empleados_form.html', data=data)
+
+
+# ==== EVALUACIONES ====
+
+@app.route('/evaluaciones', methods=['GET'])
+def evaluaciones_all():
+    """
+    Evaluaciones: mostrar la información de todas las evaluaciones
+    ----
+    En esta rutina mostraremos la información de todas las evaluaciones
+    """
+    try:
+        evaluaciones = Evaluacion.query.all()
+        evaluaciones = [evaluacion.serialize() for evaluacion in evaluaciones]
+        success = True
+    except:
+        success = False
+
+    data = {
+        'title':                    "Evaluaciones",
+        'breadcrumb_title':         "Recursos Humanos",
+        'breadcrumb_subtitle':      '<i class="fas fa-star-half-alt mr-2"></i>Evaluaciones',
+        'breadcrumb_button':        '<i class="fas fa-plus fa-sm text-white-50 mr-2"></i>Crear evaluación',
+        'breadcrumb_button_url':    '/evaluaciones/add',
+        'database_name':            'evaluacion',
+        'database_name_plural':     'evaluaciones',
+        'card_title':               "Listado de evaluaciones",
+        'error':                    f'No hemos podido obtener la información de las evaluaciones' if not success else None,
+        'evaluaciones':             evaluaciones if success else None
+    }
+    return render_template('pages/evaluaciones_list.html', data=data)
+
+
+@app.route('/empleados/<dni>/evals', methods=['GET'])
+def empleado_evaluaciones_all(dni):
+    """
+    Evaluaciones: mostrar la información de todas las evaluaciones de un empleado
+    ----
+    En esta rutina mostraremos la información de todas las evaluaciones de un empleado
+    """
+    try:
+        evaluaciones = Evaluacion.query.filter_by(dni=dni)
+        evaluaciones = [evaluacion.serialize() for evaluacion in evaluaciones]
+    except:
+        evaluaciones = None
+
+    data = {
+        'title':                    f"Evaluaciones de empleado #{dni}",
+        'breadcrumb_title':         "Recursos Humanos",
+        'breadcrumb_subtitle':      '<i class="fas fa-user mr-2"></i>Empleados',
+        'breadcrumb_button':        f'<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a empleado #{dni}',
+        'breadcrumb_button_url':    f'/empleados/{dni}',
+        'database_name':            'empleado',
+        'database_name_plural':     'empleados',
+        'card_title':               f"Evaluaciones del empleado #{dni}",
+        # Mostrar un mensaje de error si no existe el empleado
+        'error':                    f'No hemos podido obtener la información de las evaluaciones del empleado con DNI {dni}' if not evaluaciones else None,
+        'empleado':                 evaluaciones
+    }
+    return render_template('pages/evaluaciones_list.html', data=data)
+
+
+@app.route('/evaluaciones/<id>', methods=['GET'])
+def evaluaciones_detail(id):
+    """
+    Evaluaciones: mostrar información de una evaluacion
+    ----
+    En esta rutina mostraremos la información de una evaluacion
+    """
+    # primero recopilamos la información de la BD
+    try:
+        evaluacion = Evaluacion.query.filter_by(id=id).first()
+        evaluacion = evaluacion.serialize()
+    except:
+        evaluacion = None
+
+    data = {
+        'title':                    f"Evaluación #{id}",
+        'breadcrumb_title':         "Recursos Humanos",
+        'breadcrumb_subtitle':      '<i class="fas fa-star-half-alt mr-2"></i>Evaluaciones',
+        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a evaluaciones',
+        'breadcrumb_button_url':    '/evaluaciones',
+        'database_name':            'evaluacion',
+        'database_name_plural':     'evaluaciones',
+        'card_title':               f"Detalle de la evaluación #{id}",
+        'error':                    f'No se ha encontrado una evaluación con ID #{id}' if not evaluacion else None,
+        'evaluacion':               evaluacion
+    }
+    return render_template('pages/evaluaciones_detail.html', data=data)
+
+
+@app.route('/evaluaciones/add', methods=['GET'])
+def evaluaciones_add(api_resp=None):
+    """
+    Evaluaciones: añadir evaluacion
+    ----
+    En esta rutina mostraremos una página con un formulario para crear
+    una nueva evaluación.
+    """
+    data = {
+        'title':                    "Añadir evaluación",
+        'breadcrumb_title':         "Recursos Humanos",
+        'breadcrumb_subtitle':      '<i class="fas fa-star-half-alt mr-2"></i>Evaluaciones',
+        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a evaluaciones',
+        'breadcrumb_button_url':    '/evaluaciones',
+        'database_name':            'evaluacion',
+        'database_name_plural':     'evaluaciones',
+        'card_title':               f"Añadir evaluación",
+        'edit':                     False,  # el formulario será de creación
+        # no son necesarios más datos en este caso
+    }
+    return render_template('pages/evaluaciones_form.html', data=data)
+
+
+@app.route('/evaluaciones/<id>/edit', methods=['GET'])
+def evaluaciones_edit(id, api_resp=None):
+    """
+    Evaluaciones: editar información de una evaluacion
+    ----
+    En esta rutina permitiremos la edición de la información de un proyecto
+    """
+    # primero recopilamos la información de la BD
+    try:
+        evaluacion = Evaluacion.query.filter_by(id=id).first()
+        evaluacion = evaluacion.serialize()
+    except Exception as e:
+        print(str(e))
+        evaluacion = None
+
+    data = {
+        'title':                    f"Editar evaluación {id}",
+        'breadcrumb_title':         "Recursos Humanos",
+        'breadcrumb_subtitle':      '<i class="fas fa-star-half-alt mr-2"></i>Evaluaciones',
+        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a evaluaciones',
+        'breadcrumb_button_url':    '/evaluaciones',
+        'database_name':            'evaluacion',
+        'database_name_plural':     'evaluaciones',
+        'card_title':               f"Editar evaluación #{id}",
+        'error':                    f'No se ha encontrado una evaluación con ID {id}' if not evaluacion else None,
+        'edit':                     True,  # el formulario será de edición
+        # cargamos la información existente en el formulario
+        'edit_data':                evaluacion
+    }
+    return render_template('pages/evaluaciones_form.html', data=data)
+
+
+# ================================
+# ==== DPTO. I+D Y PRODUCCIÓN ====
+# ================================
 
 # ==== PROYECTOS ====
 
@@ -50,6 +318,7 @@ def proyectos_add():
     }
     return render_template('pages/proyectos_form.html', data=data)
 
+
 @app.route('/proyectos', methods=['GET'])
 def proyectos_all():
     """
@@ -63,7 +332,7 @@ def proyectos_all():
         success = True
     except:
         success = False
-    
+
     data = {
         'title':                    "Proyectos",
         'breadcrumb_title':         "I+D y Producción",
@@ -77,6 +346,7 @@ def proyectos_all():
         'proyectos':                proyectos if success else None
     }
     return render_template('pages/proyectos_list.html', data=data)
+
 
 @app.route('/proyectos/<id>', methods=['GET'])
 def proyectos_detail(id):
@@ -107,6 +377,7 @@ def proyectos_detail(id):
     }
     return render_template('pages/proyectos_detail.html', data=data)
 
+
 @app.route('/proyectos/<id>/edit', methods=['GET'])
 def proyectos_edit(id):
     """
@@ -120,7 +391,7 @@ def proyectos_edit(id):
         proyecto = proyecto.serialize()
     except:
         proyecto = None
-    
+
     data = {
         'title':                    f"Editar proyecto #{id}",
         'breadcrumb_title':         "I+D y Producción",
@@ -156,6 +427,7 @@ def productos_add():
     }
     return render_template('pages/productos_form.html', data=data)
 
+
 @app.route('/productos', methods=['GET'])
 def productos_all():
     try:
@@ -164,7 +436,7 @@ def productos_all():
         success = True
     except:
         success = False
-    
+
     data = {
         'title':                    "Productos",
         'breadcrumb_title':         "I+D y Producción",
@@ -178,6 +450,7 @@ def productos_all():
         'productos':                productos if success else None
     }
     return render_template('pages/productos_list.html', data=data)
+
 
 @app.route('/productos/<id>', methods=['GET'])
 def productos_detail(id):
@@ -205,6 +478,7 @@ def productos_detail(id):
     print(data)
     return render_template('pages/productos_detail.html', data=data)
 
+
 @app.route('/productos/<id>/edit', methods=['GET'])
 def productos_edit(id):
     # primero recopilamos la información de la BD
@@ -213,7 +487,7 @@ def productos_edit(id):
         producto = producto.serialize()
     except:
         producto = None
-    
+
     data = {
         'title':                    f"Editar producto #{id}",
         'breadcrumb_title':         "I+D y Producción",
@@ -239,7 +513,7 @@ def procesos_productivos_add():
         'title':                    "Añadir proceso productivo",
         'breadcrumb_title':         "I+D y Producción",
         'breadcrumb_subtitle':      '<i class="fas fa-dolly-flatbed mr-2"></i>Procesos productivos',
-        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a productos',
+        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a procesos productivos',
         'breadcrumb_button_url':    '/procesos-productivos',
         'database_name':            'proceso-productivo',
         'database_name_plural':     'procesos-productivos',
@@ -249,15 +523,17 @@ def procesos_productivos_add():
     }
     return render_template('pages/procesos_productivos_form.html', data=data)
 
+
 @app.route('/procesos-productivos', methods=['GET'])
 def procesos_productivos_all():
     try:
         procesos_productivos = ProcesoProductivo.query.all()
-        procesos_productivos = [proceso_productivo.serialize() for proceso_productivo in procesos_productivos]
+        procesos_productivos = [proceso_productivo.serialize(
+        ) for proceso_productivo in procesos_productivos]
         success = True
     except:
         success = False
-    
+
     data = {
         'title':                    "Procesos productivos",
         'breadcrumb_title':         "I+D y Producción",
@@ -271,6 +547,7 @@ def procesos_productivos_all():
         'procesos_productivos':     procesos_productivos if success else None
     }
     return render_template('pages/procesos_productivos_list.html', data=data)
+
 
 @app.route('/procesos-productivos/<id>', methods=['GET'])
 def procesos_productivos_detail(id):
@@ -298,6 +575,7 @@ def procesos_productivos_detail(id):
     print(data)
     return render_template('pages/procesos_productivos_detail.html', data=data)
 
+
 @app.route('/procesos-productivos/<id>/edit', methods=['GET'])
 def procesos_productivos_edit(id):
     # primero recopilamos la información de la BD
@@ -306,7 +584,7 @@ def procesos_productivos_edit(id):
         proceso_productivo = proceso_productivo.serialize()
     except:
         proceso_productivo = None
-    
+
     data = {
         'title':                    f"Editar proceso productivo #{id}",
         'breadcrumb_title':         "I+D y Producción",
@@ -329,34 +607,232 @@ def procesos_productivos_edit(id):
 # |  API             |
 # |__________________|
 
+# ================================
+# ==== DPTO. RECURSOS HUMANOS ====
+# ================================
+
+# ==== EMPLEADOS ====
+
+@app.route('/api/empleados/add', methods=['POST'])
+def api_empleados_add():
+    data = json.loads(request.form['data'])
+
+    dni = data['dni']
+    nombre = data['nombre']
+    puesto = data['puesto']
+    sueldo = data['sueldo']
+    fechaInicio = data['fechaInicio']
+    duracion = data['duracion']
+    actividad = EmpleadoEstados(int(data['actividad']))
+
+    valid, reason = Empleado.validate(dni, sueldo)
+
+    response = {}
+
+    if valid:
+        try:
+            empleado = Empleado(
+                dni=dni,
+                nombre=nombre,
+                puesto=puesto,
+                sueldo=sueldo,
+                duracion=duracion,
+                fechaInicio=fechaInicio,
+                actividad=actividad
+            )
+            db.session.add(empleado)
+            db.session.commit()
+            response['category'] = 'success'
+            response['message'] = f"Empleado añadido con DNI: {empleado.dni}"
+            response['data'] = {
+                'redirect': f"/empleados/{empleado.dni}"
+            }
+        except Exception as e:
+            response['category'] = 'error'
+            response['message'] = "Server insertion error: " + str(e)
+    else:
+        response['category'] = 'constraint'
+        response['message'] = reason
+
+    return jsonify(response)
+
+
+@app.route('/api/empleados/edit/<dni>', methods=['POST'])
+def api_empleados_edit(dni):
+    data = json.loads(request.form['data'])
+    nombre = data['nombre']
+    puesto = data['puesto']
+    sueldo = data['sueldo']
+    fechaInicio = data['fechaInicio']
+    duracion = data['duracion']
+    actividad = EmpleadoEstados(int(data['actividad']))
+
+    # server-side validation
+    valid, reason = Empleado.validate(dni, sueldo)
+
+    response = {}
+
+    if valid:
+        try:
+            empleado = Empleado.query.filter_by(dni=dni).first()
+            empleado.nombre = nombre
+            empleado.puesto = puesto
+            empleado.sueldo = sueldo
+            empleado.fechaInicio = fechaInicio
+            empleado.duracion = duracion
+            empleado.actividad = actividad
+            db.session.commit()
+            response['category'] = 'success'
+            response['message'] = f"Empleado actualizado con DNI: {empleado.dni}"
+            response['data'] = {
+                'redirect': f"/empleados/{empleado.dni}"
+            }
+        except Exception as e:
+            response['category'] = 'error'
+            response['message'] = "Server insertion error: " + str(e)
+    else:
+        response['category'] = 'constraint'
+        response['message'] = reason
+
+    return jsonify(response)
+
+
+@app.route('/api/empleados/delete/<dni>', methods=['POST', 'GET'])
+def api_empleado_delete(dni):
+    response = {}
+
+    try:
+        empleado = Empleado.query.filter_by(dni=dni).first()
+        db.session.delete(empleado)
+        db.session.commit()
+        response['category'] = 'success'
+        response['message'] = f"Empleado eliminado con DNI: {empleado.dni}"
+        response['data'] = {
+            'redirect':     f"/empleados"
+        }
+    except Exception as e:
+        response['category'] = 'error'
+        response['message'] = "Server deletion error: " + str(e)
+
+    return jsonify(response)
+
+
+# ==== EMPLEADOS ====
+
+@app.route('/api/evaluaciones/add', methods=['POST'])
+def api_evaluaciones_add():
+    data = json.loads(request.form['data'])
+    nombre = data['nombre']
+    dni = data['dni']
+    fechaIni = data['fechaIni']
+    fechaFin = data['fechaFin']
+    conclusion = data['conclusion']
+    index = data['index']
+
+    valid, reason = Evaluacion.validate(dni, fechaIni,fechaFin,conclusion,index)
+
+    response = {}
+    if valid:
+        try:
+            evaluacion = Evaluacion(
+                nombre=nombre,
+                dni=dni,
+                fechaIni=fechaIni,
+                fechaFin=fechaFin,
+                conclusion=conclusion,
+                index=index
+
+            )
+            db.session.add(evaluacion)
+            db.session.commit()
+            response['category'] = 'success'
+            response['message'] = f"Evaluación creada con ID: {evaluacion.id}"
+            response['data'] = {
+                'redirect':     f"/evaluaciones/{evaluacion.id}"
+            }
+        except Exception as e:
+            response['category'] = 'error'
+            response['message'] = "Server insertion error: " + str(e)
+    else:
+        response['category'] = 'constraint'
+        response['message'] = reason
+
+    return jsonify(response)
+
+
+@app.route('/api/evaluaciones/edit/<id>', methods=['POST'])
+def api_evaluaciones_edit(id):
+    data = json.loads(request.form['data'])
+    nombre = data['nombre']
+    fechaIni = data['fechaIni']
+    fechaFin = data['fechaFin']
+    conclusion = data['conclusion']
+    index = data['index']
+    # WIP aquí no pillamos el DNI, pero bueno
+    dni = Evaluacion.query.filter_by(id=id).first().dni
+
+    response = {}
+
+    valid, reason = Evaluacion.validate(dni,fechaIni,fechaFin,conclusion,index)
+
+    if valid:
+        try:
+            evaluacion = Evaluacion.query.filter_by(id=id).first()
+            evaluacion.nombre = nombre
+            evaluacion.fechaIni = fechaIni
+            evaluacion.fechaFin = fechaFin
+            evaluacion.conclusion = conclusion
+            evaluacion.index = index
+            db.session.commit()
+            response['category'] = 'success'
+            response['message'] = f"Evaluación actualizada con ID: {evaluacion.id}"
+            response['data'] = {
+                'redirect':     f"/evaluaciones/{evaluacion.id}"
+            }
+        except Exception as e:
+            response['category'] = 'error'
+            response['message'] = "Server insertion error: " + str(e)
+    else:
+        response['category'] = 'constraint'
+        response['message'] = reason
+
+    return jsonify(response)
+
+
+# ================================
+# ==== DPTO. I+D Y PRODUCCIÓN ====
+# ================================
+
 # ==== PROYECTOS ====
 
 @app.route('/api/proyectos/get/all')
 def api_proyectos_get_all():
     try:
-        proyectos=Proyecto.query.all()
+        proyectos = Proyecto.query.all()
         return jsonify([proyecto.serialize() for proyecto in proyectos])
     except Exception as e:
         return str(e)
 
+
 @app.route('/api/proyectos/get/<id>', methods=['POST'])
 def api_proyectos_get(id):
     try:
-        proyecto=Proyecto.query.filter_by(id=id).first()
+        proyecto = Proyecto.query.filter_by(id=id).first()
         return jsonify(proyecto.serialize())
     except Exception as e:
         return str(e)
+
 
 @app.route('/api/proyectos/add', methods=['POST'])
 def api_proyectos_add():
     # decodificar datos recibidos (en JSON)
     data = json.loads(request.form['data'])
-    
-    id          = data['id']
-    nombre		= data['nombre']
-    descripcion	= data['descripcion']
-    categoria	= data['categoria']
-    estado		= ProyectoEstados(int(data['estado']))
+
+    id = data['id']
+    nombre = data['nombre']
+    descripcion = data['descripcion']
+    categoria = data['categoria']
+    estado = ProyectoEstados(int(data['estado']))
 
     # server-side validation
     #   Aquí insertamos una validación que tenga que efectuarse en el
@@ -392,11 +868,11 @@ def api_proyectos_add():
     if valid:
         try:
             proyecto = Proyecto(
-                id          = id,
-                nombre		= nombre,
-                descripcion	= descripcion,
-                categoria	= categoria,
-                estado		= estado
+                id=id,
+                nombre=nombre,
+                descripcion=descripcion,
+                categoria=categoria,
+                estado=estado
             )
             db.session.add(proyecto)
             db.session.commit()
@@ -411,15 +887,16 @@ def api_proyectos_add():
 
     return jsonify(response)
 
+
 @app.route('/api/proyectos/edit/<id>', methods=['POST'])
 def api_proyectos_edit(id):
     # decodificar datos recibidos (en JSON)
     data = json.loads(request.form['data'])
-    
-    nombre		= data['nombre']
-    descripcion	= data['descripcion']
-    categoria	= data['categoria']
-    estado		= ProyectoEstados(int(data['estado']))
+
+    nombre = data['nombre']
+    descripcion = data['descripcion']
+    categoria = data['categoria']
+    estado = ProyectoEstados(int(data['estado']))
 
     valid = True
 
@@ -444,10 +921,10 @@ def api_proyectos_edit(id):
     if valid:
         try:
             proyecto = Proyecto.query.filter_by(id=id).first()
-            proyecto.nombre         = nombre
-            proyecto.descripcion    = descripcion
-            proyecto.categoria      = categoria
-            proyecto.estado         = estado
+            proyecto.nombre = nombre
+            proyecto.descripcion = descripcion
+            proyecto.categoria = categoria
+            proyecto.estado = estado
             db.session.commit()
             response['category'] = 'success'
             response['message'] = f"Proyecto actualizado con ID: {proyecto.id}"
@@ -459,6 +936,7 @@ def api_proyectos_edit(id):
             response['message'] = "Server update error: " + str(e)
 
     return jsonify(response)
+
 
 @app.route('/api/proyectos/delete/<id>', methods=['POST'])
 def api_proyectos_delete(id):
@@ -476,7 +954,7 @@ def api_proyectos_delete(id):
     except Exception as e:
         response['category'] = 'error'
         response['message'] = "Server deletion error: " + str(e)
-    
+
     return jsonify(response)
 
 
@@ -486,13 +964,13 @@ def api_proyectos_delete(id):
 def api_productos_add():
     # decodificar datos recibidos (en JSON)
     data = json.loads(request.form['data'])
-    
-    id                  = data['id']
-    nombre              = data['nombre']
-    descripcion         = data['descripcion']
-    cod_distribucion	= data['cod_distribucion']
-    precio_venta		= float('0'+data['precio_venta'])
-    origen              = data['origen']
+
+    id = data['id']
+    nombre = data['nombre']
+    descripcion = data['descripcion']
+    cod_distribucion = data['cod_distribucion']
+    precio_venta = float('0'+data['precio_venta'])
+    origen = data['origen']
 
     # server-side validation
     #   Aquí insertamos una validación que tenga que efectuarse en el
@@ -536,12 +1014,12 @@ def api_productos_add():
     if valid:
         try:
             producto = Producto(
-                id                  = id,
-                nombre              = nombre,
-                descripcion         = descripcion,
-                cod_distribucion	= cod_distribucion,
-                precio_venta		= precio_venta,
-                origen              = origen
+                id=id,
+                nombre=nombre,
+                descripcion=descripcion,
+                cod_distribucion=cod_distribucion,
+                precio_venta=precio_venta,
+                origen=origen
             )
             db.session.add(producto)
             db.session.commit()
@@ -556,15 +1034,16 @@ def api_productos_add():
 
     return jsonify(response)
 
+
 @app.route('/api/productos/edit/<id>', methods=['POST'])
 def api_productos_edit(id):
     # decodificar datos recibidos (en JSON)
     data = json.loads(request.form['data'])
-    
-    nombre              = data['nombre']
-    descripcion         = data['descripcion']
-    cod_distribucion	= data['cod_distribucion']
-    precio_venta		= float('0'+data['precio_venta'])
+
+    nombre = data['nombre']
+    descripcion = data['descripcion']
+    cod_distribucion = data['cod_distribucion']
+    precio_venta = float('0'+data['precio_venta'])
 
     valid = True
 
@@ -582,17 +1061,17 @@ def api_productos_edit(id):
     if (precio_venta <= 0):
         response['message'] += "debe introducir un precio de venta, "
         valid = False
-    
+
     # eliminar la última coma
     response['message'] = response['message'][:-2] + "."
 
     if valid:
         try:
             producto = Producto.query.filter_by(id=id).first()
-            producto.nombre             = nombre
-            producto.descripcion        = descripcion
-            producto.cod_distribucion   = cod_distribucion
-            producto.precio_venta       = precio_venta
+            producto.nombre = nombre
+            producto.descripcion = descripcion
+            producto.cod_distribucion = cod_distribucion
+            producto.precio_venta = precio_venta
             db.session.commit()
             response['category'] = 'success'
             response['message'] = f"Producto actualizado con ID: {producto.id}"
@@ -604,6 +1083,7 @@ def api_productos_edit(id):
             response['message'] = "Server update error: " + str(e)
 
     return jsonify(response)
+
 
 @app.route('/api/productos/delete/<id>', methods=['POST'])
 def api_productos_delete(id):
@@ -621,7 +1101,7 @@ def api_productos_delete(id):
     except Exception as e:
         response['category'] = 'error'
         response['message'] = "Server deletion error: " + str(e)
-    
+
     return jsonify(response)
 
 
@@ -631,14 +1111,14 @@ def api_productos_delete(id):
 def api_procesos_productivos_add():
     # decodificar datos recibidos (en JSON)
     data = json.loads(request.form['data'])
-    
-    id              = data['id']
-    nombre          = data['nombre']
-    descripcion     = data['descripcion']
-    fecha_inicio	= data['fecha_inicio']
-    fecha_fin		= data['fecha_fin']
-    ctd_producida   = float('0'+data['ctd_producida'])
-    fabrica         = data['fabrica']
+
+    id = data['id']
+    nombre = data['nombre']
+    descripcion = data['descripcion']
+    fecha_inicio = data['fecha_inicio']
+    fecha_fin = data['fecha_fin']
+    ctd_producida = float('0'+data['ctd_producida'])
+    fabrica = data['fabrica']
 
     # server-side validation
     #   Aquí insertamos una validación que tenga que efectuarse en el
@@ -671,14 +1151,14 @@ def api_procesos_productivos_add():
 
     # compilamos las fechas para asignar
     try:
-        d, m, y = fecha_inicio.split('/')
+        y, m, d = fecha_inicio.split('-')
         fecha_inicio = datetime.datetime(int(y), int(m), int(d))
-        d, m, y = fecha_fin.split('/')
+        y, m, d = fecha_fin.split('-')
         fecha_fin = datetime.datetime(int(y), int(m), int(d))
     except:
         response['message'] += "debe introducir las fechas siguiendo el formato adecuado, "
         valid = False
-    
+
     # comprobaciones de restricciones en BD
     if valid:
         response['message'] = "No se puede insertar: "
@@ -698,13 +1178,13 @@ def api_procesos_productivos_add():
     if valid:
         try:
             proceso_productivo = ProcesoProductivo(
-                id              = id,
-                nombre          = nombre,
-                descripcion     = descripcion,
-                fecha_inicio	= fecha_inicio,
-                fecha_fin		= fecha_fin,
-                ctd_producida   = ctd_producida,
-                fabrica         = fabrica
+                id=id,
+                nombre=nombre,
+                descripcion=descripcion,
+                fecha_inicio=fecha_inicio,
+                fecha_fin=fecha_fin,
+                ctd_producida=ctd_producida,
+                fabrica=fabrica
             )
             db.session.add(proceso_productivo)
             db.session.commit()
@@ -719,16 +1199,18 @@ def api_procesos_productivos_add():
 
     return jsonify(response)
 
+
 @app.route('/api/procesos-productivos/edit/<id>', methods=['POST'])
 def api_procesos_productivos_edit(id):
     # decodificar datos recibidos (en JSON)
     data = json.loads(request.form['data'])
-    
-    nombre          = data['nombre']
-    descripcion     = data['descripcion']
-    fecha_inicio	= data['fecha_inicio']
-    fecha_fin		= data['fecha_fin']
-    ctd_producida   = float('0'+data['ctd_producida'])
+
+    print("============DATA:============",data)
+    nombre = data['nombre']
+    descripcion = data['descripcion']
+    fecha_inicio = data['fecha_inicio']
+    fecha_fin = data['fecha_fin']
+    ctd_producida = float('0'+data['ctd_producida'])
 
     # server-side validation
     #   Aquí insertamos una validación que tenga que efectuarse en el
@@ -756,14 +1238,14 @@ def api_procesos_productivos_edit(id):
 
     # compilamos las fechas para asignar
     try:
-        d, m, y = fecha_inicio.split('/')
+        y, m, d = fecha_inicio.split('-')
         fecha_inicio = datetime.datetime(int(y), int(m), int(d))
-        d, m, y = fecha_fin.split('/')
+        y, m, d = fecha_fin.split('-')
         fecha_fin = datetime.datetime(int(y), int(m), int(d))
     except:
         response['message'] += "debe introducir las fechas siguiendo el formato adecuado, "
         valid = False
-    
+
     # comprobaciones de restricciones en BD
     if valid:
         response['message'] = "No se puede insertar: "
@@ -776,12 +1258,13 @@ def api_procesos_productivos_edit(id):
 
     if valid:
         try:
-            proceso_productivo = ProcesoProductivo.query.filter_by(id=id).first()
-            proceso_productivo.nombre           = nombre
-            proceso_productivo.descripcion      = descripcion
-            proceso_productivo.fecha_inicio     = fecha_inicio
-            proceso_productivo.fecha_fin        = fecha_fin
-            proceso_productivo.ctd_producida    = ctd_producida
+            proceso_productivo = ProcesoProductivo.query.filter_by(
+                id=id).first()
+            proceso_productivo.nombre = nombre
+            proceso_productivo.descripcion = descripcion
+            proceso_productivo.fecha_inicio = fecha_inicio
+            proceso_productivo.fecha_fin = fecha_fin
+            proceso_productivo.ctd_producida = ctd_producida
             db.session.commit()
             response['category'] = 'success'
             response['message'] = f"Proceso productivo actualizado con ID: {proceso_productivo.id}"
@@ -793,6 +1276,7 @@ def api_procesos_productivos_edit(id):
             response['message'] = "Server update error: " + str(e)
 
     return jsonify(response)
+
 
 @app.route('/api/procesos-productivos/delete/<id>', methods=['POST'])
 def api_procesos_productivos_delete(id):
@@ -810,7 +1294,7 @@ def api_procesos_productivos_delete(id):
     except Exception as e:
         response['category'] = 'error'
         response['message'] = "Server deletion error: " + str(e)
-    
+
     return jsonify(response)
 
 

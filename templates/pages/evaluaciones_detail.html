@@ -1,0 +1,36 @@
+{% extends "skeleton/detail.html" %}
+
+{% block detail %}
+<table class="table mb-0">
+    <tbody>
+        <tr>
+            <th scope="row">ID</th>
+            <td>{{ data.evaluacion.id }}</td>
+        </tr>
+        <tr>
+            <th scope="row">DNI</th>
+            <td><a href="/empleados/{{ data.evaluacion.dni }}">{{ data.evaluacion.dni }}</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Nombre</th>
+            <td>{{ data.evaluacion.nombre }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Fecha de inicio</th>
+            <td>{{ data.evaluacion.fechaIni }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Fecha de final</th>
+            <td>{{ data.evaluacion.fechaFin }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Conclusión</th>
+            <td>{{ data.evaluacion.conclusion }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Índice de rendimiento</th>
+            <td>{{ data.evaluacion.index }}</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
