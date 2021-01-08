@@ -1,0 +1,27 @@
+{% extends "skeleton/form.html" %}
+
+{% block form %}
+<form action="{% if data.edit %}/api/facturas/edit/{{ data.edit_data.id }}{% else %}/api/facturas/add{% endif %}" id="facturas-add-form" method="post" class="needs-validation" novalidate>
+    <div class="form-row mb-3">
+        <label for="CIF_cli">CIF</label>
+        <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.CIF_cli }}"{% endif %}
+            placeholder="CIF" id="CIF_cli" name="CIF_cli">
+    </div>
+    <div class="form-row mb-3">
+        <label for="IDlote">Identificador de lote</label>
+        <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.IDlote }}"{% endif %}
+            placeholder="ID" id="IDlote" name="IDlote">
+    </div>
+    <div class="form-row mb-3">
+        <label for="FechaVen">Fecha de venta</label>
+        <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.FechaVen }}"{% endif %}
+            placeholder="YYYY-MM-DD" id="FechaVen" name="FechaVen">
+    </div>
+    <div class="form-row mb-3">
+        <label for="ImporteVen">Importe</label>
+        <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.ImporteVen }}"{% endif %}
+            placeholder="Importe" id="ImporteVen" name="ImporteVen">
+    </div>
+    <button type="submit" class="btn btn-primary" style="float:right" id="submit-button">{% if data.edit %}Actualizar{% else %}Crear{% endif %} factura</button>
+</form>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "skeleton/list.html" %}
+
+{% block table %}
+<table class="table mb-0" id="dataTable">
+    <thead>
+        <tr>
+            <th>Núm. Operación</th>
+            <th>Balance</th>
+            <th>Tipo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for balanceCuentas in data.balancesCuentas %}
+        <tr>
+            <th scope="row">{{ balanceCuentas.IdOp }}</th>
+            <td>{{ balanceCuentas.balance }}</td>
+            <td>{{ balanceCuentas.claseOp.verbose }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td><strong>Núm. Operación</strong></td>
+            <td><strong>Balance</strong></td>
+            <td><strong>Tipo</strong></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}

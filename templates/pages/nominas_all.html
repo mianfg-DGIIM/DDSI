@@ -1,0 +1,35 @@
+{% extends "skeleton/list.html" %}
+
+{% block table %}
+<table class="table mb-0" id="dataTable">
+    <thead>
+        <tr>
+            <th>DNI</th>
+            <th>Fecha</th>
+            <th>Cuenta</th>
+            <th>Sueldo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for nomina in data.nominas %}
+        <tr>
+            <th scope="row">{{ nomina.DNI }}</th>
+            <td>{{ nomina.fecha }}</td>
+            <td>{{ nomina.IBAN }}</td>
+            <td>{{ nomina.sueldo }}</td>
+            <td><a href="/nominas/{{ nomina.DNI }}/{{ nomina.fecha }}">Ver</a> · <a href="/nominas/{{ nomina.DNI }}/{{ nomina.fecha }}/edit">Editar</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td><strong>DNI</strong></td>
+            <td><strong>Fecha</strong></td>
+            <td><strong>Cuenta</strong></td>
+            <td><strong>Sueldo</strong></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}

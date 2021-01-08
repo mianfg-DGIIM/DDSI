@@ -1,0 +1,33 @@
+{% extends "skeleton/list.html" %}
+
+{% block table %}
+<table class="table mb-0" id="dataTable">
+    <thead>
+        <tr>
+            <th>CIF</th>
+            <th>Núm. registro</th>
+            <th>Fecha</th>
+            <th>Importe</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for recibo in data.recibos %}
+        <tr>
+            <th scope="row">{{ recibo.CIF_pro }}</th>
+            <td>{{ recibo.NumeroRegistro }}</td>
+            <td>{{ recibo.FechaCom }}</td>
+            <td>{{ recibo.ImporteCom }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td><strong>CIF</strong></td>
+            <td><strong>Núm. Registro</strong></td>
+            <td><strong>Fecha</strong></td>
+            <td><strong>Importe</strong></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}

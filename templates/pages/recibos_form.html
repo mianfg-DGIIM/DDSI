@@ -1,0 +1,25 @@
+
+<form action="{% if data.edit %}/api/recibos/edit/{{ data.edit_data.id }}{% else %}/api/recibos/add{% endif %}" id="recibos-add-form" method="post" class="needs-validation" novalidate>
+    <div class="form-row mb-3">
+        <label for="CIF_pro">CIF</label>
+        <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.CIF_pro }}"{% endif %}
+            placeholder="CIF" id="CIF_pro" name="CIF_pro">
+    </div>
+    <div class="form-row mb-3">
+        <label for="NumeroRegistro">Número de registro de la mercancía</label>
+        <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.NumeroRegistro }}"{% endif %}
+            placeholder="Número registro" id="NumeroRegistro" name="NumeroRegistro">
+    </div>
+    <div class="form-row mb-3">
+        <label for="FechaCom">Fecha de compra</label>
+        <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.FechaCom }}"{% endif %}
+            placeholder="YYYY-MM-DD" id="FechaCom" name="FechaCom">
+    </div>
+    <div class="form-row mb-3">
+        <label for="ImporteCom">Importe</label>
+        <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.ImporteCom }}"{% endif %}
+            placeholder="Importe" id="ImporteCom" name="ImporteCom">
+    </div>
+    <button type="submit" class="btn btn-primary" style="float:right" id="submit-button">{% if data.edit %}Actualizar{% else %}Crear{% endif %} recibo</button>
+</form>
+

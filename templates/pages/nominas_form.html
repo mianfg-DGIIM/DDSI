@@ -1,0 +1,34 @@
+{% extends "skeleton/form.html" %}
+
+{% block form %}
+<form action="{% if data.edit %}/api/nominas/edit/{{ data.edit_data.DNI }}/{{ data.edit_data.fecha }}{% else %}/api/nominas/add{% endif %}" id="nominas-add-form" method="post" class="needs-validation" novalidate>
+
+    <div class="form-row mb-3">
+        <label for="DNI">DNI</label>
+        <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.DNI }}"{% endif %}
+            placeholder="DNI" id="DNI" name="DNI" {% if data.edit %}disabled{% endif %}>
+        <div class="invalid-feedback">
+            Debes introducir el DNI del empleado.
+        </div>
+    </div>
+
+    <div class="form-row mb-3">
+        <label for="fecha">Fecha</label>
+        <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.fecha }}"{% endif %}
+            placeholder="YYYY-MM-DD" id="fecha" name="fecha" {% if data.edit %}disabled{% endif %}>
+    </div>
+
+    <div class="form-row mb-3">
+        <label for="IBAN">Número de cuenta</label>
+        <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.IBAN }}"{% endif %}
+            placeholder="IBAN" id="IBAN" name="IBAN">
+    </div>
+
+    <div class="form-row mb-3">
+        <label for="sueldo">Sueldo</label>
+        <input class="form-control" type="text" placeholder="Cantidad de ingreso" id="sueldo" name="sueldo" {% if data.edit %}disabled{% endif %}>
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="float:right" id="submit-button">{% if data.edit %}Actualizar{% else %}Crear{% endif %} nómina</button>
+</form>
+{% endblock %}
