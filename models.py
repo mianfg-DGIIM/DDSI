@@ -256,3 +256,205 @@ class Proyecto(db.Model):
             },
             'productos':    self.productos
         }
+
+
+# ================================
+# ==== DPTO. I+D Y PRODUCCIÓN ====
+# ================================
+
+
+class ClaseOperacion(enum.Enum):    
+    COMPRA		= 0
+    VENTA	    = 1
+    NOMINA  	= 2
+
+
+    def __str__(self):
+        keys = {
+            0: "Compra",
+            1: "Venta",
+            2: "Nómina"
+        }
+        
+        return keys[self.value]
+
+
+class Proveedor(db.Model):
+    __tablename__ = 'proveedores'
+
+    CIF_pro = db.Column(db.String(), primary_key = True)
+    nombre = db.Column(db.String())
+    direccion = db.Column(db.String())
+
+    def __init__(self, CIF_pro, nombre, direccion):
+        self.CIF_pro = CIF_pro
+        self.nombre = nombre
+        self.direccion = direccion
+    
+    def __repr__(self):
+        return f'<Proveedor {self.CIF_pro} - {self.nombre}>'
+    
+    def serialize(self):
+        return{
+            'CIF_pro':         self.CIF_pro,
+            'nombre':          self.nombre,
+            'direccion':       self.direccion
+        }
+
+
+class Cliente(db.Model):
+    __tablename__ = 'clientes'
+
+    CIF_cli = db.Column(db.String(), primary_key = True)
+    nombre = db.Column(db.String())
+    direccion = db.Column(db.String())
+
+    def __init__(self, CIF_pro, nombre, direccion):
+        self.CIF_cli = CIF_pro
+        self.nombre = nombre
+        self.direccion = direccion
+    
+    def __repr__(self):
+        return f'<Proveedor {self.CIF_cli} - {self.nombre}>'
+    
+    def serialize(self):
+        return{
+            'CIF_cli':         self.CIF_cli,
+            'nombre':          self.nombre,
+            'direccion':       self.direccion
+        }
+
+
+class Recibo(db.Model):
+    __tablename__ = 'recibos'
+
+    CIF_pro = db.Column(db.String())
+    NumeroRegistro = db.Column(db.Integer(), primary_key=True)
+    FechaCom = db.Column(db.Date())
+    ImporteCom = db.Column(db.Float())
+    IdOp = db.Column(db.Integer())
+
+    def __init__(self, CIF_pro, NumeroRegistro, FechaCom, ImporteCom, IdOp):
+        self.CIF_pro = CIF_pro
+        self.NumeroRegistro = NumeroRegistro
+        self.FechaCom = FechaCom
+        self.ImporteCom = ImporteCom
+        self.IdOp = IdOp
+    
+    @classmethod
+    def validate( CIF_pro, NumeroRegistro, FechaCom, ImporteCom, IdOp):
+        b1 = Recibo.query.filter_by(NumeroRegistro = NumeroRegistro) == None
+
+        return b1
+
+    
+    def __repr__(self):
+        return f'<Recibo {self.CIF_pro} - {self.NumeroRegistro}>'
+
+    def serialize(self):
+        return{
+            'CIF_pro':         self.CIF_pro,
+            'NumeroRegistro':  self.NumeroRegistro,
+            'FechaCom':        self.FechaCom,
+            'ImporteCom':      self.ImporteCom,
+            'IdOp':            self.IdOp
+        }
+
+
+class Factura(db.Model):
+    __tablename__ = 'facturas'
+
+    CIF_cli = db.Column(db.String())
+    IDlote = db.Column(db.Integer(), primary_key=True)
+    FechaVen = db.Column(db.Date())
+    ImporteVen = db.Column(db.Float())
+    IdOp = db.Column(db.Integer())
+
+    def __init__(self, CIF_cli, IDlote, FechaVen, ImporteVen, IdOp):
+        self.CIF_cli = CIF_cli
+        self.IDlote = IDlote
+        self.FechaVen = FechaVen
+        self.ImporteVen = ImporteVen
+        self.IdOp = IdOp
+    
+    @classmethod
+    def validate(CIF_cli, IDlote, FechaVen, ImporteVen, IdOp):
+        b1 = Factura.query.filter_by(IDlote = IDlote) == None
+
+        return b1
+    
+    def __repr__(self):
+        return f'<Recibo {self.CIF_cli} - {self.IDlote}>'
+
+    def serialize(self):
+        return{
+            'CIF_cli':         self.CIF_cli,
+            'IDlote':          self.IDlote,
+            'FechaVen':        self.FechaVen,
+            'ImporteVen':      self.ImporteVen,
+            'IdOp':            self.IdOp
+        }
+
+
+class Nomina(db.Model):
+    __tablename__ = 'nominas'
+
+    IBAN = db.Column(db.String())
+    fecha = db.Column(db.Date(), primary_key = True)
+    sueldo = db.Column(db.Float())
+    DNI = db.Column(db.String(), primary_key = True)
+    IdOp = db.Column(db.Integer())
+
+    def __init__(self, IBAN, fecha, sueldo, DNI, IdOp):
+        self.IBAN = IBAN
+        self.fecha = fecha
+        self.sueldo = sueldo
+        self.DNI = DNI
+        self.IdOp = IdOp
+    
+    @classmethod
+    def validate(IBAN, fecha, sueldo, DNI, IdOp):
+        b1 = Factura.query.filter_by(IBAN = IBAN, fecha = fecha) == None
+
+        return b1
+    
+    def __repr__(self):
+        return f'<Nomina {self.IBAN} - {self.fecha}>'
+    
+    def serialize(self):
+        return{
+            'IBAN':         self.IBAN,
+            'fecha':        self.fecha,
+            'sueldo':       self.sueldo,
+            'DNI':          self.DNI,
+            'IdOp':         self.IdOp
+        }
+
+
+
+
+class BalanceCuentas(db.Model):
+    __tablename__ = 'balances'
+
+    IdOp = db.Column(db.Integer(), primary_key = True)
+    balance = db.Column(db.Float())
+    claseOp = db.Column(db.Enum(ClaseOperacion))
+
+    def __init__(self, IdOp, balance, claseOp):
+        self.IdOp = IdOp
+        self.balance = balance
+        self.claseOp = claseOp
+    
+    def __repr__(self):
+        return f'<Balance {self.IdOp} - {self.balance}>'
+    
+    def serialize(self):
+        return{
+            'IdOp':         self.IdOp,
+            'balance':      self.balance,
+            'claseOp':		{
+                'value':    self.claseOp.value,
+                'verbose':  str(self.claseOp)
+            }
+        }
+
