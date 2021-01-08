@@ -19,9 +19,9 @@
             <td>{{ proceso_productivo.ctd_producida }}</td>
             <td><a href="/productos/{{ proceso_productivo.fabrica }}">#{{ proceso_productivo.fabrica }}</a></td>
             <td align="right">
-                <a href="/procesos-productivos/{{ proceso_productivo.id }}"><i class="fa fa-search mr-2"></i></a>
-                <a href="/procesos-productivos/{{ proceso_productivo.id }}/edit"><i class="fa fa-pencil mr-2"></i></a>
-                <a href="#" onclick="deleteItem('procesos-productivos', '{{ proceso_productivo.id }}')"><i class="fa fa-trash"></i></a>
+                <a href="/procesos-productivos/{{ proceso_productivo.id }}"><i class="fa fa-fw fa-search mr-2"></i></a>
+                <a href="/procesos-productivos/{{ proceso_productivo.id }}/edit"><i class="fa fa-fw fa-pencil mr-2"></i></a>
+                <a href="#" onclick="deleteItem('procesos-productivos', '{{ proceso_productivo.id }}')"><i class="fa fa-fw fa-trash"></i></a>
             </td>
         </tr>
         {% endfor %}

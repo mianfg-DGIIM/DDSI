@@ -21,7 +21,7 @@ from models import *
 def home():
     data = {
         'breadcrumb_title':         'Página principal',
-        'breadcrumb_button':        '<i class="fas fa-info-circle fa-sm text-white-50 mr-2"></i>Sobre el proyecto',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-info-circle fa-sm text-white-50 mr-2"></i>Sobre el proyecto',
         'breadcrumb_button_url':    '#'
     }
     return render_template('pages/home.html', data=data)
@@ -43,8 +43,8 @@ def empleados_add():
     data = {
         'title':                    "Añadir empleado",
         'breadcrumb_title':         "Recursos Humanos",
-        'breadcrumb_subtitle':      '<i class="fas fa-user mr-2"></i>Empleados',
-        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a empleados',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Empleados',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a empleados',
         'breadcrumb_button_url':    '/empleados',
         'database_name':            'empleado',
         'database_name_plural':     'empleados',
@@ -72,8 +72,8 @@ def empleados_all():
     data = {
         'title':                    "Empleados",
         'breadcrumb_title':         "Recursos Humanos",
-        'breadcrumb_subtitle':      '<i class="fas fa-user mr-2"></i>Empleados',
-        'breadcrumb_button':        '<i class="fas fa-plus fa-sm text-white-50 mr-2"></i>Añadir empleado',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Empleados',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Añadir empleado',
         'breadcrumb_button_url':    '/empleados/add',
         'database_name':            'empleado',
         'database_name_plural':     'empleados',
@@ -102,8 +102,8 @@ def empleados_detail(dni):
     data = {
         'title':                    f"Empleado #{dni}",
         'breadcrumb_title':         "Recursos Humanos",
-        'breadcrumb_subtitle':      '<i class="fas fa-user mr-2"></i>Empleados',
-        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a empleados',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Empleados',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a empleados',
         'breadcrumb_button_url':    '/empleados',
         'database_name':            'empleado',
         'database_name_plural':     'empleados',
@@ -132,8 +132,8 @@ def empleados_edit(dni, api_resp=None):
     data = {
         'title':                    f"Editar empleado #{dni}",
         'breadcrumb_title':         "Recursos Humanos",
-        'breadcrumb_subtitle':      '<i class="fas fa-user mr-2"></i>Empleados',
-        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a empleados',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Empleados',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a empleados',
         'breadcrumb_button_url':    '/empleados',
         'database_name':            'empleado',
         'database_name_plural':     'empleados',
@@ -165,8 +165,8 @@ def evaluaciones_all():
     data = {
         'title':                    "Evaluaciones",
         'breadcrumb_title':         "Recursos Humanos",
-        'breadcrumb_subtitle':      '<i class="fas fa-star-half-alt mr-2"></i>Evaluaciones',
-        'breadcrumb_button':        '<i class="fas fa-plus fa-sm text-white-50 mr-2"></i>Crear evaluación',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-star-half-alt mr-2"></i>Evaluaciones',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Crear evaluación',
         'breadcrumb_button_url':    '/evaluaciones/add',
         'database_name':            'evaluacion',
         'database_name_plural':     'evaluaciones',
@@ -178,7 +178,7 @@ def evaluaciones_all():
 
 
 @app.route('/empleados/<dni>/evals', methods=['GET'])
-def empleado_evaluaciones_all(dni):
+def empleados_evals_all(dni):
     """
     Evaluaciones: mostrar la información de todas las evaluaciones de un empleado
     ----
@@ -193,8 +193,8 @@ def empleado_evaluaciones_all(dni):
     data = {
         'title':                    f"Evaluaciones de empleado #{dni}",
         'breadcrumb_title':         "Recursos Humanos",
-        'breadcrumb_subtitle':      '<i class="fas fa-user mr-2"></i>Empleados',
-        'breadcrumb_button':        f'<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a empleado #{dni}',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Empleados',
+        'breadcrumb_button':        f'<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a empleado #{dni}',
         'breadcrumb_button_url':    f'/empleados/{dni}',
         'database_name':            'empleado',
         'database_name_plural':     'empleados',
@@ -223,8 +223,8 @@ def evaluaciones_detail(id):
     data = {
         'title':                    f"Evaluación #{id}",
         'breadcrumb_title':         "Recursos Humanos",
-        'breadcrumb_subtitle':      '<i class="fas fa-star-half-alt mr-2"></i>Evaluaciones',
-        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a evaluaciones',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-star-half-alt mr-2"></i>Evaluaciones',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a evaluaciones',
         'breadcrumb_button_url':    '/evaluaciones',
         'database_name':            'evaluacion',
         'database_name_plural':     'evaluaciones',
@@ -246,8 +246,8 @@ def evaluaciones_add(api_resp=None):
     data = {
         'title':                    "Añadir evaluación",
         'breadcrumb_title':         "Recursos Humanos",
-        'breadcrumb_subtitle':      '<i class="fas fa-star-half-alt mr-2"></i>Evaluaciones',
-        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a evaluaciones',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-star-half-alt mr-2"></i>Evaluaciones',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a evaluaciones',
         'breadcrumb_button_url':    '/evaluaciones',
         'database_name':            'evaluacion',
         'database_name_plural':     'evaluaciones',
@@ -276,8 +276,8 @@ def evaluaciones_edit(id, api_resp=None):
     data = {
         'title':                    f"Editar evaluación {id}",
         'breadcrumb_title':         "Recursos Humanos",
-        'breadcrumb_subtitle':      '<i class="fas fa-star-half-alt mr-2"></i>Evaluaciones',
-        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a evaluaciones',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-star-half-alt mr-2"></i>Evaluaciones',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a evaluaciones',
         'breadcrumb_button_url':    '/evaluaciones',
         'database_name':            'evaluacion',
         'database_name_plural':     'evaluaciones',
@@ -307,8 +307,8 @@ def proyectos_add():
     data = {
         'title':                    "Añadir proyecto",
         'breadcrumb_title':         "I+D y Producción",
-        'breadcrumb_subtitle':      '<i class="fas fa-lightbulb mr-2"></i>Proyectos',
-        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a proyectos',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-lightbulb mr-2"></i>Proyectos',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a proyectos',
         'breadcrumb_button_url':    '/proyectos',
         'database_name':            'proyecto',
         'database_name_plural':     'proyectos',
@@ -336,8 +336,8 @@ def proyectos_all():
     data = {
         'title':                    "Proyectos",
         'breadcrumb_title':         "I+D y Producción",
-        'breadcrumb_subtitle':      '<i class="fas fa-lightbulb mr-2"></i>Proyectos',
-        'breadcrumb_button':        '<i class="fas fa-plus fa-sm text-white-50 mr-2"></i>Crear proyecto',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-lightbulb mr-2"></i>Proyectos',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Crear proyecto',
         'breadcrumb_button_url':    '/proyectos/add',
         'database_name':            'proyecto',
         'database_name_plural':     'proyectos',
@@ -365,8 +365,8 @@ def proyectos_detail(id):
     data = {
         'title':                    f"Proyecto #{id}",
         'breadcrumb_title':         "I+D y Producción",
-        'breadcrumb_subtitle':      '<i class="fas fa-lightbulb mr-2"></i>Proyectos',
-        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a proyectos',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-lightbulb mr-2"></i>Proyectos',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a proyectos',
         'breadcrumb_button_url':    '/proyectos',
         'database_name':            'proyecto',
         'database_name_plural':     'proyectos',
@@ -395,8 +395,8 @@ def proyectos_edit(id):
     data = {
         'title':                    f"Editar proyecto #{id}",
         'breadcrumb_title':         "I+D y Producción",
-        'breadcrumb_subtitle':      '<i class="fas fa-lightbulb mr-2"></i>Proyectos',
-        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a proyectos',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-lightbulb mr-2"></i>Proyectos',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a proyectos',
         'breadcrumb_button_url':    '/proyectos',
         'database_name':            'proyecto',
         'database_name_plural':     'proyectos',
@@ -416,8 +416,8 @@ def productos_add():
     data = {
         'title':                    "Añadir producto",
         'breadcrumb_title':         "I+D y Producción",
-        'breadcrumb_subtitle':      '<i class="fas fa-pills mr-2"></i>Productos',
-        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a productos',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-pills mr-2"></i>Productos',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a productos',
         'breadcrumb_button_url':    '/productos',
         'database_name':            'producto',
         'database_name_plural':     'productos',
@@ -440,8 +440,8 @@ def productos_all():
     data = {
         'title':                    "Productos",
         'breadcrumb_title':         "I+D y Producción",
-        'breadcrumb_subtitle':      '<i class="fas fa-pills mr-2"></i>Productos',
-        'breadcrumb_button':        '<i class="fas fa-plus fa-sm text-white-50 mr-2"></i>Crear producto',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-pills mr-2"></i>Productos',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Crear producto',
         'breadcrumb_button_url':    '/productos/add',
         'database_name':            'producto',
         'database_name_plural':     'productos',
@@ -464,8 +464,8 @@ def productos_detail(id):
     data = {
         'title':                    f"Producto #{id}",
         'breadcrumb_title':         "I+D y Producción",
-        'breadcrumb_subtitle':      '<i class="fas fa-pills mr-2"></i>Productos',
-        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a productos',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-pills mr-2"></i>Productos',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a productos',
         'breadcrumb_button_url':    '/productos',
         'database_name':            'producto',
         'database_name_plural':     'productos',
@@ -491,8 +491,8 @@ def productos_edit(id):
     data = {
         'title':                    f"Editar producto #{id}",
         'breadcrumb_title':         "I+D y Producción",
-        'breadcrumb_subtitle':      '<i class="fas fa-pills mr-2"></i>Productos',
-        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a productos',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-pills mr-2"></i>Productos',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a productos',
         'breadcrumb_button_url':    '/productos',
         'database_name':            'producto',
         'database_name_plural':     'productos',
@@ -512,8 +512,8 @@ def procesos_productivos_add():
     data = {
         'title':                    "Añadir proceso productivo",
         'breadcrumb_title':         "I+D y Producción",
-        'breadcrumb_subtitle':      '<i class="fas fa-dolly-flatbed mr-2"></i>Procesos productivos',
-        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a procesos productivos',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-dolly-flatbed mr-2"></i>Procesos productivos',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a procesos productivos',
         'breadcrumb_button_url':    '/procesos-productivos',
         'database_name':            'proceso-productivo',
         'database_name_plural':     'procesos-productivos',
@@ -537,8 +537,8 @@ def procesos_productivos_all():
     data = {
         'title':                    "Procesos productivos",
         'breadcrumb_title':         "I+D y Producción",
-        'breadcrumb_subtitle':      '<i class="fas fa-dolly-flatbed mr-2"></i>Procesos productivos',
-        'breadcrumb_button':        '<i class="fas fa-plus fa-sm text-white-50 mr-2"></i>Crear proceso productivo',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-dolly-flatbed mr-2"></i>Procesos productivos',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Crear proceso productivo',
         'breadcrumb_button_url':    '/procesos-productivos/add',
         'database_name':            'proceso-productivo',
         'database_name_plural':     'procesos-productivos',
@@ -561,8 +561,8 @@ def procesos_productivos_detail(id):
     data = {
         'title':                    f"Proceso productivo #{id}",
         'breadcrumb_title':         "I+D y Producción",
-        'breadcrumb_subtitle':      '<i class="fas fa-dolly-flatbed mr-2"></i>Procesos productivos',
-        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a procesos productivos',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-dolly-flatbed mr-2"></i>Procesos productivos',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a procesos productivos',
         'breadcrumb_button_url':    '/procesos-productivos',
         'database_name':            'proceso-productivo',
         'database_name_plural':     'procesos-productivos',
@@ -588,8 +588,8 @@ def procesos_productivos_edit(id):
     data = {
         'title':                    f"Editar proceso productivo #{id}",
         'breadcrumb_title':         "I+D y Producción",
-        'breadcrumb_subtitle':      '<i class="fas fa-dolly-flatbed mr-2"></i>Procesos productivos',
-        'breadcrumb_button':        '<i class="fas fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a procesos productivos',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-dolly-flatbed mr-2"></i>Procesos productivos',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a procesos productivos',
         'breadcrumb_button_url':    '/procesos-productivos',
         'database_name':            'proceso-productivo',
         'database_name_plural':     'procesos-productivos',

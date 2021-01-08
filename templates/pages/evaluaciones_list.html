@@ -17,8 +17,8 @@
             <td>{{ evaluacion.nombre }}</td>
             <td><a href="/empleados/{{ evaluacion.dni }}">{{ evaluacion.dni }}</a></td>
             <td align="right">
-                <a href="/evaluaciones/{{ evaluacion.id }}"><i class="fa fa-search mr-2"></i></a>
-                <a href="/evaluaciones/{{ evaluacion.id }}/edit"><i class="fa fa-pencil mr-2"></i></a>
+                <a href="/evaluaciones/{{ evaluacion.id }}"><i class="fa fa-fw fa-search mr-2"></i></a>
+                <a href="/evaluaciones/{{ evaluacion.id }}/edit"><i class="fa fa-fw fa-pencil mr-2"></i></a>
             </td>
         </tr>
         {% endfor %}

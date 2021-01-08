@@ -15,9 +15,9 @@
             <td>{{ empleado.dni }}</td>
             <td>{{ empleado.nombre }}</td>
             <td align="right">
-                <a href="/empleados/{{ empleado.dni }}"><i class="fa fa-search mr-2"></i></a>
-                <a href="/empleados/{{ empleado.dni }}/edit"><i class="fa fa-pencil mr-2"></i></a>
-                <a href="#" onclick="deleteItem('empleados', '{{ empleado.dni }}')"><i class="fa fa-trash"></i></a>
+                <a href="/empleados/{{ empleado.dni }}"><i class="fa fa-fw fa-search mr-2"></i></a>
+                <a href="/empleados/{{ empleado.dni }}/edit"><i class="fa fa-fw fa-pencil mr-2"></i></a>
+                <a href="#" onclick="deleteItem('empleados', '{{ empleado.dni }}')"><i class="fa fa-fw fa-trash"></i></a>
             </td>
         </tr>
         {% endfor %}

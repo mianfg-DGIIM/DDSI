@@ -21,9 +21,9 @@
             <td>{{ producto.precio_venta }}€</td>
             <td><a href="/proyectos/{{ producto.origen }}">#{{ producto.origen }}</a></td>
             <td align="right">
-                <a href="/productos/{{ producto.id }}"><i class="fa fa-search mr-2"></i></a>
-                <a href="/productos/{{ producto.id }}/edit"><i class="fa fa-pencil mr-2"></i></a>
-                <a href="#" onclick="deleteItem('productos', '{{ producto.id }}')"><i class="fa fa-trash"></i></a>
+                <a href="/productos/{{ producto.id }}"><i class="fa fa-fw fa-search mr-2"></i></a>
+                <a href="/productos/{{ producto.id }}/edit"><i class="fa fa-fw fa-pencil mr-2"></i></a>
+                <a href="#" onclick="deleteItem('productos', '{{ producto.id }}')"><i class="fa fa-fw fa-trash"></i></a>
             </td>
         </tr>
         {% endfor %}

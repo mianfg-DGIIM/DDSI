@@ -19,9 +19,9 @@
             <td>{{ proyecto.categoria }}</td>
             <td>{{ proyecto.estado.verbose }}</td>
             <td align="right">
-                <a href="/proyectos/{{ proyecto.id }}"><i class="fa fa-search mr-2"></i></a>
-                <a href="/proyectos/{{ proyecto.id }}/edit"><i class="fa fa-pencil mr-2"></i></a>
-                <a href="#" onclick="deleteItem('proyectos', '{{ proyecto.id }}')"><i class="fa fa-trash"></i></a>
+                <a href="/proyectos/{{ proyecto.id }}"><i class="fa fa-fw fa-search mr-2"></i></a>
+                <a href="/proyectos/{{ proyecto.id }}/edit"><i class="fa fa-fw fa-pencil mr-2"></i></a>
+                <a href="#" onclick="deleteItem('proyectos', '{{ proyecto.id }}')"><i class="fa fa-fw fa-trash"></i></a>
             </td>
         </tr>
         {% endfor %}
