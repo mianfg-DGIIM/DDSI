@@ -1329,7 +1329,7 @@ def nominas_add(api_resp=None):
         'edit':                     False,  # el formulario será de creación
         # no son necesarios más datos en este caso
     }
-    return render_template('nominas_form.html', data=data)
+    return render_template('pages/nominas_form.html', data=data)
 
 @app.route('/nominas', methods=['GET'])
 def nomina_all():
@@ -1357,7 +1357,7 @@ def nomina_all():
         'error':                    f'No hemos podido obtener la información de las nóminas' if not success else None,
         'nominas':                  nominas if success else None
     }
-    return render_template('nominas_all.html', data=data)
+    return render_template('pages/nominas_all.html', data=data)
 
 
 
@@ -1397,7 +1397,7 @@ def nominas_edit(DNI, fecha, api_resp=None):
         'edit_data':                nomina
     }
 
-    return render_template('nominas_form.html', data=data)
+    return render_template('pages/nominas_form.html', data=data)
 
 
 @app.route('/nominas/<DNI>/<fecha>', methods=['GET'])
@@ -1408,7 +1408,6 @@ def nomina_detail(DNI, fecha):
     En esta rutina mostraremos la información de una nómina
     """
     # primero recopilamos la información de la BD
-    exists = False
     try:
         nomina = Nomina.query.filter_by(DNI=DNI, fecha=fecha).first()
         nomina = nomina.serialize()
@@ -1416,13 +1415,20 @@ def nomina_detail(DNI, fecha):
         nomina = None
 
     if nomina: exists = True
-
     data = {
-        # Mostrar un mensaje de error si no existe el nomina
-        'error':    f'No se ha encontrado una nómina con DNI {DNI} y fecha {fecha}' if not exists else None,
-        'nomina': nomina
+        'title':                    f"Nómina",
+        'breadcrumb_title':         "Contabilidad",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Nóminas',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a nóminas',
+        'breadcrumb_button_url':    '/nominas',
+        'database_name':            'nomina',
+        'database_name_plural':     'nominas',
+        'card_title':               f"Información de la nómina",
+        # Mostrar un mensaje de error si no existe el empleado
+        'error':                    f'No se ha encontrado una nómina con DNI {DNI} y fecha {fecha}' if not nomina else None,
+        'empleado':                 nomina
     }
-    return render_template('nominas_detail.html', data=data)
+    return render_template('pages/nominas_detail.html', data=data)
 
 
 @app.route('/recibos/add', methods=['GET'])
@@ -1434,14 +1440,20 @@ def recibos_add(api_resp=None):
     un nuevo recibo.
     """
     data = {
-        'edit':     False,  # el formulario será de creación
+        'title':                    "Añadir recibos",
+        'breadcrumb_title':         "Contabilidad",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Recibos',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a recibos',
+        'breadcrumb_button_url':    '/recibos',
+        'database_name':            'recibo',
+        'database_name_plural':     'recibos',
+        'card_title':               "Crear recibo",
+        'edit':                     False,  # el formulario será de creación
         # no son necesarios más datos en este caso
-        # si la API nos ha devuelto algún error
-        'error':    api_resp['msg'] if api_resp else None
     }
-    return render_template('recibos_form.html', data=data)
+    return render_template('pages/recibos_form.html', data=data)
 
-@app.route('/recibos/all', methods=['GET'])
+@app.route('/recibos', methods=['GET'])
 def recibos_all():
     """
     Recibos: mostrar la información de todos los recibos
@@ -1454,12 +1466,23 @@ def recibos_all():
         success = True
     except:
         success = False
-    
+    data = {
+        'title':                    "Recibos",
+        'breadcrumb_title':         "Contabilidad",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Recibos',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Añadir recibo',
+        'breadcrumb_button_url':    '/recibos/add',
+        'database_name':            'recibo',
+        'database_name_plural':     'recibos',
+        'card_title':               "Listado de recibos",
+        'error':                    f'No hemos podido obtener la información de los recibos' if not success else None,
+        'recibos':                  recibos if success else None
+    }
     data = {
         'error':        f'No hemos podido obtener la información de los recibos' if not success else None,
         'recibos':      recibos if success else None
     }
-    return render_template('recibos_all.html', data=data)
+    return render_template('pages/recibos_all.html', data=data)
 
 
 @app.route('/facturas/add', methods=['GET'])
@@ -1471,14 +1494,20 @@ def facturas_add(api_resp=None):
     una nuevo factura.
     """
     data = {
-        'edit':     False,  # el formulario será de creación
+        'title':                    "Añadir factura",
+        'breadcrumb_title':         "Contabilidad",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Facturas',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a facturas',
+        'breadcrumb_button_url':    '/facturas',
+        'database_name':            'factura',
+        'database_name_plural':     'facturas',
+        'card_title':               "Crear factura",
+        'edit':                     False,  # el formulario será de creación
         # no son necesarios más datos en este caso
-        # si la API nos ha devuelto algún error
-        'error':    api_resp['msg'] if api_resp else None
     }
-    return render_template('facturas_form.html', data=data)
+    return render_template('pages/facturas_form.html', data=data)
 
-@app.route('/facturas/all', methods=['GET'])
+@app.route('/facturas', methods=['GET'])
 def facturas_all():
     """
     Facturas: mostrar la información de todos las facturas
@@ -1493,13 +1522,21 @@ def facturas_all():
         success = False
     
     data = {
-        'error':        f'No hemos podido obtener la información de las facturas' if not success else None,
-        'facturas':      facturas if success else None
+        'title':                    "Facturas",
+        'breadcrumb_title':         "Contabilidad",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Facturas',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Añadir factura',
+        'breadcrumb_button_url':    '/facturas/add',
+        'database_name':            'factura',
+        'database_name_plural':     'facturas',
+        'card_title':               "Listado de facturas",
+        'error':                    f'No hemos podido obtener la información de las facturas' if not success else None,
+        'facturas':                  facturas if success else None
     }
-    return render_template('facturas_all.html', data=data)
+    return render_template('pages/facturas_all.html', data=data)
 
 
-@app.route('/balancesCuentas/all', methods=['GET'])
+@app.route('/balancesCuentas', methods=['GET'])
 def balanceCuentas_all():
     """
     Balances: mostrar la información de todos los balances
@@ -1513,12 +1550,20 @@ def balanceCuentas_all():
         success = True
     except:
         success = False
-    
     data = {
-        'error':        f'No hemos podido obtener la información de los balances' if not success else None,
-        'balancesCuentas':      balancesCuentas if success else None
+        'title':                    "Balance de cuentas",
+        'breadcrumb_title':         "Contabilidad",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Balances',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Añadir factura',
+        'breadcrumb_button_url':    '/balanceCuentas',
+        'database_name':            'balanceCuentas',
+        'database_name_plural':     'balancesCuentas',
+        'card_title':               "Listado de operaciones",
+        'error':                    f'No hemos podido obtener la información de los balances' if not success else None,
+        'balancesCuentas':          balancesCuentas if success else None
     }
-    return render_template('balancesCuentas_all.html', data=data)
+
+    return render_template('pages/balancesCuentas_all.html', data=data)
 
 
 #  __________________
@@ -1532,7 +1577,7 @@ def api_nominas_add():
 
     IBAN = request.form['IBAN']
     fecha = request.form['fecha']
-    sueldo = float(request.form['sueldo']
+    sueldo = float(request.form['sueldo'])
     DNI = request.form['DNI']
 
 
@@ -1547,7 +1592,9 @@ def api_nominas_add():
         balance = d['balance'] - sueldo
         
 
-    valid = Nomina.validate(IBAN, fecha, sueldo, DNI)
+    valid, reason = Nomina.validate(IBAN, fecha, sueldo, DNI)
+
+    response = {}
 
     if valid:
         try:
@@ -1566,50 +1613,21 @@ def api_nominas_add():
             db.session.add(balanceCuentas)
             db.session.add(nomina)
             db.session.commit()
-            category = 'success'
-            msg = f"Nómina añadida con DNI: {nomina.DNI} Fecha: {nomina.fecha}"
+            response['category'] = 'success'
+            response['message'] = f"Nómina añadida con DNI: {nomina.DNI} Fecha: {nomina.fecha}"
+            response['data'] = {
+                'redirect': f"/nominas/{nomina.DNI}/{nomina.fecha}"
+            }
         except Exception as e:
-            category = 'error'
-            msg = "Server insertion error: " + str(e)
+            response['category'] = 'error'
+            response['message'] = "Server insertion error: " + str(e)
     else:
-        category = 'constraint'
-        msg = f"Los datos introducidos no cumplen las restricciones."
+        response['category'] = 'constraint'
+        response['message'] = reason
 
-    resp = {'msg': msg, 'category': category}
+    return jsonify(response)
 
-    # === WIP ===
 
-    # NOTA: por ahora hacemos render_template, pero estoy viendo si
-    #   hay alguna forma de eliminar el comportamiento por defecto de
-    #   submit para mostrar el mensaje de error sin recargar (si alguien
-    #   puede ayudarme lo agradecería jeje)
-    
-    # si se ha insertado bien, vamos a los datos
-    if resp['category'] == 'success':
-        return redirect(f'/nominas/all', code=302)
-    # si no, volvemos a cargar la página con la información de error
-    else:
-        return nominas_add(api_resp=resp)
-
-    # Realmente deberíamos hacer algo con make_response
-    #   NO es una buena decisión de diseño retornar una plantilla en la API,
-    #   la API debería retornar mensajes (en JSON, como en el resto)
-
-@app.route('/api/nominas/get/all')
-def api_nominas_get_all():
-    try:
-        nominas=Nomina.query.all()
-        return jsonify([nomina.serialize() for nomina in nominas])
-    except Exception as e:
-        return str(e)
-
-@app.route('/api/nominas/get/<DNI>/<fecha>', methods=['POST'])
-def api_nominas_get(DNI, fecha):
-    try:
-        nomina=Nomina.query.filter_by(DNI=DNI, fecha=fecha).first()
-        return jsonify(nomina.serialize())
-    except Exception as e:
-        return str(e)
 
 # Aquí tampoco usamos make_response, aunque deberíamos
 @app.route('/api/nominas/edit/<DNI>/<fecha>', methods=['POST'])
@@ -1617,7 +1635,9 @@ def api_nominas_edit(DNI, fecha):
     IBAN = request.form['IBAN']
 
     # server-side validation
-    valid = True#categoria.startswith('TEST')
+    valid, reason = Nomina.validate(IBAN, fecha, sueldo, DNI)
+
+    response = {}
 
     if valid:
         try:
@@ -1625,21 +1645,19 @@ def api_nominas_edit(DNI, fecha):
             nomina.IBAN = IBAN
 
             db.session.commit()
-            category = 'success'
-            msg = f"Proyecto modificado con DNI {nomina.DNI} y fecha {nomina.fecha}"
+            response['category'] = 'success'
+            response['message'] = f"Nómina actualizada con DNI: {nomina.DNI} Fecha: {nomina.fecha}"
+            response['data'] = {
+                'redirect': f"/nominas/{nomina.DNI}/{nomina.fecha}"
+            }
         except Exception as e:
-            category = 'error'
-            msg = "Server update error: " + str(e)
+            response['category'] = 'error'
+            response['message'] = "Server insertion error: " + str(e)
     else:
-        category = 'constraint'
-        msg = f"La categoría {categoria} no es válida"
-    
-    resp = {'msg': msg, 'category': category}
+        response['category'] = 'constraint'
+        response['message'] = reason
 
-    if resp['category'] == 'success':
-        return redirect(f'/nominas/{DNI}/{fecha}', code=302)
-    else:
-        return nominas_edit(DNI, fecha, api_resp=resp)
+    return jsonify(response)
 
 @app.route('/api/recibos/add', methods=['POST'])
 def api_recibos_add():
@@ -1666,7 +1684,9 @@ def api_recibos_add():
     #   lado del servidor, i.e., comprobar que un ID referencia a un
     #   objeto que existe en la BD, etc. Esto que aparece aquí es de
     #   prueba, para que veáis cómo implementarlo (lo eliminaré)
-    valid = Recibo.validate(CIF_pro, NumeroRegistro, FechaCom, ImporteCom)
+    valid, reason = Recibo.validate(CIF_pro, NumeroRegistro, FechaCom, ImporteCom)
+
+    response = {}
 
     if valid:
         try:
@@ -1685,34 +1705,19 @@ def api_recibos_add():
             db.session.add(balanceCuentas)
             db.session.add(recibo)
             db.session.commit()
-            category = 'success'
-            msg = f"Recibo añadida con CIF: {recibo.CIF_pro} Número de registro: {recibo.NumeroRegistro}"
+            response['category'] = 'success'
+            response['message'] = f"Recibo añadida con CIF: {recibo.CIF_pro} Número de registro: {recibo.NumeroRegistro}"
+            response['data'] = {
+                'redirect': f"/recibos"
+            }
         except Exception as e:
-            category = 'error'
-            msg = "Server insertion error: " + str(e)
+            response['category'] = 'error'
+            response['message'] = "Server insertion error: " + str(e)
     else:
-        category = 'constraint'
-        msg = f"Los datos introducidos no cumplen las restricciones."
-
-    resp = {'msg': msg, 'category': category}
-
-    # === WIP ===
-
-    # NOTA: por ahora hacemos render_template, pero estoy viendo si
-    #   hay alguna forma de eliminar el comportamiento por defecto de
-    #   submit para mostrar el mensaje de error sin recargar (si alguien
-    #   puede ayudarme lo agradecería jeje)
+        response['category'] = 'constraint'
+        response['message'] = reason
     
-    # si se ha insertado bien, vamos a los datos
-    if resp['category'] == 'success':
-        return redirect(f'/recibos/all', code=302)
-    # si no, volvemos a cargar la página con la información de error
-    else:
-        return recibos_add(api_resp=resp)
-
-    # Realmente deberíamos hacer algo con make_response
-    #   NO es una buena decisión de diseño retornar una plantilla en la API,
-    #   la API debería retornar mensajes (en JSON, como en el resto)
+    return jsonify(response)
 
 
 @app.route('/api/facturas/add', methods=['POST'])
@@ -1740,7 +1745,9 @@ def api_facturas_add():
     #   lado del servidor, i.e., comprobar que un ID referencia a un
     #   objeto que existe en la BD, etc. Esto que aparece aquí es de
     #   prueba, para que veáis cómo implementarlo (lo eliminaré)
-    valid = Factura.validate(CIF_cli, IDlote, FechaVen, ImporteVen)
+    valid, reason = Factura.validate(CIF_cli, IDlote, FechaVen, ImporteVen)
+
+    response = {}
 
     if valid:
         try:
@@ -1760,34 +1767,19 @@ def api_facturas_add():
             db.session.add(balanceCuentas)
             db.session.add(factura)
             db.session.commit()
-            category = 'success'
-            msg = f"Recibo añadida con CIF: {factura.CIF_pro} Número de registro: {factura.NumeroRegistro}"
+            response['category'] = 'success'
+            response['message'] = f"Factura añadida con CIF: {factura.CIF_pro} Número de registro: {factura.NumeroRegistro}"
+            response['data'] = {
+                'redirect': f"/recibos"
+            }
         except Exception as e:
-            category = 'error'
-            msg = "Server insertion error: " + str(e)
+            response['category'] = 'error'
+            response['message'] = "Server insertion error: " + str(e)
     else:
-        category = 'constraint'
-        msg = f"Los datos introducidos no cumplen las restricciones."
-
-    resp = {'msg': msg, 'category': category}
-
-    # === WIP ===
-
-    # NOTA: por ahora hacemos render_template, pero estoy viendo si
-    #   hay alguna forma de eliminar el comportamiento por defecto de
-    #   submit para mostrar el mensaje de error sin recargar (si alguien
-    #   puede ayudarme lo agradecería jeje)
+        response['category'] = 'constraint'
+        response['message'] = reason
     
-    # si se ha insertado bien, vamos a los datos
-    if resp['category'] == 'success':
-        return redirect(f'/facturas/all', code=302)
-    # si no, volvemos a cargar la página con la información de error
-    else:
-        return facturas_add(api_resp=resp)
-
-    # Realmente deberíamos hacer algo con make_response
-    #   NO es una buena decisión de diseño retornar una plantilla en la API,
-    #   la API debería retornar mensajes (en JSON, como en el resto)
+    return jsonify(response)
 
 
 

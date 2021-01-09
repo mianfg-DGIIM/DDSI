@@ -344,6 +344,10 @@ class Recibo(db.Model):
     @classmethod
     def validate( CIF_pro, NumeroRegistro, FechaCom, ImporteCom, IdOp):
         b1 = Recibo.query.filter_by(NumeroRegistro = NumeroRegistro) == None
+        reason = ""
+
+        if b1:
+            reason = reason + "Error: número de registro ya usado\n"
 
         return b1
 
@@ -380,6 +384,10 @@ class Factura(db.Model):
     @classmethod
     def validate(CIF_cli, IDlote, FechaVen, ImporteVen, IdOp):
         b1 = Factura.query.filter_by(IDlote = IDlote) == None
+        reason = ""
+
+        if b1:
+            reason = reason + "Error: ID de lote ya usado\n"
 
         return b1
     
@@ -415,6 +423,10 @@ class Nomina(db.Model):
     @classmethod
     def validate(IBAN, fecha, sueldo, DNI, IdOp):
         b1 = Factura.query.filter_by(IBAN = IBAN, fecha = fecha) == None
+        reason = ""
+
+        if b1:
+            reason = reason + "Error: nómina ya registrada\n"
 
         return b1
     

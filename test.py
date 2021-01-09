@@ -122,7 +122,7 @@ def populate_balances():
             balance=BalanceCuentas(
                 IdOp	        = int(d[0]),
                 balance	        = float(d[1]),
-                claseOp	        = ClaseOperaciond(int(d[2])),
+                claseOp	        = ClaseOperacion(int(d[2])),
             )
             db.session.add(balance)
             db.session.commit()
