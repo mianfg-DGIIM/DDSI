@@ -22,7 +22,7 @@
         <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.ImporteCom }}"{% endif %}
             placeholder="Importe" id="ImporteCom" name="ImporteCom">
     </div>
-    <button type="submit" class="btn btn-primary" style="float:right" id="submit-button">{% if data.edit %}Actualizar{% else %}Crear{% endif %} recibo</button>
+    <button type="submit" class="btn btn-primary btn-sm" style="float:right" id="form-submit">{% if data.edit %}Actualizar{% else %}Crear{% endif %} recibo</button>
 </form>
 {% endblock %}
 

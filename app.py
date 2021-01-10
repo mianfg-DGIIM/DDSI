@@ -1426,7 +1426,7 @@ def nomina_detail(DNI, fecha):
         'card_title':               f"Información de la nómina",
         # Mostrar un mensaje de error si no existe el empleado
         'error':                    f'No se ha encontrado una nómina con DNI {DNI} y fecha {fecha}' if not nomina else None,
-        'empleado':                 nomina
+        'nomina':                 nomina
     }
     return render_template('pages/nominas_detail.html', data=data)
 
