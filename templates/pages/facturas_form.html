@@ -1,7 +1,7 @@
 {% extends "skeleton/form.html" %}
 
 {% block form %}
-<form action="{% if data.edit %}/api/facturas/edit/{{ data.edit_data.id }}{% else %}/api/facturas/add{% endif %}" id="facturas-add-form" method="post" class="needs-validation" novalidate>
+<form action="{% if data.edit %}/api/facturas/edit/{{ data.edit_data.id }}{% else %}/api/facturas/add{% endif %}" id="form" method="post" class="needs-validation" novalidate>
     <div class="form-row mb-3">
         <label for="CIF_cli">CIF</label>
         <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.CIF_cli }}"{% endif %}

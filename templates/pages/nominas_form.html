@@ -1,7 +1,7 @@
 {% extends "skeleton/form.html" %}
 
 {% block form %}
-<form action="{% if data.edit %}/api/nominas/edit/{{ data.edit_data.DNI }}/{{ data.edit_data.fecha }}{% else %}/api/nominas/add{% endif %}" id="nominas-add-form" method="post" class="needs-validation" novalidate>
+<form action="{% if data.edit %}/api/nominas/edit/{{ data.edit_data.DNI }}/{{ data.edit_data.fecha }}{% else %}/api/nominas/add{% endif %}" id="form" method="post" class="needs-validation" novalidate>
 
     <div class="form-row mb-3">
         <label for="DNI">DNI</label>

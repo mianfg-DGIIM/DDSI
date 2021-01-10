@@ -1478,10 +1478,6 @@ def recibos_all():
         'error':                    f'No hemos podido obtener la información de los recibos' if not success else None,
         'recibos':                  recibos if success else None
     }
-    data = {
-        'error':        f'No hemos podido obtener la información de los recibos' if not success else None,
-        'recibos':      recibos if success else None
-    }
     return render_template('pages/recibos_all.html', data=data)
 
 
@@ -1554,8 +1550,6 @@ def balanceCuentas_all():
         'title':                    "Balance de cuentas",
         'breadcrumb_title':         "Contabilidad",
         'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Balances',
-        'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Añadir factura',
-        'breadcrumb_button_url':    '/balanceCuentas',
         'database_name':            'balanceCuentas',
         'database_name_plural':     'balancesCuentas',
         'card_title':               "Listado de operaciones",
@@ -1592,7 +1586,7 @@ def api_nominas_add():
         balance = d['balance'] - sueldo
         
 
-    valid, reason = Nomina.validate(IBAN, fecha, sueldo, DNI)
+    valid, reason = Nomina.validate(IBAN, fecha, sueldo, DNI, IdOp)
 
     response = {}
 
@@ -1635,7 +1629,7 @@ def api_nominas_edit(DNI, fecha):
     IBAN = request.form['IBAN']
 
     # server-side validation
-    valid, reason = Nomina.validate(IBAN, fecha, sueldo, DNI)
+    #valid, reason = Nomina.validate(IBAN, fecha, sueldo, DNI, IdOp)
 
     response = {}
 
@@ -1684,7 +1678,12 @@ def api_recibos_add():
     #   lado del servidor, i.e., comprobar que un ID referencia a un
     #   objeto que existe en la BD, etc. Esto que aparece aquí es de
     #   prueba, para que veáis cómo implementarlo (lo eliminaré)
-    valid, reason = Recibo.validate(CIF_pro, NumeroRegistro, FechaCom, ImporteCom)
+    valid, reason = Recibo.validate(CIF_pro, NumeroRegistro, FechaCom, ImporteCom, IdOp)
+    if valid:
+        print("Genial")
+    else:
+        print("Muy Mal")
+
 
     response = {}
 
@@ -1745,7 +1744,7 @@ def api_facturas_add():
     #   lado del servidor, i.e., comprobar que un ID referencia a un
     #   objeto que existe en la BD, etc. Esto que aparece aquí es de
     #   prueba, para que veáis cómo implementarlo (lo eliminaré)
-    valid, reason = Factura.validate(CIF_cli, IDlote, FechaVen, ImporteVen)
+    valid, reason = Factura.validate(CIF_cli, IDlote, FechaVen, ImporteVen, IdOp)
 
     response = {}
 
@@ -1768,9 +1767,9 @@ def api_facturas_add():
             db.session.add(factura)
             db.session.commit()
             response['category'] = 'success'
-            response['message'] = f"Factura añadida con CIF: {factura.CIF_pro} Número de registro: {factura.NumeroRegistro}"
+            response['message'] = f"Factura añadida con CIF: {factura.CIF_cli} Número de registro: {factura.IDlote}"
             response['data'] = {
-                'redirect': f"/recibos"
+                'redirect': f"/facturas"
             }
         except Exception as e:
             response['category'] = 'error'

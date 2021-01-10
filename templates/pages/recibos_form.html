@@ -1,5 +1,7 @@
+{% extends "skeleton/form.html" %}
 
-<form action="{% if data.edit %}/api/recibos/edit/{{ data.edit_data.id }}{% else %}/api/recibos/add{% endif %}" id="recibos-add-form" method="post" class="needs-validation" novalidate>
+{% block form %}
+<form action="{% if data.edit %}/api/recibos/edit/{{ data.edit_data.id }}{% else %}/api/recibos/add{% endif %}" id="form" method="post" class="needs-validation" novalidate>
     <div class="form-row mb-3">
         <label for="CIF_pro">CIF</label>
         <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.CIF_pro }}"{% endif %}
@@ -22,4 +24,5 @@
     </div>
     <button type="submit" class="btn btn-primary" style="float:right" id="submit-button">{% if data.edit %}Actualizar{% else %}Crear{% endif %} recibo</button>
 </form>
+{% endblock %}
 

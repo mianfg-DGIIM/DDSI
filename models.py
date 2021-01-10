@@ -259,7 +259,7 @@ class Proyecto(db.Model):
 
 
 # ================================
-# ==== DPTO. I+D Y PRODUCCIÓN ====
+# ==== DPTO. CONTABILIDAD ====
 # ================================
 
 
@@ -342,14 +342,19 @@ class Recibo(db.Model):
         self.IdOp = IdOp
     
     @classmethod
-    def validate( CIF_pro, NumeroRegistro, FechaCom, ImporteCom, IdOp):
-        b1 = Recibo.query.filter_by(NumeroRegistro = NumeroRegistro) == None
+    def validate(self, CIF_pro, NumeroRegistro, FechaCom, ImporteCom, IdOp):
+
+        b1 = Recibo.query.filter_by(NumeroRegistro = NumeroRegistro).first() == None
+        b2 = len(CIF_pro) == 9
         reason = ""
 
-        if b1:
+        if not b1:
             reason = reason + "Error: número de registro ya usado\n"
+        if not b2:
+            reason = reason + "Error: longitud de CIF no apropiada\n"
+        
 
-        return b1
+        return b1 and b2, reason
 
     
     def __repr__(self):
@@ -382,14 +387,17 @@ class Factura(db.Model):
         self.IdOp = IdOp
     
     @classmethod
-    def validate(CIF_cli, IDlote, FechaVen, ImporteVen, IdOp):
-        b1 = Factura.query.filter_by(IDlote = IDlote) == None
+    def validate(self, CIF_cli, IDlote, FechaVen, ImporteVen, IdOp):
+        b1 = Factura.query.filter_by(IDlote = IDlote).first() == None
+        b2 = len(CIF_cli) == 9
         reason = ""
 
-        if b1:
+        if not b1:
             reason = reason + "Error: ID de lote ya usado\n"
+        if not b2:
+            reason = reason + "Error: longitud de CIF no apropiada\n"
 
-        return b1
+        return b1 and b2, reason
     
     def __repr__(self):
         return f'<Recibo {self.CIF_cli} - {self.IDlote}>'
@@ -421,14 +429,18 @@ class Nomina(db.Model):
         self.IdOp = IdOp
     
     @classmethod
-    def validate(IBAN, fecha, sueldo, DNI, IdOp):
-        b1 = Factura.query.filter_by(IBAN = IBAN, fecha = fecha) == None
+    def validate(self, IBAN, fecha, sueldo, DNI, IdOp):
+        b1 = Factura.query.filter_by(IBAN = IBAN, fecha = fecha).first() == None
+        b2 = len(DNI) == 9
         reason = ""
 
-        if b1:
-            reason = reason + "Error: nómina ya registrada\n"
 
-        return b1
+        if not b1:
+            reason = reason + "Error: nómina ya registrada\n"
+        if not b2:
+            reason = reason + "Error: longitud de DNI no apropiada\n"
+
+        return b1 and b2, reason
     
     def __repr__(self):
         return f'<Nomina {self.IBAN} - {self.fecha}>'
