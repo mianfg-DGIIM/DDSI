@@ -1310,7 +1310,7 @@ def api_procesos_productivos_delete(id):
 # |  Templates       |
 # |__________________|
 
-@app.route('/nominas/add', methods=['GET'])
+@app.route('/nominas/add/', methods=['GET'])
 def nominas_add(api_resp=None):
     """
     Nóminas: añadir nomina
@@ -1331,7 +1331,7 @@ def nominas_add(api_resp=None):
     }
     return render_template('pages/nominas_form.html', data=data)
 
-@app.route('/nominas', methods=['GET'])
+@app.route('/nominas/', methods=['GET'])
 def nomina_all():
     """
     Nóminas: mostrar la información de todas las nóminas
@@ -1361,7 +1361,7 @@ def nomina_all():
 
 
 
-@app.route('/nominas/<DNI>/<fecha>/edit', methods=['GET'])
+@app.route('/nominas/<DNI>/<fecha>/edit/', methods=['GET'])
 def nominas_edit(DNI, fecha, api_resp=None):
     """
     Nóminas: editar información de un nómina
@@ -1400,7 +1400,7 @@ def nominas_edit(DNI, fecha, api_resp=None):
     return render_template('pages/nominas_form.html', data=data)
 
 
-@app.route('/nominas/<DNI>/<fecha>', methods=['GET'])
+@app.route('/nominas/<DNI>/<fecha>/', methods=['GET'])
 def nomina_detail(DNI, fecha):
     """
     Nóminas: mostrar información de una nómina
@@ -1431,7 +1431,7 @@ def nomina_detail(DNI, fecha):
     return render_template('pages/nominas_detail.html', data=data)
 
 
-@app.route('/recibos/add', methods=['GET'])
+@app.route('/recibos/add/', methods=['GET'])
 def recibos_add(api_resp=None):
     """
     Recibo: añadir recibo
@@ -1453,7 +1453,7 @@ def recibos_add(api_resp=None):
     }
     return render_template('pages/recibos_form.html', data=data)
 
-@app.route('/recibos', methods=['GET'])
+@app.route('/recibos/', methods=['GET'])
 def recibos_all():
     """
     Recibos: mostrar la información de todos los recibos
@@ -1481,7 +1481,7 @@ def recibos_all():
     return render_template('pages/recibos_all.html', data=data)
 
 
-@app.route('/facturas/add', methods=['GET'])
+@app.route('/facturas/add/', methods=['GET'])
 def facturas_add(api_resp=None):
     """
     Factura: añadir factura
@@ -1503,7 +1503,7 @@ def facturas_add(api_resp=None):
     }
     return render_template('pages/facturas_form.html', data=data)
 
-@app.route('/facturas', methods=['GET'])
+@app.route('/facturas/', methods=['GET'])
 def facturas_all():
     """
     Facturas: mostrar la información de todos las facturas
@@ -1532,7 +1532,7 @@ def facturas_all():
     return render_template('pages/facturas_all.html', data=data)
 
 
-@app.route('/balancesCuentas', methods=['GET'])
+@app.route('/balancesCuentas/', methods=['GET'])
 def balanceCuentas_all():
     """
     Balances: mostrar la información de todos los balances
@@ -1568,11 +1568,12 @@ def balanceCuentas_all():
 
 @app.route('/api/nominas/add', methods=['POST'])
 def api_nominas_add():
+    data = json.loads(request.form['data'])
 
-    IBAN = request.form['IBAN']
-    fecha = request.form['fecha']
-    sueldo = float(request.form['sueldo'])
-    DNI = request.form['DNI']
+    IBAN = data['IBAN']
+    fecha = data['fecha']
+    sueldo = float(data['sueldo'])
+    DNI = data['DNI']
 
 
      
@@ -1612,6 +1613,7 @@ def api_nominas_add():
             response['data'] = {
                 'redirect': f"/nominas/{nomina.DNI}/{nomina.fecha}"
             }
+            print("Hello")
         except Exception as e:
             response['category'] = 'error'
             response['message'] = "Server insertion error: " + str(e)
@@ -1626,10 +1628,12 @@ def api_nominas_add():
 # Aquí tampoco usamos make_response, aunque deberíamos
 @app.route('/api/nominas/edit/<DNI>/<fecha>', methods=['POST'])
 def api_nominas_edit(DNI, fecha):
-    IBAN = request.form['IBAN']
+    data = json.loads(request.form['data'])
+    IBAN = data['IBAN']
 
     # server-side validation
     #valid, reason = Nomina.validate(IBAN, fecha, sueldo, DNI, IdOp)
+    valid = True
 
     response = {}
 
@@ -1655,11 +1659,12 @@ def api_nominas_edit(DNI, fecha):
 
 @app.route('/api/recibos/add', methods=['POST'])
 def api_recibos_add():
+    data = json.loads(request.form['data'])
 
-    CIF_pro = request.form['CIF_pro']
-    NumeroRegistro = int(request.form['NumeroRegistro'])
-    FechaCom = request.form['FechaCom']
-    ImporteCom = int(request.form['ImporteCom'])
+    CIF_pro = data['CIF_pro']
+    NumeroRegistro = int(data['NumeroRegistro'])
+    FechaCom = data['FechaCom']
+    ImporteCom = int(data['ImporteCom'])
 
 
      
@@ -1721,11 +1726,12 @@ def api_recibos_add():
 
 @app.route('/api/facturas/add', methods=['POST'])
 def api_facturas_add():
+    data = json.loads(request.form['data'])
 
-    CIF_cli = request.form['CIF_cli']
-    IDlote = int(request.form['IDlote'])
-    FechaVen = request.form['FechaVen']
-    ImporteVen = int(request.form['ImporteVen'])
+    CIF_cli = data['CIF_cli']
+    IDlote = int(data['IDlote'])
+    FechaVen = data['FechaVen']
+    ImporteVen = int(data['ImporteVen'])
 
 
      

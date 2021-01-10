@@ -22,6 +22,6 @@
         <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.ImporteVen }}"{% endif %}
             placeholder="Importe" id="ImporteVen" name="ImporteVen">
     </div>
-    <button type="submit" class="btn btn-primary" style="float:right" id="submit-button">{% if data.edit %}Actualizar{% else %}Crear{% endif %} factura</button>
+    <button type="submit" class="btn btn-primary btn-sm" style="float:right" id="form-submit">{% if data.edit %}Actualizar{% else %}Crear{% endif %} factura</button>
 </form>
 {% endblock %}

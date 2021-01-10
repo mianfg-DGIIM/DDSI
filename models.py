@@ -430,7 +430,7 @@ class Nomina(db.Model):
     
     @classmethod
     def validate(self, IBAN, fecha, sueldo, DNI, IdOp):
-        b1 = Factura.query.filter_by(IBAN = IBAN, fecha = fecha).first() == None
+        b1 = Nomina.query.filter_by(IBAN = IBAN, fecha = fecha).first() == None
         b2 = len(DNI) == 9
         reason = ""
 

@@ -29,6 +29,6 @@
         <input class="form-control" type="text" placeholder="Cantidad de ingreso" id="sueldo" name="sueldo" {% if data.edit %}disabled{% endif %}>
     </div>
 
-    <button type="submit" class="btn btn-primary" style="float:right" id="submit-button">{% if data.edit %}Actualizar{% else %}Crear{% endif %} nómina</button>
+    <button type="submit" class="btn btn-primary btn-sm" style="float:right" id="form-submit">{% if data.edit %}Actualizar{% else %}Crear{% endif %} nómina</button>
 </form>
 {% endblock %}
