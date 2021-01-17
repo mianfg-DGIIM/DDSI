@@ -346,15 +346,19 @@ class Recibo(db.Model):
 
         b1 = Recibo.query.filter_by(NumeroRegistro = NumeroRegistro).first() == None
         b2 = len(CIF_pro) == 9
+        #b3 = Mercancia.query.filter_by(NumeroRegistro = NumeroRegistro).first() != None
+        b3 = True
         reason = ""
 
         if not b1:
-            reason = reason + "Error: número de registro ya usado\n"
+            reason = reason + "Número de registro ya usado para un recibo. "
         if not b2:
-            reason = reason + "Error: longitud de CIF no apropiada\n"
+            reason = reason + "Longitud de CIF no apropiada. "
+        #if not b3:
+            #reason = reason + "Número de registro no asignado a ninguna mercancía. "
         
 
-        return b1 and b2, reason
+        return b1 and b2 and b3, reason
 
     
     def __repr__(self):
@@ -390,14 +394,19 @@ class Factura(db.Model):
     def validate(self, CIF_cli, IDlote, FechaVen, ImporteVen, IdOp):
         b1 = Factura.query.filter_by(IDlote = IDlote).first() == None
         b2 = len(CIF_cli) == 9
+        #b3 = Lote.query.filter_by(IDlote = IDlote).first() != None
+        b3 = True
         reason = ""
 
         if not b1:
-            reason = reason + "Error: ID de lote ya usado\n"
+            reason = reason + "ID de lote ya usado. "
         if not b2:
-            reason = reason + "Error: longitud de CIF no apropiada\n"
+            reason = reason + "Longitud de CIF no apropiada. "
+        #if not b3:
+            #reason = reason + "Identificador no asignado a ningún lote. "
+        
 
-        return b1 and b2, reason
+        return b1 and b2 and b3, reason
     
     def __repr__(self):
         return f'<Recibo {self.CIF_cli} - {self.IDlote}>'
@@ -430,17 +439,20 @@ class Nomina(db.Model):
     
     @classmethod
     def validate(self, IBAN, fecha, sueldo, DNI, IdOp):
-        b1 = Nomina.query.filter_by(IBAN = IBAN, fecha = fecha).first() == None
+        b1 = Nomina.query.filter_by(DNI = DNI, fecha = fecha).first() == None
         b2 = len(DNI) == 9
+        #b3 = Empleado.query.filter_by(dni = dni).first() != None
+        b3 = True
         reason = ""
 
-
         if not b1:
-            reason = reason + "Error: nómina ya registrada\n"
+            reason = reason + "Nómina ya registrada. "
         if not b2:
-            reason = reason + "Error: longitud de DNI no apropiada\n"
+            reason = reason + "Longitud de DNI no apropiada. "
+        #if not b3:
+            #reason = reason + "DNI no asignado a ningún empleado. "
 
-        return b1 and b2, reason
+        return b1 and b2 and b3, reason
     
     def __repr__(self):
         return f'<Nomina {self.IBAN} - {self.fecha}>'

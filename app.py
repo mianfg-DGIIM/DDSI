@@ -1613,7 +1613,6 @@ def api_nominas_add():
             response['data'] = {
                 'redirect': f"/nominas/{nomina.DNI}/{nomina.fecha}"
             }
-            print("Hello")
         except Exception as e:
             response['category'] = 'error'
             response['message'] = "Server insertion error: " + str(e)
