@@ -63,9 +63,112 @@ def populate_procesos_productivos():
         except:
             pass
 
+def populate_nominas():
+    data = load_data('testbed/nominas.csv')
+
+    for d in data:
+        try:
+            nomina=Nomina(
+                IBAN		= d[0],
+                fecha	    = d[1],
+                sueldo	    = float(d[2]),
+                DNI		    = d[3],
+                IdOp        = int(d[4])
+            )
+            db.session.add(nomina)
+            db.session.commit()
+        except:
+            pass
+
+def populate_facturas():
+    data = load_data('testbed/facturas.csv')
+
+    for d in data:
+        try:
+            factura=Factura(
+                CIF_cli		    = d[0],
+                IDlote	        = int(d[1]),
+                FechaVen	    = d[2],
+                ImporteVen		= float(d[3]),
+                IdOp            = int(d[4])
+            )
+            db.session.add(factura)
+            db.session.commit()
+        except:
+            pass
+
+def populate_recibos():
+    data = load_data('testbed/recibos.csv')
+
+    for d in data:
+        try:
+            recibo=Recibo(
+                CIF_pro		    = d[0],
+                NumeroRegistro	= int(d[1]),
+                FechaCom	    = d[2],
+                ImporteCom		= float(d[3]),
+                IdOp            = int(d[4])
+            )
+            db.session.add(recibo)
+            db.session.commit()
+        except:
+            pass
+
+def populate_balances():
+    data = load_data('testbed/balances.csv')
+
+    for d in data:
+        try:
+            balance=BalanceCuentas(
+                IdOp	        = int(d[0]),
+                balance	        = float(d[1]),
+                claseOp	        = ClaseOperacion(int(d[2])),
+            )
+            db.session.add(balance)
+            db.session.commit()
+        except:
+            pass
+
+def populate_clientes():
+    data = load_data('testbed/clientes.csv')
+
+    for d in data:
+        try:
+            cliente=Cliente(
+                CIF_cli	        = d[0],
+                nombre	        = d[1],
+                direccion	    = d[2],
+            )
+            db.session.add(cliente)
+            db.session.commit()
+        except:
+            pass
+
+def populate_proveedores():
+    data = load_data('testbed/proveedores.csv')
+
+    for d in data:
+        try:
+            proveedor=Proveedor(
+                CIF_pro	        = d[0],
+                nombre	        = d[1],
+                direccion	    = d[2],
+            )
+            db.session.add(proveedor)
+            db.session.commit()
+        except:
+            pass
+
+
 
 if __name__ == '__main__':
     # I+D y Producción
     populate_proyectos()
     populate_productos()
     populate_procesos_productivos()
+    populate_nominas()
+    populate_facturas()
+    populate_recibos()
+    populate_balances()
+    populate_clientes()
+    populate_recibos()

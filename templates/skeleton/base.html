@@ -31,6 +31,10 @@
                     <li class="nav-item"><a class="nav-link" href="/procesos-productivos"><i class="fas fa-fw fa-dolly-flatbed mr-2 ml-2"></i><span {% if 'procesos_productivos' in request.url_rule.endpoint %}style="text-decoration: underline;"{% endif %}>Procesos Productivos</span></a></li>
                     <li class="nav-item mt-2"><div class="nav-link text-white"><i class="text-white fas fa-fw fa-box mr-2 ml-2"></i><span><strong>Almacén y Logística</strong></span></div></li>
                     <li class="nav-item mt-2"><div class="nav-link text-white"><i class="text-white fas fa-fw fa-table mr-2 ml-2"></i><span><strong>Contabilidad</strong></span></div></li>
+                    <li class="nav-item"><a class="nav-link" href="/recibos"><i class="fas fa-fw fa-table mr-2 ml-2"></i><span {% if 'recibos' in request.url_rule.endpoint %}style="text-decoration: underline;"{% endif %}>Recibos</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/facturas"><i class="fas fa-fw fa-table mr-2 ml-2"></i><span {% if 'facturas' in request.url_rule.endpoint %}style="text-decoration: underline;"{% endif %}>Facturas</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/nominas"><i class="fas fa-fw fa-table mr-2 ml-2"></i><span {% if 'nominas' in request.url_rule.endpoint %}style="text-decoration: underline;"{% endif %}>Nóminas</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/balancesCuentas"><i class="fas fa-fw fa-table mr-2 ml-2"></i><span {% if 'balancesCuentas' in request.url_rule.endpoint %}style="text-decoration: underline;"{% endif %}>Balance de cuentas</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>

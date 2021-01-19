@@ -1,0 +1,30 @@
+{% extends "skeleton/detail.html" %}
+
+{% block detail %}
+<table class="table mb-0">
+    <thead>
+        <tr>
+            <th scope="col">Propiedad</th>
+            <th scope="col">Valor</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">DNI</th>
+            <td>{{ data.nomina.DNI }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Fecha</th>
+            <td>{{ data.nomina.fecha }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Sueldo</th>
+            <td>{{ data.nomina.sueldo }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Categoría</th>
+            <td>{{ data.nomina.IBAN }}</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

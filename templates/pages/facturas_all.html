@@ -1,0 +1,33 @@
+{% extends "skeleton/list.html" %}
+
+{% block table %}
+<table class="table mb-0" id="dataTable">
+    <thead>
+        <tr>
+            <th>CIF</th>
+            <th>ID lote</th>
+            <th>Fecha</th>
+            <th>Importe</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for factura in data.facturas %}
+        <tr>
+            <th scope="row">{{ factura.CIF_cli }}</th>
+            <td>{{ factura.IDlote }}</td>
+            <td>{{ factura.FechaVen }}</td>
+            <td>{{ factura.ImporteVen }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td><strong>CIF</strong></td>
+            <td><strong>ID lote</strong></td>
+            <td><strong>Fecha</strong></td>
+            <td><strong>Importe</strong></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}

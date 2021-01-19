@@ -1298,5 +1298,494 @@ def api_procesos_productivos_delete(id):
     return jsonify(response)
 
 
+
+# ================================
+# ==== DPTO. CONTABILIDAD ====
+# ================================
+
+
+
+#  __________________
+# |                  |
+# |  Templates       |
+# |__________________|
+
+@app.route('/nominas/add/', methods=['GET'])
+def nominas_add(api_resp=None):
+    """
+    Nóminas: añadir nomina
+    ----
+    En esta rutina mostraremos una página con un formulario para insertar una nueva nómina.
+    """
+    data = {
+        'title':                    "Añadir nómina",
+        'breadcrumb_title':         "Contabilidad",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Nóminas',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a nóminas',
+        'breadcrumb_button_url':    '/nominas',
+        'database_name':            'nomina',
+        'database_name_plural':     'nominas',
+        'card_title':               "Crear nómina",
+        'edit':                     False,  # el formulario será de creación
+        # no son necesarios más datos en este caso
+    }
+    return render_template('pages/nominas_form.html', data=data)
+
+@app.route('/nominas/', methods=['GET'])
+def nomina_all():
+    """
+    Nóminas: mostrar la información de todas las nóminas
+    ----
+    En esta rutina mostraremos la información de todas las nóminas.
+    """
+    try:
+        nominas = Nomina.query.all()
+        nominas = [nomina.serialize() for nomina in nominas]
+        success = True
+    except:
+        success = False
+
+    data = {
+        'title':                    "Nóminas",
+        'breadcrumb_title':         "Contabilidad",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Nóminas',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Añadir nómina',
+        'breadcrumb_button_url':    '/nominas/add',
+        'database_name':            'nomina',
+        'database_name_plural':     'nominas',
+        'card_title':               "Listado de nóminas",
+        'error':                    f'No hemos podido obtener la información de las nóminas' if not success else None,
+        'nominas':                  nominas if success else None
+    }
+    return render_template('pages/nominas_all.html', data=data)
+
+
+
+@app.route('/nominas/<DNI>/<fecha>/edit/', methods=['GET'])
+def nominas_edit(DNI, fecha, api_resp=None):
+    """
+    Nóminas: editar información de un nómina
+    ----
+    En esta rutina permitiremos la edición de la información de una nómina
+    """
+    # primero recopilamos la información de la BD
+    try:
+        nomina = Nomina.query.filter_by(DNI=DNI, fecha=fecha).first()
+        exists = True   # la nómina existe
+    except:
+        exists = False  # la nómina no existe
+    
+    if not exists:
+        error = f'No se ha encontrado la nómina del empleado {DNI} el {fecha}'
+    elif api_resp:
+        error = api_resp['msg']
+    else:
+        error = None
+    
+    data = {
+        'title':                    f"Editar nómina",
+        'breadcrumb_title':         "Contabilidad",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Nóminas',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a nóminas',
+        'breadcrumb_button_url':    '/nominas',
+        'database_name':            'nomina',
+        'database_name_plural':     'nominas',
+        'card_title':               f"Editar empleado",
+        'error':                    error,
+        'edit':                     True,   # el formulario será de edición
+        # cargamos la información existente en el formulario
+        'edit_data':                nomina
+    }
+
+    return render_template('pages/nominas_form.html', data=data)
+
+
+@app.route('/nominas/<DNI>/<fecha>/', methods=['GET'])
+def nomina_detail(DNI, fecha):
+    """
+    Nóminas: mostrar información de una nómina
+    ----
+    En esta rutina mostraremos la información de una nómina
+    """
+    # primero recopilamos la información de la BD
+    try:
+        nomina = Nomina.query.filter_by(DNI=DNI, fecha=fecha).first()
+        nomina = nomina.serialize()
+    except:
+        nomina = None
+
+    if nomina: exists = True
+    data = {
+        'title':                    f"Nómina",
+        'breadcrumb_title':         "Contabilidad",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Nóminas',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a nóminas',
+        'breadcrumb_button_url':    '/nominas',
+        'database_name':            'nomina',
+        'database_name_plural':     'nominas',
+        'card_title':               f"Información de la nómina",
+        # Mostrar un mensaje de error si no existe el empleado
+        'error':                    f'No se ha encontrado una nómina con DNI {DNI} y fecha {fecha}' if not nomina else None,
+        'nomina':                 nomina
+    }
+    return render_template('pages/nominas_detail.html', data=data)
+
+
+@app.route('/recibos/add/', methods=['GET'])
+def recibos_add(api_resp=None):
+    """
+    Recibo: añadir recibo
+    ----
+    En esta rutina mostraremos una página con un formulario para crear
+    un nuevo recibo.
+    """
+    data = {
+        'title':                    "Añadir recibos",
+        'breadcrumb_title':         "Contabilidad",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Recibos',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a recibos',
+        'breadcrumb_button_url':    '/recibos',
+        'database_name':            'recibo',
+        'database_name_plural':     'recibos',
+        'card_title':               "Crear recibo",
+        'edit':                     False,  # el formulario será de creación
+        # no son necesarios más datos en este caso
+    }
+    return render_template('pages/recibos_form.html', data=data)
+
+@app.route('/recibos/', methods=['GET'])
+def recibos_all():
+    """
+    Recibos: mostrar la información de todos los recibos
+    ----
+    En esta rutina mostraremos la información de todos los recibos
+    """
+    try:
+        recibos = Recibo.query.all()
+        recibos = [recibo.serialize() for recibo in recibos]
+        success = True
+    except:
+        success = False
+    data = {
+        'title':                    "Recibos",
+        'breadcrumb_title':         "Contabilidad",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Recibos',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Añadir recibo',
+        'breadcrumb_button_url':    '/recibos/add',
+        'database_name':            'recibo',
+        'database_name_plural':     'recibos',
+        'card_title':               "Listado de recibos",
+        'error':                    f'No hemos podido obtener la información de los recibos' if not success else None,
+        'recibos':                  recibos if success else None
+    }
+    return render_template('pages/recibos_all.html', data=data)
+
+
+@app.route('/facturas/add/', methods=['GET'])
+def facturas_add(api_resp=None):
+    """
+    Factura: añadir factura
+    ----
+    En esta rutina mostraremos una página con un formulario para crear
+    una nuevo factura.
+    """
+    data = {
+        'title':                    "Añadir factura",
+        'breadcrumb_title':         "Contabilidad",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Facturas',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a facturas',
+        'breadcrumb_button_url':    '/facturas',
+        'database_name':            'factura',
+        'database_name_plural':     'facturas',
+        'card_title':               "Crear factura",
+        'edit':                     False,  # el formulario será de creación
+        # no son necesarios más datos en este caso
+    }
+    return render_template('pages/facturas_form.html', data=data)
+
+@app.route('/facturas/', methods=['GET'])
+def facturas_all():
+    """
+    Facturas: mostrar la información de todos las facturas
+    ----
+    En esta rutina mostraremos la información de todos las facturas
+    """
+    try:
+        facturas = Factura.query.all()
+        facturas = [factura.serialize() for factura in facturas]
+        success = True
+    except:
+        success = False
+    
+    data = {
+        'title':                    "Facturas",
+        'breadcrumb_title':         "Contabilidad",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Facturas',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Añadir factura',
+        'breadcrumb_button_url':    '/facturas/add',
+        'database_name':            'factura',
+        'database_name_plural':     'facturas',
+        'card_title':               "Listado de facturas",
+        'error':                    f'No hemos podido obtener la información de las facturas' if not success else None,
+        'facturas':                  facturas if success else None
+    }
+    return render_template('pages/facturas_all.html', data=data)
+
+
+@app.route('/balancesCuentas/', methods=['GET'])
+def balanceCuentas_all():
+    """
+    Balances: mostrar la información de todos los balances
+    ----
+    En esta rutina mostraremos la información de todos los balances
+    """
+    try:
+        balancesCuentas = BalanceCuentas.query.all()
+        balancesCuentas = [balanceCuentas.serialize() for balanceCuentas in balancesCuentas]
+        
+        success = True
+    except:
+        success = False
+    data = {
+        'title':                    "Balance de cuentas",
+        'breadcrumb_title':         "Contabilidad",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Balances',
+        'database_name':            'balanceCuentas',
+        'database_name_plural':     'balancesCuentas',
+        'card_title':               "Listado de operaciones",
+        'error':                    f'No hemos podido obtener la información de los balances' if not success else None,
+        'balancesCuentas':          balancesCuentas if success else None
+    }
+
+    return render_template('pages/balancesCuentas_all.html', data=data)
+
+
+#  __________________
+# |                  |
+# |  API             |
+# |__________________|
+
+
+@app.route('/api/nominas/add', methods=['POST'])
+def api_nominas_add():
+    data = json.loads(request.form['data'])
+
+    IBAN = data['IBAN']
+    fecha = data['fecha']
+    sueldo = float(data['sueldo'])
+    DNI = data['DNI']
+
+
+     
+    qry = BalanceCuentas.query.order_by(BalanceCuentas.IdOp.desc()).first()
+
+    IdOp = 0
+    balance = -1*sueldo
+    if qry != None:
+        d = qry.serialize()
+        IdOp = d['IdOp'] + 1
+        balance = d['balance'] - sueldo
+        
+
+    valid, reason = Nomina.validate(IBAN, fecha, sueldo, DNI, IdOp)
+
+    response = {}
+
+    if valid:
+        try:
+            nomina=Nomina(
+                IBAN		= IBAN,
+                fecha	    = fecha,
+                sueldo	    = sueldo,
+                DNI		    = DNI,
+                IdOp        = IdOp
+            )
+            balanceCuentas = BalanceCuentas(
+                IdOp            = IdOp,
+                balance         = balance,
+                claseOp         = ClaseOperacion(2)
+            )
+            db.session.add(balanceCuentas)
+            db.session.add(nomina)
+            db.session.commit()
+            response['category'] = 'success'
+            response['message'] = f"Nómina añadida con DNI: {nomina.DNI} Fecha: {nomina.fecha}"
+            response['data'] = {
+                'redirect': f"/nominas/{nomina.DNI}/{nomina.fecha}"
+            }
+        except Exception as e:
+            response['category'] = 'error'
+            response['message'] = "Server insertion error: " + str(e)
+    else:
+        response['category'] = 'constraint'
+        response['message'] = reason
+
+    return jsonify(response)
+
+
+
+# Aquí tampoco usamos make_response, aunque deberíamos
+@app.route('/api/nominas/edit/<DNI>/<fecha>', methods=['POST'])
+def api_nominas_edit(DNI, fecha):
+    data = json.loads(request.form['data'])
+    IBAN = data['IBAN']
+
+    # server-side validation
+    #valid, reason = Nomina.validate(IBAN, fecha, sueldo, DNI, IdOp)
+    valid = True
+
+    response = {}
+
+    if valid:
+        try:
+            nomina=Nomina.query.filter_by(DNI=DNI, fecha=fecha).first()
+            nomina.IBAN = IBAN
+
+            db.session.commit()
+            response['category'] = 'success'
+            response['message'] = f"Nómina actualizada con DNI: {nomina.DNI} Fecha: {nomina.fecha}"
+            response['data'] = {
+                'redirect': f"/nominas/{nomina.DNI}/{nomina.fecha}"
+            }
+        except Exception as e:
+            response['category'] = 'error'
+            response['message'] = "Server insertion error: " + str(e)
+    else:
+        response['category'] = 'constraint'
+        response['message'] = reason
+
+    return jsonify(response)
+
+@app.route('/api/recibos/add', methods=['POST'])
+def api_recibos_add():
+    data = json.loads(request.form['data'])
+
+    CIF_pro = data['CIF_pro']
+    NumeroRegistro = int(data['NumeroRegistro'])
+    FechaCom = data['FechaCom']
+    ImporteCom = int(data['ImporteCom'])
+
+
+     
+    qry = BalanceCuentas.query.order_by(BalanceCuentas.IdOp.desc()).first()
+
+    IdOp = 0
+    balance = -1*ImporteCom
+    if qry != None:
+        d = qry.serialize()
+        IdOp = d['IdOp'] + 1
+        balance = d['balance'] - ImporteCom
+
+
+    # server-side validation
+    #   Aquí insertamos una validación que tenga que efectuarse en el
+    #   lado del servidor, i.e., comprobar que un ID referencia a un
+    #   objeto que existe en la BD, etc. Esto que aparece aquí es de
+    #   prueba, para que veáis cómo implementarlo (lo eliminaré)
+    valid, reason = Recibo.validate(CIF_pro, NumeroRegistro, FechaCom, ImporteCom, IdOp)
+    if valid:
+        print("Genial")
+    else:
+        print("Muy Mal")
+
+
+    response = {}
+
+    if valid:
+        try:
+            recibo=Recibo(
+                CIF_pro		    = CIF_pro,
+                NumeroRegistro	= NumeroRegistro,
+                FechaCom	    = FechaCom,
+                ImporteCom		= ImporteCom,
+                IdOp            = IdOp
+            )
+            balanceCuentas = BalanceCuentas(
+                IdOp            = IdOp,
+                balance         = balance,
+                claseOp         = ClaseOperacion(0)
+            )
+            db.session.add(balanceCuentas)
+            db.session.add(recibo)
+            db.session.commit()
+            response['category'] = 'success'
+            response['message'] = f"Recibo añadida con CIF: {recibo.CIF_pro} Número de registro: {recibo.NumeroRegistro}"
+            response['data'] = {
+                'redirect': f"/recibos"
+            }
+        except Exception as e:
+            response['category'] = 'error'
+            response['message'] = "Server insertion error: " + str(e)
+    else:
+        response['category'] = 'constraint'
+        response['message'] = reason
+    
+    return jsonify(response)
+
+
+@app.route('/api/facturas/add', methods=['POST'])
+def api_facturas_add():
+    data = json.loads(request.form['data'])
+
+    CIF_cli = data['CIF_cli']
+    IDlote = int(data['IDlote'])
+    FechaVen = data['FechaVen']
+    ImporteVen = int(data['ImporteVen'])
+
+
+     
+    qry = BalanceCuentas.query.order_by(BalanceCuentas.IdOp.desc()).first()
+
+    IdOp = 0
+    balance = ImporteVen
+    if qry != None:
+        d = qry.serialize()
+        IdOp = d['IdOp'] + 1
+        balance = ImporteVen + d['balance']
+
+
+    # server-side validation
+    #   Aquí insertamos una validación que tenga que efectuarse en el
+    #   lado del servidor, i.e., comprobar que un ID referencia a un
+    #   objeto que existe en la BD, etc. Esto que aparece aquí es de
+    #   prueba, para que veáis cómo implementarlo (lo eliminaré)
+    valid, reason = Factura.validate(CIF_cli, IDlote, FechaVen, ImporteVen, IdOp)
+
+    response = {}
+
+    if valid:
+        try:
+            factura=Factura(
+                CIF_cli		    = CIF_cli,
+                IDlote	        = IDlote,
+                FechaVen	    = FechaVen,
+                ImporteVen		= ImporteVen,
+                IdOp            = IdOp
+            )
+            balanceCuentas = BalanceCuentas(
+                IdOp            = IdOp,
+                balance         = balance,
+                claseOp         = ClaseOperacion(1)
+
+            )
+            db.session.add(balanceCuentas)
+            db.session.add(factura)
+            db.session.commit()
+            response['category'] = 'success'
+            response['message'] = f"Factura añadida con CIF: {factura.CIF_cli} Número de registro: {factura.IDlote}"
+            response['data'] = {
+                'redirect': f"/facturas"
+            }
+        except Exception as e:
+            response['category'] = 'error'
+            response['message'] = "Server insertion error: " + str(e)
+    else:
+        response['category'] = 'constraint'
+        response['message'] = reason
+    
+    return jsonify(response)
+
+
+
 if __name__ == '__main__':
     app.run()
