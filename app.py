@@ -11,7 +11,8 @@ db = SQLAlchemy(app)
 
 from models import *
 
-
+#Trabajo grupo 5
+#migue es un pesao
 #  __________________
 # |                  |
 # |  Templates       |
