@@ -33,7 +33,7 @@ document.getElementById("form-submit").onclick = function () {
                         $("#form-error-text").html(response.data.message);
                         // mostramos el cuadro de error
                         $("#form-error").attr("hidden", false);
-                    }            
+                    }
                 } else {
                     // modificamos el mensaje del cuadro de error
                     $("#form-error-text").html("Parece que hay un problema. Prueba a recargar la página e inténtalo de nuevo");
