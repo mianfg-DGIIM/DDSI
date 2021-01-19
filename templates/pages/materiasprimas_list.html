@@ -1,0 +1,32 @@
+{% extends "skeleton/list.html" %}
+
+{% block table %}
+<table class="table mb-0" id="dataTable">
+    <thead>
+        <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Zona de almacenaje</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for materiaprima in data.materiasprimas %}
+        <tr>
+            <td>{{ materiaprima.nombre }}</td>
+            <td>{{ materiaprima.zonaAlmacenaje }}</td>
+            <td align="right">
+                <a href="/materiasprimas/{{ materiaprima.nombre }}"><i class="fa fa-fw fa-search mr-2"></i></a>
+                <a href="/materiasprimas/{{ materiaprima.nombre }}/edit"><i class="fa fa-fw fa-pencil mr-2"></i></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td><strong>Nombre</strong></td>
+            <td><strong>Zona de almacenaje</strong></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "skeleton/detail.html" %}
+
+{% block detail %}
+<table class="table mb-0">
+    <tbody>
+        <tr>
+            <th scope="row">Numero de registro</th>
+            <td>{{ data.mercancia.numRegistro }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Nombre de la materia prima</th>
+            <td>{{ data.mercancia.nombreM }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Cantidad</th>
+            <td>{{ data.mercancia.cantidad }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Tipo de transaccion</th>
+            <td>{{ data.mercancia.tipo.verbose }}</td>
+        </tr>
+        <tr>
+            <th scope="row">ID del proceso productivo al que va destinado en caso de salida</th>
+            <td>{{ data.mercancia.idpp }}</td>
+        </tr>
+    </tbody>
+</table>
+<a href="/materiasprimas/{{ data.mercancia.nombreM }}" type="button" class="btn btn-primary btn-sm mt-3">Ver la materia prima</a>
+{% endblock %}

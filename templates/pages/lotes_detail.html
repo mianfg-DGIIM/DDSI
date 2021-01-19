@@ -1,0 +1,28 @@
+{% extends "skeleton/detail.html" %}
+
+{% block detail %}
+<table class="table mb-0">
+    <tbody>
+        <tr>
+            <th scope="row">ID</th>
+            <td>{{ data.lote.id }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Nombre</th>
+            <td>{{ data.lote.nombre }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Fecha de producción</th>
+            <td>{{ data.lote.fechaProd }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Fecha de caducidad</th>
+            <td>{{ data.lote.fechaCad }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Cantidad</th>
+            <td>{{ data.lote.cantidad }}</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

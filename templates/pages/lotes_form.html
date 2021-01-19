@@ -1,0 +1,51 @@
+{% extends "skeleton/form.html" %}
+
+{% block form %}
+<form action="{% if data.edit %}/api/lotes/edit/{{ data.edit_data.id }}{% else %}/api/lotes/add{% endif %}" id="form" method="post" class="needs-validation" novalidate>
+    <div class="form-row mb-3">
+        <div class="col">
+            <label for="id"><strong>ID</strong></label>
+            <input class="form-control" type="number" {% if data.edit %}value="{{ data.edit_data.id }}"{% endif %}
+                placeholder="ID del lote" id="id" name="id" {% if data.edit %} disabled {% endif %}>
+        </div>
+        <div class="col">
+            <label for="nombre"><strong>Nombre</strong></label>
+            <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.nombre }}"{% endif %}
+                placeholder="Nombre del lote" id="nombre" name="nombre" required>
+            <div class="invalid-feedback">
+                Debes insertar el nombre del lote                    
+            </div>
+        </div>
+    </div>
+    <div class="form-row mb-3">
+        <div class="col">
+            <label for="fechaProd"><strong>Fecha de producción</strong></label>
+            <input class="form-control" type="date" {% if data.edit %}value="{{ data.edit_data.fechaProd }}"{% endif %}
+                placeholder="Fecha de producción del lote" id="fechaProd" name="fechaProd"required>
+            <div class="invalid-feedback">
+                Debes insertar la fecha de producción del lote
+            </div>
+        </div>
+        <div class="col">
+            <label for="fechaCad"><strong>Fecha de caducidad</strong></label>
+            <input class="form-control" type="date" {% if data.edit %}value="{{ data.edit_data.fechaCad }}"{% endif %}
+                placeholder="Fecha de caducidad" id="fechaCad" name="fechaCad" required>
+            <div class="invalid-feedback">
+                Debes insertar la fecha de caducidad del lote
+            </div>
+        </div>
+    </div>
+     <div class="form-row mb-3">
+        <div class="col">
+            <label for="cantidad"><strong>Cantidad</strong></label>
+            <input class="form-control" type="number" 
+                placeholder="Cantidad de la materia prima" id="cantidad" name="cantidad" >
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col">
+            <button type="submit" id="form-submit" class="btn btn-primary btn-sm">{% if data.edit %}Actualizar{% else %}Crear{% endif %} lote</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

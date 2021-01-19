@@ -1,0 +1,36 @@
+{% extends "skeleton/form.html" %}
+
+{% block form %}
+<form action="{% if data.edit %}/api/materiasprimas/edit/{{ data.edit_data.nombre }}{% else %}/api/materiasprimas/add{% endif %}" id="form" method="post" class="needs-validation" novalidate>
+    <div class="form-row mb-3">
+        <label for="nombre"><strong>Nombre</strong></label>
+        <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.nombre }}"{% endif %}
+            placeholder="Nombre de la materia prima" id="nombre" name="nombre"  {% if data.edit %}disabled{% endif %}>
+            <div class="invalid-feedback">
+                Debes insertar el nombre de la materia prima
+            </div>
+    </div>
+    <div class="form-row mb-3">
+        <label for="caracteristicas"><strong>Caracteristicas</strong></label>
+        <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.caracteristicas }}"{% endif %}
+            placeholder="Caracteristicas de la materia prima" id="caracteristicas" name="caracteristicas" >
+            <div class="invalid-feedback">
+                Debes insertar características de la materia prima
+            </div>
+    </div>
+    <div class="form-row mb-3">
+        <label for="zonaAlmacenaje"><strong>Zona de almacenaje</strong></label>
+        <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.zonaAlmacenaje }}"{% endif %}
+            placeholder="Zona de almacenaje" id="zonaAlmacenaje" name="zonaAlmacenaje" >
+            <div class="invalid-feedback">
+                Debes insertar la zona de almacenaje de la materia prima
+            </div>
+    </div>
+
+    <div class="form-row">
+        <div class="col">
+            <button type="submit" id="form-submit" class="btn btn-primary btn-sm">{% if data.edit %}Actualizar{% else %}Crear{% endif %} materia prima</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

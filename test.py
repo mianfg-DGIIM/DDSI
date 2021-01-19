@@ -161,6 +161,60 @@ def populate_proveedores():
 
 
 
+def populate_materiasprimas():
+    data = load_data('testbed/materiasprimas.csv')
+
+    for d in data:
+        try:
+            materiaprima = Materiaprima(
+                nombre      = d[1],
+                caracteristicas = d[2],
+                zonaAlmacenaje   = d[3],
+                #cantidadA      = int(d[4])
+            )
+            db.session.add(materiaprima)
+            db.session.commit()
+        except:
+            pass
+
+def populate_mercancias():
+    data = load_data('testbed/mercancias.csv')
+
+    for d in data:
+        try:
+            mercancia = Mercancia(
+                numRegistro      = int(d[1]),
+                nombreM = d[2],
+                cantida   = int(d[3]),
+                tipo      = MercanciaTipos(int(d[4])),
+                idpp      = d[5]
+            )
+            db.session.add(mercancia)
+            db.session.commit()
+        except:
+            pass
+
+def populate_lotes():
+    data = load_data('testbed/lotes.csv')
+
+    for d in data:
+        t_d = lambda d, i: int(d.split('/')[i])
+        try:
+            proceso_productivo = ProcesoProductivo(
+                id              = d[0],
+                nombre          = d[1],
+                descripcion     = d[2],
+                fechaProd	= datetime.datetime(t_d(d[3], 2), t_d(d[3], 1), t_d(d[3], 0)),
+                fechaCad		= datetime.datetime(t_d(d[4], 2), t_d(d[4], 1), t_d(d[4], 0)),
+                cantidad         = int(d[6])
+            )
+            db.session.add(lote)
+            db.session.commit()
+        except:
+            pass
+
+
+
 if __name__ == '__main__':
     # I+D y Producción
     populate_proyectos()
@@ -172,3 +226,6 @@ if __name__ == '__main__':
     populate_balances()
     populate_clientes()
     populate_recibos()
+    populate_materiasprimas()
+    populate_mercancias()
+    populate_lotes()

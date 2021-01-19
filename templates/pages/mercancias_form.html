@@ -1,0 +1,44 @@
+{% extends "skeleton/form.html" %}
+
+{% block form %}
+<form action="/api/mercancias/add" id="form" method="post" class="needs-validation" novalidate>
+    <div class="form-row mb-3">
+        <div class="col">
+            <label for="numRegistro"><strong>Numero de registro</strong></label>
+            <input class="form-control" type="text"
+                placeholder="Numero de registro" id="numRegistro" name="numRegistro">
+        </div>
+    </div>
+    <div class="form-row mb-3">
+        <div class="col">
+            <label for="nombreM"><strong>Nombre de la materia prima</strong></label>
+            <input class="form-control" type="text"
+                placeholder="Nombre de la materia prima" id="nombreM" name="nombreM" >
+        </div>
+    </div>
+    <div class="form-row mb-3">
+        <div class="col">
+            <label for="cantidad"><strong>Cantidad</strong></label>
+            <input class="form-control" type="text" 
+                placeholder="Cantidad de la materia prima" id="cantidad" name="cantidad" >
+        </div>
+    </div>
+    <div class="form-row mb-3">
+        <div class="col">
+            <label for="tipo"><strong>Tipo de transacción</strong></label>
+            <select class="form-control" id="tipo" name="tipo" >
+                <option value="1">Retirada</option>
+                <option value="0" >Añadido</option>
+            </select>
+        </div>
+        <div class="col">
+            <label for="idpp"><strong>ID Proceso productivo</strong> </label>
+            <input class="form-control" type="text"
+                placeholder="ID proceso productivo" id="idpp" name="idpp">
+        </div>
+    </div>
+    <div class="form-row">
+        <button type="submit" id="form-submit" class="btn btn-primary btn-sm">Crear mercancia</button>
+    </div>
+</form>
+{% endblock %}
