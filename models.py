@@ -343,12 +343,15 @@ class Recibo(db.Model):
         self.IdOp = IdOp
     
     @classmethod
-    def validate(self, CIF_pro, NumeroRegistro, FechaCom, ImporteCom, IdOp):
-
-        b1 = Recibo.query.filter_by(NumeroRegistro = NumeroRegistro).first() == None
+    def validate(self, CIF_pro, NumeroRegistro, FechaCom, ImporteCom):
+        if len(NumeroRegistro)>0:
+            b1 = Recibo.query.filter_by(NumeroRegistro = int(NumeroRegistro)).first() == None
+        else:
+            b1 = True
         b2 = len(CIF_pro) == 9
         #b3 = Mercancia.query.filter_by(NumeroRegistro = NumeroRegistro).first() != None
         b3 = True
+        b4 = len(CIF_pro) > 0 and len(NumeroRegistro) > 0 and len(FechaCom) > 0 and len(ImporteCom) > 0
         reason = ""
 
         if not b1:
@@ -357,9 +360,11 @@ class Recibo(db.Model):
             reason = reason + "Longitud de CIF no apropiada. "
         #if not b3:
             #reason = reason + "Número de registro no asignado a ninguna mercancía. "
+        if not b4:
+            reason = reason + "Todos los campos tienen que ser rellenados. "
         
 
-        return b1 and b2 and b3, reason
+        return b1 and b2 and b3 and b4, reason
 
     
     def __repr__(self):
@@ -392,12 +397,21 @@ class Factura(db.Model):
         self.IdOp = IdOp
     
     @classmethod
-    def validate(self, CIF_cli, IDlote, FechaVen, ImporteVen, IdOp):
-        b1 = Factura.query.filter_by(IDlote = IDlote).first() == None
+    def validate(self, CIF_cli, IDlote, FechaVen, ImporteVen):
+        if len(IDlote)>0:
+            b1 = Factura.query.filter_by(IDlote = int(IDlote)).first() == None
+        else:
+            b1 = True
         b2 = len(CIF_cli) == 9
         #b3 = Lote.query.filter_by(IDlote = IDlote).first() != None
         b3 = True
+        b4 = len(CIF_cli) > 0 and len(IDlote) > 0 and len(FechaVen) > 0 and len(ImporteVen) > 0
         reason = ""
+        print("Longitud id lote: ", len(IDlote))
+        if b4:
+            print("Todos mayor")
+        else:
+            print("Alguno 0")
 
         if not b1:
             reason = reason + "ID de lote ya usado. "
@@ -405,9 +419,11 @@ class Factura(db.Model):
             reason = reason + "Longitud de CIF no apropiada. "
         #if not b3:
             #reason = reason + "Identificador no asignado a ningún lote. "
+        if not b4:
+            reason = reason + "Todos los campos tienen que ser rellenados. "
         
 
-        return b1 and b2 and b3, reason
+        return b1 and b2 and b3 and b4, reason
     
     def __repr__(self):
         return f'<Recibo {self.CIF_cli} - {self.IDlote}>'
@@ -439,11 +455,15 @@ class Nomina(db.Model):
         self.IdOp = IdOp
     
     @classmethod
-    def validate(self, IBAN, fecha, sueldo, DNI, IdOp):
-        b1 = Nomina.query.filter_by(DNI = DNI, fecha = fecha).first() == None
+    def validate(self, IBAN, fecha, sueldo, DNI):
+        if len(DNI)>0 and len(fecha)>0:
+            b1 = Nomina.query.filter_by(DNI = DNI, fecha = fecha).first() == None
+        else:
+            b1 = True
         b2 = len(DNI) == 9
         #b3 = Empleado.query.filter_by(dni = dni).first() != None
         b3 = True
+        b4 = len(IBAN) > 0 and len(fecha) > 0 and len(sueldo) > 0 and len(DNI) > 0
         reason = ""
 
         if not b1:
@@ -452,8 +472,10 @@ class Nomina(db.Model):
             reason = reason + "Longitud de DNI no apropiada. "
         #if not b3:
             #reason = reason + "DNI no asignado a ningún empleado. "
+        if not b4:
+            reason = reason + "Todos los campos tienen que ser rellenados. "
 
-        return b1 and b2 and b3, reason
+        return b1 and b2 and b3 and b4, reason
     
     def __repr__(self):
         return f'<Nomina {self.IBAN} - {self.fecha}>'

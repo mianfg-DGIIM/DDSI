@@ -2145,22 +2145,24 @@ def api_nominas_add():
 
     IBAN = data['IBAN']
     fecha = data['fecha']
-    sueldo = float(data['sueldo'])
+    sueldo = data['sueldo']
     DNI = data['DNI']
 
-
+    valid, reason = Nomina.validate(IBAN, fecha, sueldo, DNI)
+    if valid:
+        sueldo = float(sueldo)
      
     qry = BalanceCuentas.query.order_by(BalanceCuentas.IdOp.desc()).first()
 
     IdOp = 0
-    balance = -1*sueldo
-    if qry != None:
+    if qry != None and valid:
+        balance = -1*sueldo
         d = qry.serialize()
         IdOp = d['IdOp'] + 1
-        balance = d['balance'] - sueldo
+        balance = round(d['balance'] - float(sueldo),2)
         
 
-    valid, reason = Nomina.validate(IBAN, fecha, sueldo, DNI, IdOp)
+    
 
     response = {}
 
@@ -2205,7 +2207,9 @@ def api_nominas_edit(DNI, fecha):
 
     # server-side validation
     #valid, reason = Nomina.validate(IBAN, fecha, sueldo, DNI, IdOp)
-    valid = True
+    valid = len(IBAN)>0
+    if not valid:
+        reason = "El IBAN no puede estar vacío."
 
     response = {}
 
@@ -2234,28 +2238,27 @@ def api_recibos_add():
     data = json.loads(request.form['data'])
 
     CIF_pro = data['CIF_pro']
-    NumeroRegistro = int(data['NumeroRegistro'])
+    NumeroRegistro = data['NumeroRegistro']
     FechaCom = data['FechaCom']
-    ImporteCom = int(data['ImporteCom'])
+    ImporteCom = data['ImporteCom']
 
-
+    valid, reason = Recibo.validate(CIF_pro, NumeroRegistro, FechaCom, ImporteCom)
+    if valid:
+        NumeroRegistro = int(NumeroRegistro)
+        ImporteCom = float(ImporteCom)
      
     qry = BalanceCuentas.query.order_by(BalanceCuentas.IdOp.desc()).first()
+    
 
     IdOp = 0
-    balance = -1*ImporteCom
-    if qry != None:
+    if qry != None and valid:
+        balance = -1*ImporteCom
         d = qry.serialize()
         IdOp = d['IdOp'] + 1
-        balance = d['balance'] - ImporteCom
+        balance = round(d['balance'] - float(ImporteCom),2)
 
 
-    # server-side validation
-    #   Aquí insertamos una validación que tenga que efectuarse en el
-    #   lado del servidor, i.e., comprobar que un ID referencia a un
-    #   objeto que existe en la BD, etc. Esto que aparece aquí es de
-    #   prueba, para que veáis cómo implementarlo (lo eliminaré)
-    valid, reason = Recibo.validate(CIF_pro, NumeroRegistro, FechaCom, ImporteCom, IdOp)
+    
     if valid:
         print("Genial")
     else:
@@ -2301,28 +2304,27 @@ def api_facturas_add():
     data = json.loads(request.form['data'])
 
     CIF_cli = data['CIF_cli']
-    IDlote = int(data['IDlote'])
+    IDlote = data['IDlote']
     FechaVen = data['FechaVen']
-    ImporteVen = int(data['ImporteVen'])
+    ImporteVen = data['ImporteVen']
 
-
+    valid, reason = Factura.validate(CIF_cli, IDlote, FechaVen, ImporteVen)
+    if valid:
+        IDlote = int(IDlote)
+        print("IDlote2: ", IDlote)
+        ImporteVen = float(ImporteVen)
      
     qry = BalanceCuentas.query.order_by(BalanceCuentas.IdOp.desc()).first()
 
     IdOp = 0
-    balance = ImporteVen
-    if qry != None:
+    if qry != None and valid:
+        balance = ImporteVen
         d = qry.serialize()
         IdOp = d['IdOp'] + 1
-        balance = ImporteVen + d['balance']
+        balance = round(float(ImporteVen) + d['balance'],2)
 
-
-    # server-side validation
-    #   Aquí insertamos una validación que tenga que efectuarse en el
-    #   lado del servidor, i.e., comprobar que un ID referencia a un
-    #   objeto que existe en la BD, etc. Esto que aparece aquí es de
-    #   prueba, para que veáis cómo implementarlo (lo eliminaré)
-    valid, reason = Factura.validate(CIF_cli, IDlote, FechaVen, ImporteVen, IdOp)
+    print("IDlote1: ", IDlote)
+    
 
     response = {}
 
