@@ -62,7 +62,7 @@ class Evaluacion(db.Model):
             good_date = fechaIni < fechaFin
         else:
             good_date = true
-        good_index = int(index) >= 0 and int(index) <= 10
+        good_index = index >= 0 and index <= 1
 
         reason = "none"
         if not good_dni:
@@ -81,7 +81,7 @@ class Empleado(db.Model):
     dni = db.Column(db.String(), primary_key=True)
     nombre = db.Column(db.String())
     puesto = db.Column(db.String())
-    sueldo = db.Column(db.String())
+    sueldo = db.Column(db.Float())
     duracion = db.Column(db.String())
     fechaInicio = db.Column(db.String())
     actividad = db.Column(db.Enum(EmpleadoEstados))
@@ -118,7 +118,7 @@ class Empleado(db.Model):
     @classmethod
     def validate(self, dni, sueldo):
         good_name = Empleado.query.filter_by(dni=dni)
-        good_money = int(sueldo) >= 0
+        good_money = sueldo >= 0
         reason = "none"
         if not good_name:
             reason = "Ya existe un empleado con ese DNI"
