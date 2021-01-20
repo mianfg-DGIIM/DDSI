@@ -4,6 +4,7 @@
 <table class="table mb-0" id="dataTable">
     <thead>
         <tr>
+            <th scope="col">ID</th>
             <th scope="col">Nombre</th>
             <th scope="col">Zona de almacenaje</th>
             <th scope="col"></th>
@@ -12,17 +13,19 @@
     <tbody>
         {% for materiaprima in data.materiasprimas %}
         <tr>
+            <td>{{ materiaprima.id }}</td>
             <td>{{ materiaprima.nombre }}</td>
             <td>{{ materiaprima.zonaAlmacenaje }}</td>
             <td align="right">
-                <a href="/materiasprimas/{{ materiaprima.nombre }}"><i class="fa fa-fw fa-search mr-2"></i></a>
-                <a href="/materiasprimas/{{ materiaprima.nombre }}/edit"><i class="fa fa-fw fa-pencil mr-2"></i></a>
+                <a href="/materiasprimas/{{ materiaprima.id }}"><i class="fa fa-fw fa-search mr-2"></i></a>
+                <a href="/materiasprimas/{{ materiaprima.id }}/edit"><i class="fa fa-fw fa-pencil mr-2"></i></a>
             </td>
         </tr>
         {% endfor %}
     </tbody>
     <tfoot>
         <tr>
+            <td><strong>ID</strong></td>
             <td><strong>Nombre</strong></td>
             <td><strong>Zona de almacenaje</strong></td>
             <td></td>

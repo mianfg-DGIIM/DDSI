@@ -661,8 +661,8 @@ def materiasprimas_all():
     return render_template('pages/materiasprimas_list.html', data=data)
 
 
-@app.route('/materiasprimas/<nombre>', methods=['GET'])
-def materiasprimas_detail(nombre):
+@app.route('/materiasprimas/<id>', methods=['GET'])
+def materiasprimas_detail(id):
     """
     Materiasprimas: mostrar información de una materia prima
     ----
@@ -670,29 +670,29 @@ def materiasprimas_detail(nombre):
     """
     # primero recopilamos la información de la BD
     try:
-        materiaprima =  Materiaprima.query.filter_by(nombre=nombre).first()
+        materiaprima =  Materiaprima.query.filter_by(id=id).first()
         materiaprima = materiaprima.serialize()
     except:
         materiaprima = None
 
     data = {
-        'title':                    f"Materia prima #{nombre}",
+        'title':                    f"Materia prima #{id}",
         'breadcrumb_title':         "Almacenaje",
         'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Materias primas',
         'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a materias primas',
         'breadcrumb_button_url':    '/materiasprimas',
         'database_name':            'materiaprima',
         'database_name_plural':     'materiasprimas',
-        'card_title':               f"Detalle de la materia prima #{nombre}",
+        'card_title':               f"Detalle de la materia prima #{id}",
         # Mostrar un mensaje de error si no existe
-        'error':    f'No se ha encontrado una materia prima con nombre {nombre}' if not materiaprima else None,
+        'error':    f'No se ha encontrado una materia prima con ID {id}' if not materiaprima else None,
         'materiaprima': materiaprima
     }
     return render_template('pages/materiasprimas_detail.html', data=data)
 
 
-@app.route('/materiasprimas/<nombre>/edit', methods=['GET'])
-def materiasprimas_edit(nombre, api_resp=None):
+@app.route('/materiasprimas/<id>/edit', methods=['GET'])
+def materiasprimas_edit(id, api_resp=None):
     """
     Materiasprimas: edit información de una materia prima
     ---
@@ -700,21 +700,21 @@ def materiasprimas_edit(nombre, api_resp=None):
     """
     # primero recopilamos la información de la BD
     try:
-        materiaprima = Materiaprima.query.filter_by(nombre=nombre).first()
+        materiaprima = Materiaprima.query.filter_by(id=id).first()
         materiaprima = materiaprima.serialize()
     except:
         materiaprima = None
 
     data = {
-        'title':                    f"Editar materia prima #{nombre}",
+        'title':                    f"Editar materia prima #{id}",
         'breadcrumb_title':         "Almacenaje",
         'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Materias primas',
         'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a materias primas',
         'breadcrumb_button_url':    '/materiasprimas',
         'database_name':            'materiaprima',
         'database_name_plural':     'materiasprimas',
-        'card_title':               f"Editar materia prima #{nombre}",
-        'error':                    f'No se ha encontrado una materia prima con nombre {nombre}' if not materiaprima else None,
+        'card_title':               f"Editar materia prima #{id}",
+        'error':                    f'No se ha encontrado una materia prima con ID {id}' if not materiaprima else None,
         'edit':                     True,   # el formulario será de edición
         # cargamos la información existente en el formulario
         'edit_data':                materiaprima
@@ -1877,7 +1877,7 @@ def balanceCuentas_all():
 def api_materiasprimas_add():
 
     data = json.loads(request.form['data'])
-    nombre		= data['nombre']
+    nombre		        = data['nombre']
     caracteristicas	    = data['caracteristicas']
     zonaAlmacenaje      = data['zonaAlmacenaje']
 
@@ -1895,19 +1895,18 @@ def api_materiasprimas_add():
 
     print(valid, reason)
     if valid:
-        print("dentro")
         try:
             materiaprima=Materiaprima(
-                nombre         = nombre,
+                nombre              = nombre,
                 caracteristicas	    = caracteristicas,
                 zonaAlmacenaje      = zonaAlmacenaje
             )
             db.session.add(materiaprima)
             db.session.commit()
             response['category'] = 'success'
-            response['message']= f"Materia prima añadida con nombre: {materiaprima.nombre}"
+            response['message']= f"Materia prima añadida con nombre: {materiaprima.id}"
             response['data'] = {
-                'redirect': f"/materiasprimas/{materiaprima.nombre}"
+                'redirect': f"/materiasprimas/{materiaprima.id}"
             }
         except Exception as e:
             response['category'] = 'error'
@@ -1919,9 +1918,10 @@ def api_materiasprimas_add():
     return jsonify(response)
 
 
-@app.route('/api/materiasprimas/edit/<nombre>', methods=['POST'])
-def api_materiasprimas_edit(nombre):
+@app.route('/api/materiasprimas/edit/<id>', methods=['POST'])
+def api_materiasprimas_edit(id):
     data = json.loads(request.form['data'])
+    nombre              = data['nombre']
     zonaAlmacenaje		= data['zonaAlmacenaje']
     caracteristicas	    = data['caracteristicas']
 
@@ -1930,20 +1930,26 @@ def api_materiasprimas_edit(nombre):
     response = {}
 
     try:
-        materiaprima=Materiaprima.query.filter_by(nombre=nombre).first()
+        materiaprima=Materiaprima.query.filter_by(id=id).first()
+        materiaprima.nombre             = nombre
         materiaprima.caracteristicas     = caracteristicas
         materiaprima.zonaAlmacenaje         = zonaAlmacenaje
         db.session.commit()
         response['category'] = 'success'
-        response['message']= f"Materia prima actualizado con nombre: {materiaprima.nombre}"
+        response['message']= f"Materia prima actualizado con nombre: {materiaprima.id}"
         response['data'] = {
-            'redirect': f"/materiasprimas/{materiaprima.nombre}"
+            'redirect': f"/materiasprimas/{materiaprima.id}"
         }
     except Exception as e:
         response['category'] = 'error'
         response['message'] = "Server insertion error: " + str(e)
 
     return jsonify(response)
+
+
+
+
+
 
 
 # ==== MERCANCIAS ====
@@ -1954,8 +1960,8 @@ def api_materiasprimas_edit(nombre):
 def api_mercancias_add():
 
     data = json.loads(request.form['data'])
-    numRegistro = data['numRegistro']
-    nombreM		= data['nombreM']
+
+    idmp		= data['idmp']
     cantidad	= data['cantidad']
     tipo        = MercanciaTipos(int(data['tipo']))
     idpp        = data['idpp']
@@ -1963,23 +1969,20 @@ def api_mercancias_add():
     valid = True
 
    
-    if(numRegistro==""):
-        valid = False
-        reason = "Debe insertar un numero de registro"
+
     if(cantidad==""):
        valid = False
        reason = "Debe insertar cantidad de materia prima"
     
     if valid:
-        valid,reason = Mercancia.validate(numRegistro, nombreM,cantidad, tipo, idpp) 
+        valid,reason = Mercancia.validate( idmp,cantidad, tipo, idpp) 
     
     response = {}
 
     if valid:
         try:
             mercancia=Mercancia(
-                numRegistro     = numRegistro,
-                nombreM         = nombreM,
+                idmp         = idmp,
                 cantidad	    = cantidad,
                 tipo            = tipo,
                 idpp            = idpp          
@@ -1991,7 +1994,7 @@ def api_mercancias_add():
             response['data'] = {
                 'redirect': f"/mercancias/{mercancia.numRegistro}"
             }
-            materia = Materiaprima.query.filter_by(nombre = nombreM).first()
+            materia = Materiaprima.query.filter_by(id = idmp).first()
 
             if tipo == MercanciaTipos.RETIRADA:
                 materia.cantidadA = materia.cantidadA - mercancia.cantidad
@@ -2009,22 +2012,21 @@ def api_mercancias_add():
 
 
 
+
+
 @app.route('/api/lotes/add', methods=['POST'])
 def api_lotes_add():
 
 
     data = json.loads(request.form['data'])
-    id            = data['id']
-    nombre	      = data['nombre']
+    idproducto	  = data['idproducto']
     fechaProd	  = data['fechaProd']
     fechaCad      = data['fechaCad']
     cantidad      = data['cantidad']
-
-    valid,reason = Lote.validate(id, fechaProd, fechaCad)
     
-    if(id==""):
-       valid = False
-       reason = "Debe insertar un ID"
+    valid,reason = Lote.validate(idproducto, fechaProd, fechaCad)
+    
+
     if(fechaProd==""):
        valid = False
        reason = "Debe insertar una fecha de produccion"
@@ -2041,11 +2043,11 @@ def api_lotes_add():
 
         try:
             lote=Lote(
-                id             = id,
-                nombre         = nombre,
+                idproducto     = idproducto,
                 fechaProd	   = fechaProd,
                 fechaCad       = fechaCad,
-                cantidad       = cantidad
+                cantidad       = cantidad,
+                estado         = 'ALMACENADO' 
             )
 
             db.session.add(lote)
@@ -2071,21 +2073,21 @@ def api_lotes_add():
 def api_lotes_edit(id):
 
     data = json.loads(request.form['data'])
-    nombre		    = data['nombre']
+    idproducto		= data['idproducto']
     fechaProd		= data['fechaProd']
     fechaCad	    = data['fechaCad']
     cantidad        = data['cantidad']
 
 
     # server-side validation
-    valid,reason = Lote.validateEdit(fechaProd, fechaCad)
+    valid,reason = Lote.validate(idproducto, fechaProd, fechaCad)
 
     response = {}
 
     if valid:
         try:
             lote=Lote.query.filter_by(id=id).first()
-            lote.nombre           = nombre
+            lote.idproducto       = idproducto
             lote.fechaProd        = fechaProd
             lote.fechaCad         = fechaCad
             lote.cantidad         = cantidad
@@ -2106,17 +2108,18 @@ def api_lotes_edit(id):
 
 
 
-
-@app.route('/api/lotes/delete/<id>', methods=['POST', 'GET'])
-def api_lote_delete(id):
+@app.route('/api/lotes/modify/<id>', methods=['POST', 'GET'])
+def api_lotes_modify(id):
     response = {}
-
+    print("wow")
     try:
+        print("dentro")
         lote = Lote.query.filter_by(id=id).first()
-        db.session.delete(lote)
+        lote.estado = 'REPARTIDO'
+        print(lote)     
         db.session.commit()
         response['category'] = 'success'
-        response['message'] = f"Lote eliminado con ID: {lote.id}"
+        response['message'] = f"Lote desactivado con ID: {lote.id}"
         response['data'] = {
             'redirect':     f"/lotes"
         }
@@ -2125,7 +2128,6 @@ def api_lote_delete(id):
         response['message'] = "Server deletion error: " + str(e)
 
     return jsonify(response)
-
 
 
 

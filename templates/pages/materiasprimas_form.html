@@ -1,11 +1,11 @@
 {% extends "skeleton/form.html" %}
 
 {% block form %}
-<form action="{% if data.edit %}/api/materiasprimas/edit/{{ data.edit_data.nombre }}{% else %}/api/materiasprimas/add{% endif %}" id="form" method="post" class="needs-validation" novalidate>
+<form action="{% if data.edit %}/api/materiasprimas/edit/{{ data.edit_data.id }}{% else %}/api/materiasprimas/add{% endif %}" id="form" method="post" class="needs-validation" novalidate>
     <div class="form-row mb-3">
         <label for="nombre"><strong>Nombre</strong></label>
         <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.nombre }}"{% endif %}
-            placeholder="Nombre de la materia prima" id="nombre" name="nombre"  {% if data.edit %}disabled{% endif %}>
+            placeholder="Nombre de la materia prima" id="nombre" name="nombre">
             <div class="invalid-feedback">
                 Debes insertar el nombre de la materia prima
             </div>

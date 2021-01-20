@@ -167,10 +167,9 @@ def populate_materiasprimas():
     for d in data:
         try:
             materiaprima = Materiaprima(
-                nombre      = d[1],
-                caracteristicas = d[2],
-                zonaAlmacenaje   = d[3],
-                #cantidadA      = int(d[4])
+                nombre      = d[0],
+                caracteristicas = d[1],
+                zonaAlmacenaje   = d[2]
             )
             db.session.add(materiaprima)
             db.session.commit()
@@ -183,11 +182,11 @@ def populate_mercancias():
     for d in data:
         try:
             mercancia = Mercancia(
-                numRegistro      = int(d[1]),
-                nombreM = d[2],
-                cantida   = int(d[3]),
-                tipo      = MercanciaTipos(int(d[4])),
-                idpp      = d[5]
+                numRegistro      = int(d[0]),
+                nombreM = d[1],
+                cantidad   = int(d[2]),
+                tipo      = MercanciaTipos(int(d[3])),
+                idpp      = d[4]
             )
             db.session.add(mercancia)
             db.session.commit()

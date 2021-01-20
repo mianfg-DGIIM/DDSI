@@ -4,12 +4,12 @@
 <table class="table mb-0">
     <tbody>
         <tr>
-            <th scope="row">ID</th>
+            <th scope="row">ID del lote</th>
             <td>{{ data.lote.id }}</td>
         </tr>
         <tr>
-            <th scope="row">Nombre</th>
-            <td>{{ data.lote.nombre }}</td>
+            <th scope="row">ID del producto asociado</th>
+            <td>{{ data.lote.idproducto }}</td>
         </tr>
         <tr>
             <th scope="row">Fecha de producción</th>
@@ -23,6 +23,11 @@
             <th scope="row">Cantidad</th>
             <td>{{ data.lote.cantidad }}</td>
         </tr>
+        <tr>
+            <th scope="row">Estado del lote</th>
+            <td>{{ data.lote.estado.verbose}}</td>
+        </tr>
     </tbody>
 </table>
+
 {% endblock %}

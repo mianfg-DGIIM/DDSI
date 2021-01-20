@@ -5,7 +5,7 @@
     <thead>
         <tr>
             <th>Numero de Registro</th>
-            <th>Nombre de la materia</th>
+            <th>ID de la materia</th>
             <th></th>
         </tr>
     </thead>
@@ -13,7 +13,7 @@
         {% for mercancia in data.mercancias %}
         <tr>
             <td>{{ mercancia.numRegistro }}</td>
-            <td>{{ mercancia.nombreM }}</td>
+            <td>{{ mercancia.idmp }}</td>
             <td align="right">
                 <a href="/mercancias/{{ mercancia.numRegistro }}"><i class="fa fa-fw fa-search mr-2"></i></a>
                 
@@ -24,7 +24,7 @@
     <tfoot>
         <tr>
             <td><strong>Numero de Registro</strong></td>
-            <td><strong>Nombre de la materia</strong></td>
+            <td><strong>ID de la materia</strong></td>
             <td></td>
         </tr>
     </tfoot>

@@ -8,8 +8,8 @@
             <td>{{ data.mercancia.numRegistro }}</td>
         </tr>
         <tr>
-            <th scope="row">Nombre de la materia prima</th>
-            <td>{{ data.mercancia.nombreM }}</td>
+            <th scope="row">ID de la materia prima</th>
+            <td>{{ data.mercancia.idmp }}</td>
         </tr>
         <tr>
             <th scope="row">Cantidad</th>
@@ -25,5 +25,5 @@
         </tr>
     </tbody>
 </table>
-<a href="/materiasprimas/{{ data.mercancia.nombreM }}" type="button" class="btn btn-primary btn-sm mt-3">Ver la materia prima</a>
+<a href="/materiasprimas/{{ data.mercancia.idmp }}" type="button" class="btn btn-primary btn-sm mt-3">Ver la materia prima</a>
 {% endblock %}

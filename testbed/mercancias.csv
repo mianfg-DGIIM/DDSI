@@ -1,11 +1,11 @@
 numRegistro,nombreM,cantidad,tipo,idpp 
-1234562, Hidróxido de sodio, 8541, 0
-54719, Ácido clorhídrico, 123, 0
-9514, Clorfenoxamina, 321, 0
-8941567, Oxicloruro de fósforo, 456, 0
-884461, Tricloruro de fósforo, 6454, 0
-1478, Hidróxido de sodio, 4560, 1, ‘AUEK5718P0000003’
-54211, N-acetil-para-aminofenol, 1150, 0
-12496, Ortodiclorobenceno, 5440, 0
-66479, 3,4-difenilamina, 300, 0
-2746, Tricloruro de fósforo, 2500, 1, ‘AUEK5718P0000003’
+1234562,Hidróxido de sodio,8541,0
+54719,Ácido clorhídrico,123,0
+9514,Clorfenoxamina,321,0
+8941567,Oxicloruro de fósforo,456,0
+884461,Tricloruro de fósforo,6454,0
+1478,Hidróxido de sodio,4560,1,‘AUEK5718P0000003’
+54211,N-acetil-para-aminofenol,1150,0
+12496,Ortodiclorobenceno,5440,0
+66479,34-difenilamina,300,0
+2746,Tricloruro de fósforo,2500,1,‘AUEK5718P0000003’
