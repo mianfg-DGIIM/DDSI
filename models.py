@@ -30,7 +30,7 @@ class Evaluacion(db.Model):
     fechaIni = db.Column(db.String())
     fechaFin = db.Column(db.String())
     conclusion = db.Column(db.String())
-    index = db.Column(db.Integer)
+    index = db.Column(db.Float())
 
     def __init__(self, nombre, dni, fechaIni, fechaFin, conclusion, index):
         self.nombre     = nombre
