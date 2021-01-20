@@ -62,7 +62,7 @@ class Evaluacion(db.Model):
             good_date = fechaIni < fechaFin
         else:
             good_date = true
-        good_index = index >= 0 and index <= 1
+        good_index = float(index) >= 0 and float(index) <= 1
 
         reason = "none"
         if not good_dni:
@@ -118,7 +118,7 @@ class Empleado(db.Model):
     @classmethod
     def validate(self, dni, sueldo):
         good_name = Empleado.query.filter_by(dni=dni)
-        good_money = sueldo >= 0
+        good_money = float(sueldo) >= 0
         reason = "none"
         if not good_name:
             reason = "Ya existe un empleado con ese DNI"

@@ -4,14 +4,14 @@
 <form action="{% if data.edit %}/api/evaluaciones/edit/{{ data.edit_data.id }}{% else %}/api/evaluaciones/add{% endif %}" id="form" method="post" class="needs-validation" novalidate>
     <div class="form-row mb-3">
         <div class="col">
-            <label for="nombre"><strong>Nombre</strong></label>
-            <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.nombre }}"{% endif %}
-                placeholder="Nombre de la evaluación" id="nombre" name="nombre">
-        </div>
-        <div class="col">
             <label for="dni"><strong>DNI</strong></label>
             <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.dni }}"{% endif %}
                 placeholder="DNI del empleado evaluado" id="dni" name="dni" {% if data.edit %}disabled{% endif %}>
+        </div>
+        <div class="col">
+            <label for="nombre"><strong>Nombre</strong></label>
+            <input class="form-control" type="text" {% if data.edit %}value="{{ data.edit_data.nombre }}"{% endif %}
+                placeholder="Nombre del empleado" id="nombre" name="nombre">
         </div>
     </div>
     <div class="form-row mb-3">
@@ -36,7 +36,7 @@
     <div class="form-row mb-3">
         <div class="col">
             <label for="index"><strong>Índice de rendimiento</strong></label>
-            <input class="form-control" type="number" step="1" {% if data.edit %}value="{{ data.edit_data.index }}"{% endif %}
+            <input class="form-control" type="number" step="0.1" {% if data.edit %}value="{{ data.edit_data.index }}"{% endif %}
                 placeholder="Índice" id="index" name="index">
         </div>
         <div class="col"></div>

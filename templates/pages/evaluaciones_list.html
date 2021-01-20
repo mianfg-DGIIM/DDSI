@@ -5,14 +5,15 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>Nombre</th>
             <th>DNI</th>
+            <th>Nombre</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         {% for evaluacion in data.evaluaciones %}
         <tr>
+            <td>{{ evaluacion.id }}</td>
             <td>{{ evaluacion.dni }}</td>
             <td>{{ evaluacion.nombre }}</td>
             <td><a href="/empleados/{{ evaluacion.dni }}">{{ evaluacion.dni }}</a></td>
@@ -26,8 +27,8 @@
     <tfoot>
         <tr>
             <td><strong>ID</strong></td>
-            <td><strong>Nombre</strong></td>
             <td><strong>DNI</strong></td>
+            <td><strong>Nombre</strong></td>
             <td></td>
         </tr>
     </tfoot>

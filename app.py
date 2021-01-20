@@ -178,33 +178,6 @@ def evaluaciones_all():
     return render_template('pages/evaluaciones_list.html', data=data)
 
 
-@app.route('/empleados/<dni>/evals', methods=['GET'])
-def empleados_evals_all(dni):
-    """
-    Evaluaciones: mostrar la información de todas las evaluaciones de un empleado
-    ----
-    En esta rutina mostraremos la información de todas las evaluaciones de un empleado
-    """
-    try:
-        evaluaciones = Evaluacion.query.filter_by(dni=dni)
-        evaluaciones = [evaluacion.serialize() for evaluacion in evaluaciones]
-    except:
-        evaluaciones = None
-
-    data = {
-        'title':                    f"Evaluaciones de empleado #{dni}",
-        'breadcrumb_title':         "Recursos Humanos",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Empleados',
-        'breadcrumb_button':        f'<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a empleado #{dni}',
-        'breadcrumb_button_url':    f'/empleados/{dni}',
-        'database_name':            'empleado',
-        'database_name_plural':     'empleados',
-        'card_title':               f"Evaluaciones del empleado #{dni}",
-        # Mostrar un mensaje de error si no existe el empleado
-        'error':                    f'No hemos podido obtener la información de las evaluaciones del empleado con DNI {dni}' if not evaluaciones else None,
-        'empleado':                 evaluaciones
-    }
-    return render_template('pages/evaluaciones_list.html', data=data)
 
 
 @app.route('/evaluaciones/<id>', methods=['GET'])
