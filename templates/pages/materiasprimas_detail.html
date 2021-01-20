@@ -1,0 +1,29 @@
+{% extends "skeleton/detail.html" %}
+
+{% block detail %}
+<table class="table mb-0">
+    <tbody>
+        <tr>
+            <th scope="row">ID</th>
+            <td>{{ data.materiaprima.id }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Nombre</th>
+            <td>{{ data.materiaprima.nombre }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Caracteristicas</th>
+            <td>{{ data.materiaprima.caracteristicas }}
+        </tr>
+        <tr>
+            <th scope="row">Zona de almacenaje</th>
+            <td>{{ data.materiaprima.zonaAlmacenaje }}
+        </tr>
+        <tr>
+            <th scope="row">Cantidad Almacenada</th>
+            <td>{{ data.materiaprima.cantidadA }}</td>
+        </tr>
+    </tbody>
+</table>
+<a href="/materiasprimas/{{ data.materiaprima.id }}/edit" type="button" class="btn btn-primary btn-sm mt-3">Editar materia prima</a>
+{% endblock %}

@@ -1,5 +1,5 @@
 import os, json, datetime
-from flask import Flask, request, jsonify, render_template, redirect, make_response
+from flask import Flask, request, jsonify, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -11,7 +11,8 @@ db = SQLAlchemy(app)
 
 from models import *
 
-
+#Trabajo grupo 5
+#migue es un pesao
 #  __________________
 # |                  |
 # |  Templates       |
@@ -600,6 +601,310 @@ def procesos_productivos_edit(id):
         'edit_data':                proceso_productivo
     }
     return render_template('pages/procesos_productivos_form.html', data=data)
+
+# ================================
+# ==== DPTO. ALMACENAJE ====
+# ================================
+
+# ==== MATERIAS PRIMAS ====
+
+
+
+@app.route('/materiasprimas/add', methods=['GET'])
+def materiasprimas_add():
+    """
+    Materias primas: añadir materia prima
+    ----
+    En esta rutina mostraremos una página con un formulario para crear una nueva materia prima.
+    """
+    data = {
+        'title':                    "Añadir materia prima",
+        'breadcrumb_title':         "Almacenaje",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Materias primas',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a materias primas',
+        'breadcrumb_button_url':    '/materiasprimas',
+        'database_name':            'materiaprima',
+        'database_name_plural':     'materiasprimas',
+        'card_title':               "Crear nueva materia prima",
+        'edit':                     False,  # el formulario será de creación
+        # no son necesarios más datos en este caso
+    }
+    return render_template('pages/materiasprimas_form.html', data=data)
+
+
+@app.route('/materiasprimas', methods=['GET'])
+def materiasprimas_all():
+    """
+    Materiasprimas: mostrar la información de todas las materias primas
+    ----
+    En esta rutina mostraremos la información de todas las materias primas
+    """
+    try:
+        materiasprimas = Materiaprima.query.all()
+        materiasprimas = [materiaprima.serialize() for materiaprima in materiasprimas]
+        success = True
+    except:
+        success = False
+
+    data = {
+        'title':                    "Materias primas",
+        'breadcrumb_title':         "Almacenaje",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Materias primas',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Añadir materia prima',
+        'breadcrumb_button_url':    '/materiasprimas/add',
+        'database_name':            'materiaprima',
+        'database_name_plural':     'materiasprimas',
+        'card_title':               "Listado de materias primas",
+        'error':        f'No hemos podido obtener la información de las materias primas' if not success else None,
+        'materiasprimas':    materiasprimas if success else None
+    }
+    return render_template('pages/materiasprimas_list.html', data=data)
+
+
+@app.route('/materiasprimas/<id>', methods=['GET'])
+def materiasprimas_detail(id):
+    """
+    Materiasprimas: mostrar información de una materia prima
+    ----
+    En esta rutina mostraremos la información de una materia prima
+    """
+    # primero recopilamos la información de la BD
+    try:
+        materiaprima =  Materiaprima.query.filter_by(id=id).first()
+        materiaprima = materiaprima.serialize()
+    except:
+        materiaprima = None
+
+    data = {
+        'title':                    f"Materia prima #{id}",
+        'breadcrumb_title':         "Almacenaje",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Materias primas',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a materias primas',
+        'breadcrumb_button_url':    '/materiasprimas',
+        'database_name':            'materiaprima',
+        'database_name_plural':     'materiasprimas',
+        'card_title':               f"Detalle de la materia prima #{id}",
+        # Mostrar un mensaje de error si no existe
+        'error':    f'No se ha encontrado una materia prima con ID {id}' if not materiaprima else None,
+        'materiaprima': materiaprima
+    }
+    return render_template('pages/materiasprimas_detail.html', data=data)
+
+
+@app.route('/materiasprimas/<id>/edit', methods=['GET'])
+def materiasprimas_edit(id, api_resp=None):
+    """
+    Materiasprimas: edit información de una materia prima
+    ---
+    En esta rutina permitiremos la edición de la información de una materia prima
+    """
+    # primero recopilamos la información de la BD
+    try:
+        materiaprima = Materiaprima.query.filter_by(id=id).first()
+        materiaprima = materiaprima.serialize()
+    except:
+        materiaprima = None
+
+    data = {
+        'title':                    f"Editar materia prima #{id}",
+        'breadcrumb_title':         "Almacenaje",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Materias primas',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a materias primas',
+        'breadcrumb_button_url':    '/materiasprimas',
+        'database_name':            'materiaprima',
+        'database_name_plural':     'materiasprimas',
+        'card_title':               f"Editar materia prima #{id}",
+        'error':                    f'No se ha encontrado una materia prima con ID {id}' if not materiaprima else None,
+        'edit':                     True,   # el formulario será de edición
+        # cargamos la información existente en el formulario
+        'edit_data':                materiaprima
+    }
+    return render_template('pages/materiasprimas_form.html', data=data)
+
+
+
+
+# ==== MERCANCIAS ====
+
+
+
+@app.route('/mercancias/add', methods=['GET'])
+def mercancias_add():
+
+    data = {
+        'title':                    "Añadir mercancia",
+        'breadcrumb_title':         "Almacenaje",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Mercancias',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a mercancias',
+        'breadcrumb_button_url':    '/mercancias',
+        'database_name':            'mercancia',
+        'database_name_plural':     'mercancias',
+        'card_title':               "Crear nueva mercancia",
+        'edit':                     False,  # el formulario será de creación
+
+        # no son necesarios más datos en este caso
+    }
+
+    return render_template('pages/mercancias_form.html', data=data)
+
+
+@app.route('/mercancias', methods=['GET'])
+def mercancias_all():
+
+    try:
+        mercancias = Mercancia.query.all()
+        mercancias = [mercancia.serialize() for mercancia in mercancias]
+        success = True
+    except:
+        success = False
+
+    data = {
+        'title':                    "Mercancias",
+        'breadcrumb_title':         "Almacenaje",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Mercancias',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Añadir mercancia',
+        'breadcrumb_button_url':    '/mercancias/add',
+        'database_name':            'mercancia',
+        'database_name_plural':     'mercancias',
+        'card_title':               "Listado de mercancias",
+        'error':        f'No hemos podido obtener la información de las mercancias' if not success else None,
+        'mercancias':    mercancias if success else None
+    }
+    return render_template('pages/mercancias_list.html', data=data)
+
+
+@app.route('/mercancias/<numRegistro>', methods=['GET'])
+def mercancias_detail(numRegistro):
+
+    # primero recopilamos la información de la BD
+    try:
+        mercancia =  Mercancia.query.filter_by(numRegistro=numRegistro).first()
+        mercancia = mercancia.serialize()
+    except:
+        mercancia = None
+
+    data = {
+        'title':                    f"Mercancia #{numRegistro}",
+        'breadcrumb_title':         "Almacenaje",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Mercancia',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a mercancias',
+        'breadcrumb_button_url':    '/mercancias',
+        'database_name':            'mercancia',
+        'database_name_plural':     'mercancias',
+        'card_title':               f"Detalle de la mercancia #{numRegistro}",
+        # Mostrar un mensaje de error si no existe
+        'error':    f'No se ha encontrado una mercancia con numero de registro {numRegistro}' if not mercancia else None,
+        'mercancia': mercancia
+    }
+    return render_template('pages/mercancias_detail.html', data=data)
+
+
+
+
+
+
+# ==== LOTES ====
+
+
+@app.route('/lotes/add', methods=['GET'])
+def lotes_add():
+
+    data = {
+        'title':                    "Añadir lote",
+        'breadcrumb_title':         "Almacenaje",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Lotes',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a lotes',
+        'breadcrumb_button_url':    '/lotes',
+        'database_name':            'lote',
+        'database_name_plural':     'lotes',
+        'card_title':               "Crear nuevo lote",
+        'edit':                     False,  # el formulario será de creación
+        # no son necesarios más datos en este caso
+    }
+    return render_template('pages/lotes_form.html', data=data)
+
+
+@app.route('/lotes', methods=['GET'])
+def lotes_all():
+
+    try:
+        lotes = Lote.query.all()
+        lotes = [lote.serialize() for lote in lotes]
+        success = True
+    except:
+        success = False
+
+    data = {
+        'title':                    "Lotes",
+        'breadcrumb_title':         "Almacenaje",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Lotes',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Añadir lote',
+        'breadcrumb_button_url':    '/lotes/add',
+        'database_name':            'lote',
+        'database_name_plural':     'lotes',
+        'card_title':               "Listado de lotes",
+        'error':        f'No hemos podido obtener la información de los lotes' if not success else None,
+        'lotes':    lotes if success else None
+    }
+    return render_template('pages/lotes_list.html', data=data)
+
+
+@app.route('/lotes/<id>', methods=['GET'])
+def lotes_detail(id):
+
+    # primero recopilamos la información de la BD
+    try:
+        lote =  Lote.query.filter_by(id=id).first()
+        lote = lote.serialize()
+    except:
+        lote = None
+
+    data = {
+        'title':                    f"Lote #{id}",
+        'breadcrumb_title':         "Almacenaje",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Lotes',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a lotes',
+        'breadcrumb_button_url':    '/lotes',
+        'database_name':            'lote',
+        'database_name_plural':     'lotes',
+        'card_title':               f"Detalle del lote #{id}",
+        # Mostrar un mensaje de error si no existe
+        'error':    f'No se ha encontrado un lote con ID {id}' if not lote else None,
+        'lote': lote
+    }
+    return render_template('pages/lotes_detail.html', data=data)
+
+
+
+
+@app.route('/lotes/<id>/edit', methods=['GET'])
+def lotes_edit(id, api_resp=None):
+
+
+    # primero recopilamos la información de la BD
+    try:
+        lote = Lote.query.filter_by(id=id).first()
+        lote = lote.serialize()
+    except:
+        lote = None
+
+    data = {
+        'title':                    f"Editar lote #{id}",
+        'breadcrumb_title':         "Almacenaje",
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Lotes',
+        'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a lotes',
+        'breadcrumb_button_url':    '/lotes',
+        'database_name':            'lote',
+        'database_name_plural':     'lotes',
+        'card_title':               f"Editar lote #{id}",
+        'error':                    f'No se ha encontrado un lote con ID {id}' if not lote else None,
+        'edit':                     True,   # el formulario será de edición
+        # cargamos la información existente en el formulario
+        'edit_data':                lote
+    }
+    return render_template('pages/lotes_form.html', data=data)
+
+
 
 
 #  __________________
@@ -1558,6 +1863,274 @@ def balanceCuentas_all():
     }
 
     return render_template('pages/balancesCuentas_all.html', data=data)
+
+
+
+# ================================
+# ==== DPTO. ALMACENAJE ====
+# ================================
+
+# ==== MATERIAS PRIMAS ====
+
+
+@app.route('/api/materiasprimas/add', methods=['POST'])
+def api_materiasprimas_add():
+
+    data = json.loads(request.form['data'])
+    nombre		        = data['nombre']
+    caracteristicas	    = data['caracteristicas']
+    zonaAlmacenaje      = data['zonaAlmacenaje']
+
+    
+    valid,reason = Materiaprima.validate(nombre)
+
+    response = {}
+
+    if(zonaAlmacenaje==""):
+       valid = False
+       reason = "Debe insertar una zona de almacenaje"
+    if(nombre==""):
+        valid = False
+        reason = "Debe insertar el nombre de la materia prima"
+
+    print(valid, reason)
+    if valid:
+        try:
+            materiaprima=Materiaprima(
+                nombre              = nombre,
+                caracteristicas	    = caracteristicas,
+                zonaAlmacenaje      = zonaAlmacenaje
+            )
+            db.session.add(materiaprima)
+            db.session.commit()
+            response['category'] = 'success'
+            response['message']= f"Materia prima añadida con nombre: {materiaprima.id}"
+            response['data'] = {
+                'redirect': f"/materiasprimas/{materiaprima.id}"
+            }
+        except Exception as e:
+            response['category'] = 'error'
+            response['message'] = "Server insertion error: " + str(e)
+    else:
+        response['category'] = 'constraint'
+        response['message'] = reason
+
+    return jsonify(response)
+
+
+@app.route('/api/materiasprimas/edit/<id>', methods=['POST'])
+def api_materiasprimas_edit(id):
+    data = json.loads(request.form['data'])
+    nombre              = data['nombre']
+    zonaAlmacenaje		= data['zonaAlmacenaje']
+    caracteristicas	    = data['caracteristicas']
+
+
+   
+    response = {}
+
+    try:
+        materiaprima=Materiaprima.query.filter_by(id=id).first()
+        materiaprima.nombre             = nombre
+        materiaprima.caracteristicas     = caracteristicas
+        materiaprima.zonaAlmacenaje         = zonaAlmacenaje
+        db.session.commit()
+        response['category'] = 'success'
+        response['message']= f"Materia prima actualizado con nombre: {materiaprima.id}"
+        response['data'] = {
+            'redirect': f"/materiasprimas/{materiaprima.id}"
+        }
+    except Exception as e:
+        response['category'] = 'error'
+        response['message'] = "Server insertion error: " + str(e)
+
+    return jsonify(response)
+
+
+
+
+
+
+
+# ==== MERCANCIAS ====
+
+
+
+@app.route('/api/mercancias/add', methods=['POST'])
+def api_mercancias_add():
+
+    data = json.loads(request.form['data'])
+
+    idmp		= data['idmp']
+    cantidad	= data['cantidad']
+    tipo        = MercanciaTipos(int(data['tipo']))
+    idpp        = data['idpp']
+    
+    valid = True
+
+   
+
+    if(cantidad==""):
+       valid = False
+       reason = "Debe insertar cantidad de materia prima"
+    
+    if valid:
+        valid,reason = Mercancia.validate( idmp,cantidad, tipo, idpp) 
+    
+    response = {}
+
+    if valid:
+        try:
+            mercancia=Mercancia(
+                idmp         = idmp,
+                cantidad	    = cantidad,
+                tipo            = tipo,
+                idpp            = idpp          
+            )
+            db.session.add(mercancia)
+            db.session.commit()
+            response['category'] = 'success'
+            response['message']= f"Mercancia añadida con numero de registro: {mercancia.numRegistro}"
+            response['data'] = {
+                'redirect': f"/mercancias/{mercancia.numRegistro}"
+            }
+            materia = Materiaprima.query.filter_by(id = idmp).first()
+
+            if tipo == MercanciaTipos.RETIRADA:
+                materia.cantidadA = materia.cantidadA - mercancia.cantidad
+            else:
+                materia.cantidadA = materia.cantidadA + mercancia.cantidad
+            db.session.commit()
+        except Exception as e:
+            response['category'] = 'error'
+            response['message'] = "Server insertion error: " + str(e)
+    else:
+        response['category'] = 'constraint'
+        response['message'] = reason
+
+    return jsonify(response)
+
+
+
+
+
+@app.route('/api/lotes/add', methods=['POST'])
+def api_lotes_add():
+
+
+    data = json.loads(request.form['data'])
+    idproducto	  = data['idproducto']
+    fechaProd	  = data['fechaProd']
+    fechaCad      = data['fechaCad']
+    cantidad      = data['cantidad']
+    
+    valid,reason = Lote.validate(idproducto, fechaProd, fechaCad)
+    
+
+    if(fechaProd==""):
+       valid = False
+       reason = "Debe insertar una fecha de produccion"
+    if(fechaCad==""):
+       valid = False
+       reason = "Debe insertar una fecha de caducidad"   
+    response = {}
+    if(float('0'+cantidad)==0):
+       valid = False
+       reason = "Debe insertar una cantidad"
+       
+
+    if valid:
+
+        try:
+            lote=Lote(
+                idproducto     = idproducto,
+                fechaProd	   = fechaProd,
+                fechaCad       = fechaCad,
+                cantidad       = cantidad,
+                estado         = 'ALMACENADO' 
+            )
+
+            db.session.add(lote)
+            db.session.commit()
+            response['category'] = 'success'
+            response['message']= f"Lote añadido con ID: {lote.id}"
+            response['data'] = {
+                'redirect': f"/lotes/{lote.id}"
+            }
+
+        except Exception as e:
+            response['category'] = 'error'
+            response['message'] = "Server insertion error: " + str(e)
+    else:
+
+        response['category'] = 'constraint'
+        response['message'] = reason
+
+    return jsonify(response)
+
+
+@app.route('/api/lotes/edit/<id>', methods=['POST'])
+def api_lotes_edit(id):
+
+    data = json.loads(request.form['data'])
+    idproducto		= data['idproducto']
+    fechaProd		= data['fechaProd']
+    fechaCad	    = data['fechaCad']
+    cantidad        = data['cantidad']
+
+
+    # server-side validation
+    valid,reason = Lote.validate(idproducto, fechaProd, fechaCad)
+
+    response = {}
+
+    if valid:
+        try:
+            lote=Lote.query.filter_by(id=id).first()
+            lote.idproducto       = idproducto
+            lote.fechaProd        = fechaProd
+            lote.fechaCad         = fechaCad
+            lote.cantidad         = cantidad
+            db.session.commit()
+            response['category'] = 'success'
+            response['message']= f"Lote actualizado con ID: {lote.id}"
+            response['data'] = {
+                'redirect': f"/lotes/{lote.id}"
+            }
+        except Exception as e:
+            response['category'] = 'error'
+            response['message'] = "Server insertion error: " + str(e)
+    else:
+        response['category'] = 'constraint'
+        response['message'] = reason
+
+    return jsonify(response)
+
+
+
+@app.route('/api/lotes/modify/<id>', methods=['POST', 'GET'])
+def api_lotes_modify(id):
+    response = {}
+    print("wow")
+    try:
+        print("dentro")
+        lote = Lote.query.filter_by(id=id).first()
+        lote.estado = 'REPARTIDO'
+        print(lote)     
+        db.session.commit()
+        response['category'] = 'success'
+        response['message'] = f"Lote desactivado con ID: {lote.id}"
+        response['data'] = {
+            'redirect':     f"/lotes"
+        }
+    except Exception as e:
+        response['category'] = 'error'
+        response['message'] = "Server deletion error: " + str(e)
+
+    return jsonify(response)
+
+
+
 
 
 #  __________________

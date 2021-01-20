@@ -1,0 +1,32 @@
+{% extends "skeleton/list.html" %}
+
+{% block table %}
+<table class="table mb-0" id="dataTable">
+    <thead>
+        <tr>
+            <th>Numero de Registro</th>
+            <th>ID de la materia</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for mercancia in data.mercancias %}
+        <tr>
+            <td>{{ mercancia.numRegistro }}</td>
+            <td>{{ mercancia.idmp }}</td>
+            <td align="right">
+                <a href="/mercancias/{{ mercancia.numRegistro }}"><i class="fa fa-fw fa-search mr-2"></i></a>
+                
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td><strong>Numero de Registro</strong></td>
+            <td><strong>ID de la materia</strong></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}

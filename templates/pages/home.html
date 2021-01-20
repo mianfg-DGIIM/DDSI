@@ -205,9 +205,167 @@
 </div>
 <hr>
 <div class="d-sm-flex justify-content-left align-items-top mb-4">
-    <i class="fas fa-fw fa-box mt-2 mb-3 mr-3"></i><div>
+    <i class="fas fa-fw fa-prescription-bottle-alt mt-2 mb-3 mr-3"></i><div>
         <h3 class="text-dark mb-2">Almacén y Logística</h3>
-        <p class="mb-0">El departamento de <strong>Almacén y Logística</strong> es [...]</p>
+        <p class="mb-0">El departamento de <strong>Almacén y Logística</strong> se encarga de mantener un registro de las materias primas que llegan y salen al almacén, así como de los lotes de productos que vienen de la fábrica y se entregan a los clientes.</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-xl-3 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="text-primary font-weight-bold m-0"><i class="fas fa-fw fa-lightbulb mr-2"></i>Materias primas</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <p class="mb-0">Una <strong>materia prima</strong> es una materia que se utiliza para la producción de un fármaco.</p>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong><a href="/materiasprimas/add">Crear materia prima</a></strong></h6><span class="text-xs"></span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-fw fa-plus"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong><a href="/materiasprimas">Listado de materias primas</a></strong></h6><span class="text-xs"></span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-fw fa-list"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong>Ver materia prima</strong> (detalles)</h6><span class="text-xs">Vaya al <a href="/materiasprimas">listado</a> y pulse en <i class="fa fa-fw fa-search"></i> en la materia prima que desee ver</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-fw fa-search"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong>Editar materia prima</strong></h6><span class="text-xs">Vaya al <a href="/materiasprimas">listado</a> y pulse en <i class="fa fa-fw fa-pencil"></i> en la materia prima que desee editar</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-fw fa-pencil"></i>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="text-primary font-weight-bold m-0"><i class="fas fa-fw fa-pills mr-2"></i>Mercancías</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <p class="mb-0">Una <strong>mercancía</strong> es un registro del añadido o retirada de una cantidad de materia prima.</p>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong><a href="/mercancias/add">Añadir mercancía</a></strong></h6><span class="text-xs"></span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-fw fa-plus"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong><a href="/ mercancias">Listado de mercancías</a></strong></h6><span class="text-xs"></span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-fw fa-list"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong>Ver mercancía</strong> (detalles)</h6><span class="text-xs">Vaya al <a href="/mercancias">listado</a> y pulse en <i class="fa fa-fw fa-search"></i> la mercancía que desee ver</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-fw fa-search"></i>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="text-primary font-weight-bold m-0"><i class="fas fa-fw fa-dolly-flatbed mr-2"></i>Lotes</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <p class="mb-0">Un <strong>lote de productos</strong> es un paquete con grandes cantidades de un producto, ya preparado para enviar al cliente.</p>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong><a href="/lotes/add">Crear lote</a></strong></h6><span class="text-xs"></span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-fw fa-plus"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong><a href="/lotes">Listado de lotes</a></strong></h6><span class="text-xs"></span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-fw fa-list"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong>Ver lotes</strong> (detalles)</h6><span class="text-xs">Vaya al <a href="/lotes">listado</a> y pulse en <i class="fa fa-fw fa-search"></i> en el lote que desee ver</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-fw fa-search"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong>Editar lote</strong></h6><span class="text-xs">Vaya al <a href="/lotes">listado</a> y pulse en <i class="fa fa-fw fa-pencil"></i> en el lote que desee editar</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-fw fa-pencil"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <h6 class="mb-0"><strong>Eliminar lote</strong></h6><span class="text-xs">Vaya al <a href="/lotes">listado</a> y pulse en <i class="fa fa-fw fa-trash"></i> en el lote que desee eliminar</span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-fw fa-trash"></i>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 <hr>

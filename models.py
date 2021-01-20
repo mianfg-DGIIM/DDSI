@@ -26,6 +26,7 @@ class Evaluacion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String())
     dni = db.Column(db.String(), db.ForeignKey('empleados.dni'), nullable=False)
+    
     fechaIni = db.Column(db.String())
     fechaFin = db.Column(db.String())
     conclusion = db.Column(db.String())
@@ -493,4 +494,194 @@ class BalanceCuentas(db.Model):
                 'verbose':  str(self.claseOp)
             }
         }
+
+
+
+
+
+# ================================
+# ======= DPTO. ALMACENAJE =======
+# ================================
+
+
+
+class Materiaprima(db.Model):
+    __tablename__ = 'materiaprima'
+    
+    id = db.Column(db.Integer(), primary_key=True)
+    nombre = db.Column(db.String())
+    caracteristicas = db.Column(db.String())
+    zonaAlmacenaje = db.Column(db.String())
+    cantidadA = db.Column(db.Integer)
+
+    def __init__(self, nombre, caracteristicas, zonaAlmacenaje):
+        self.nombre = nombre
+        self.caracteristicas = caracteristicas
+        self.zonaAlmacenaje = zonaAlmacenaje
+        self.cantidadA = 0
+
+    def __repr__(self):
+     return f'<Materiaprima {self.id} - {self.nombre}>'
+
+
+    def serialize(self):
+        return {
+            'id':           self.id,
+            'nombre':		self.nombre,
+            'caracteristicas':	self.caracteristicas,
+            'zonaAlmacenaje':	self.zonaAlmacenaje,
+            'cantidadA':	self.cantidadA
+        }
+
+    @classmethod 
+    def validate(self,nombre):
+        good_name = not Materiaprima.query.filter_by(nombre = nombre).first()
+        reason = "none"
+        if not good_name:
+            reason = "Ya existe una materia prima con ese nombre"
+
+        return good_name,reason
+            
+        
+
+        
+class MercanciaTipos(enum.Enum):    
+    AÑADIDO		= 0
+    RETIRADA	= 1
+
+
+    def __str__(self):
+        keys = {
+            0: "Añadido",
+            1: "Retirada",
+        }
+        
+        return keys[self.value]
+
+        
+class Mercancia(db.Model):
+    __tablename__ = 'mercancia'
+    
+    numRegistro = db.Column(db.Integer(), primary_key=True)
+    idmp = db.Column(db.Integer(), db.ForeignKey('materiaprima.id'), nullable = False)
+    cantidad = db.Column(db.Integer)
+    tipo = db.Column(db.Enum(MercanciaTipos))
+    idpp = db.Column(db.String(), nullable=True)
+#db.ForeignKey('proceso_productivo.id')
+    
+    def __init__(self, idmp, cantidad, tipo, idpp): 
+        self.idmp = idmp
+        self.cantidad = cantidad
+        self.tipo = tipo
+        self.idpp = idpp
+
+    def __repr__(self):
+     return f'<Mercancia {self.numRegistro} - {self.idmp}>'
+
+
+    def serialize(self):
+        return {
+            'numRegistro':		self.numRegistro,
+            'idmp':	self.idmp,
+            'cantidad':	self.cantidad,
+            'tipo':     {
+                'value':    self.tipo.value,
+                'verbose':  str(self.tipo)
+            },
+            'idpp':	self.idpp
+        }
+
+    @classmethod 
+    def validate(self, idmp, cantidad, tipo, idpp): 
+        reason = "none"
+        good_idmp = Materiaprima.query.filter_by(id = idmp).first()
+
+        good_quantity = True
+        good_pp = True
+        
+        if not good_idmp:
+            reason = "No existe una materia prima con ese identificador"
+        else:
+            if tipo == MercanciaTipos.RETIRADA:
+                materia = Materiaprima.query.filter_by(id = idmp).first()
+
+                if (materia.cantidadA < int(cantidad)):
+                    good_quantity = False
+                    reason = "La cantidad a retirar es mayor que la almacenada"
+
+                good_pp = ProcesoProductivo.query.filter_by(id = idpp).first()
+                if not good_pp:
+                    reason = "No existe un proceso productivo con ese ID"
+        return (good_idmp and good_quantity and good_pp),reason
+      
+
+                    
+       
+       
+class LotesEstados(enum.Enum):    
+    ALMACENADO	= 1
+    REPARTIDO	= 0
+
+
+    def __str__(self):
+        keys = {
+            0: "Repartido",
+            1: "Almacenado",
+        }
+        
+        return keys[self.value]             
+                    
+                    
+         
+class Lote(db.Model):
+    __tablename__ = 'lote'
+
+    id = db.Column(db.Integer(), primary_key=True)
+    idproducto = db.Column(db.String(), db.ForeignKey('producto.id'), nullable=False)
+    fechaProd = db.Column(db.String())
+    fechaCad = db.Column(db.String())
+    cantidad = db.Column(db.Integer)
+    estado = db.Column(db.Enum(LotesEstados))
+
+    def __init__(self, idproducto, fechaProd, fechaCad, cantidad, estado):
+        self.idproducto = idproducto
+        self.fechaProd  = fechaProd
+        self.fechaCad   = fechaCad
+        self.cantidad   = cantidad
+        self.estado     = estado
+
+    def __repr__(self):
+     return f'<Lote {self.id}  >'
+
+
+    def serialize(self):
+        return {
+            'id':           self.id,
+            'idproducto':		self.idproducto,
+            'fechaProd':	self.fechaProd,
+            'fechaCad':	self.fechaCad,
+            'cantidad':	self.cantidad,
+            'estado': {
+                'value':    self.estado.value,
+                'verbose':  str(self.estado)
+            }
+        }
+
+    @classmethod 
+    def validate(self, idproducto, fechaProd, fechaCad):
+    
+        reason = "none"
+        good_date = fechaProd < fechaCad
+        if not good_date:
+            reason = "El lote no puede caducar antes de su fecha de produccion"
+            
+        good_idp = Producto.query.filter_by(id = idproducto).first()
+        if not good_idp:
+            reason = "No existe un producto con ese identificador"
+
+        return (good_date and good_idp),reason
+
+
+
+
 
