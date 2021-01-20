@@ -1008,10 +1008,10 @@ def api_empleado_delete(dni):
 
     try:
         empleado = Empleado.query.filter_by(dni=dni).first()
-        db.session.delete(empleado)
-        db.session.commit()
+        
+        empleado.actividad = 0
         response['category'] = 'success'
-        response['message'] = f"Empleado eliminado con DNI: {empleado.dni}"
+        response['message'] = f"Empleado dado de baja con DNI: {empleado.dni}"
         response['data'] = {
             'redirect':     f"/empleados"
         }
