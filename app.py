@@ -903,7 +903,7 @@ def api_empleados_add():
     duracion = data['duracion']
     actividad = EmpleadoEstados(int(data['actividad']))
 
-    valid, reason = Empleado.validate(dni, sueldo)
+    valid, reason = Empleado.validate(dni,nombre, sueldo,puesto)
 
     response = {}
 
@@ -946,7 +946,7 @@ def api_empleados_edit(dni):
     actividad = EmpleadoEstados(int(data['actividad']))
 
     # server-side validation
-    valid, reason = Empleado.validate(dni, sueldo)
+    valid, reason = Empleado.validate(dni,nombre,sueldo,puesto)
 
     response = {}
 
@@ -1007,7 +1007,7 @@ def api_evaluaciones_add():
     conclusion = data['conclusion']
     index = data['index']
 
-    valid, reason = Evaluacion.validate(dni, fechaIni,fechaFin,conclusion,index)
+    valid, reason = Evaluacion.validate(dni,nombre, fechaIni,fechaFin,conclusion,index)
 
     response = {}
     if valid:
@@ -1051,7 +1051,7 @@ def api_evaluaciones_edit(id):
 
     response = {}
 
-    valid, reason = Evaluacion.validate(dni,fechaIni,fechaFin,conclusion,index)
+    valid, reason = Evaluacion.validate(dni,nombre,fechaIni,fechaFin,conclusion,index)
 
     if valid:
         try:

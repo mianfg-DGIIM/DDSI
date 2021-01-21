@@ -55,22 +55,27 @@ class Evaluacion(db.Model):
         }
 
     @classmethod
-    def validate(self, dni, fechaIni, fechaFin, conclusion, index):
+    def validate(self, dni, nombre,fechaIni, fechaFin, conclusion, index):
         good_dni = Empleado.query.filter_by(dni=dni).first()
-        print(Empleado.query.filter_by(dni=dni).first(), dni)
+        if good_dni is not None:
+            good_nombre = (nombre == Empleado.query.filter_by(dni=dni).first().nombre)
+        else:
+            good_nombre = False
         if(fechaFin):
             good_date = fechaIni < fechaFin
         else:
             good_date = true
         good_index = float(index) >= 0 and float(index) <= 1
 
-        reason = "none"
+        reason = ""
         if not good_dni:
-            reason = "No existe un empleado con ese dni"
+            reason = reason + " No existe un empleado con ese dni"
+        if not good_nombre:
+            reason = reason + " El nombre no es coherente con el DNI dado"
         if not good_date:
-            reason = "Fecha incoherente"
+            reason = reason + " Fecha incoherente"
         if not good_index:
-            reason = "Índice fuera de rango"
+            reason = reason + " Índice fuera de rango"
 
         return good_date and good_index and good_dni, reason
 
@@ -116,16 +121,23 @@ class Empleado(db.Model):
         }
 
     @classmethod
-    def validate(self, dni, sueldo):
-        good_name = Empleado.query.filter_by(dni=dni)
-        good_money = float(sueldo) >= 0
-        reason = "none"
+    def validate(self, dni,nombre, sueldo,puesto):
+        good_dni = (len(dni) == 9)  and (not Empleado.query.filter_by(dni=dni).first())
+        good_name = not (nombre == "")
+        good_money = (float(sueldo) >= 0)
+        good_pos = (not (puesto==""))
+        
+        reason = ""
+        if not good_dni:
+            reason = reason + " DNI invalido"
         if not good_name:
-            reason = "Ya existe un empleado con ese DNI"
+            reason = reason + " Ya existe un empleado con ese DNI"
         if not good_money:
-            reason = "El sueldo no puede ser negativo"
+            reason = reason + " El sueldo no puede ser negativo"
+        if not good_pos:
+            reason = reason + " El puesto no puede estar vacío"
 
-        return (good_name and good_money), reason
+        return (good_name and good_money and good_dni and good_pos), reason
 
 
 # ================================

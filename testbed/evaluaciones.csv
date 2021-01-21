@@ -1,11 +1,11 @@
-Id_evaluacion, DNI, Nombre, FechaInicial, FechaFinal, Conclusion, IndiceRendimiento
-11111111,31548406L,Carles Valdivia,07-03-2005,25-05-2005,Muy buen desempeño. Toma buenas decisiones,0.78
-11111112,74349447S,Pablo Hernández,16-01-2005,11-03-2005,No trabaja como es debido y es candidato a despido,0.35
-11111113,74349447S,Pablo Hernández,25-01-2006,29-03-2006,Muy buen desempeño. Toma buenas decisiones,0.67
-11111114,16631029M,Diego Lopez,01-08-2006,15-08-2006,No trabaja como es debido y es candidato a despido,  0.2
-11111115,16631029M,Diego Lopez,07-04-2008,15-08-2006,Muy buen desempeño. Toma buenas decisiones, 0.75
-11111116,76582304D,Pedro Pablo Jiménez,01-08-2006,15-08-2006, Empleado ejemplar,  0.7
-11111117,76582304D,Pedro Pablo Jiménez,15-08-2005,30-08-2006,  Empleado ejemplar, 0.7
-11111118,06670544S,Ibon Martín,15-05-2001,30-05-2001,No trabaja como es debido y es candidato a despido,  0.3
-11111119,12345678Z,Alfredo Pérez Mejías,15-09-2006,30-09-2006,Empleado medio y poco destacable,  0.5
-11111121,12345678Z,Alfredo Pérez Mejías,15-09-2007,30-09-2007, Magnífico empleado y candidato a ascenso, 0.75
+ DNI, Nombre, FechaInicial, FechaFinal, Conclusion, IndiceRendimiento
+31548406L,Carles Valdivia,07-03-2005,25-05-2005,Muy buen desempeño. Toma buenas decisiones,0.78
+74349447S,Pablo Hernández,16-01-2005,11-03-2005,No trabaja como es debido y es candidato a despido,0.35
+74349447S,Pablo Hernández,25-01-2006,29-03-2006,Muy buen desempeño. Toma buenas decisiones,0.67
+16631029M,Diego Lopez,01-08-2006,15-08-2006,No trabaja como es debido y es candidato a despido,  0.2
+16631029M,Diego Lopez,07-04-2008,15-08-2006,Muy buen desempeño. Toma buenas decisiones, 0.75
+76582304D,Pedro Pablo Jiménez,01-08-2006,15-08-2006, Empleado ejemplar,  0.7
+76582304D,Pedro Pablo Jiménez,15-08-2005,30-08-2006,  Empleado ejemplar, 0.7
+06670544S,Ibon Martín,15-05-2001,30-05-2001,No trabaja como es debido y es candidato a despido,  0.3
+12345678Z,Alfredo Pérez Mejías,15-09-2006,30-09-2006,Empleado medio y poco destacable,  0.5
+12345678Z,Alfredo Pérez Mejías,15-09-2007,30-09-2007, Magnífico empleado y candidato a ascenso, 0.75
