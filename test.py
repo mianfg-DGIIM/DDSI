@@ -7,6 +7,46 @@ from app import db
 def load_data(filename):
     return pd.read_csv(filename).to_numpy()
 
+def populate_empleados():
+    data = load_data('testbed/empleados.csv')
+
+    for d in data:
+        
+            empleado = Empleado(
+                dni          = str(d[0]),
+                nombre      = str(d[1]),
+                puesto        = str(d[2]),
+                sueldo = float(d[3]),
+                duracion   = str(d[4]),
+                fechaInicio      = str(d[5]),
+                actividad    = EmpleadoEstados(int(d[6]))
+
+            )
+            db.session.add(empleado)
+            db.session.commit()
+        
+            pass
+
+def populate_evaluaciones():
+    data = load_data('testbed/evaluaciones.csv')
+
+    for d in data:
+        try:
+            evaluacion = Evaluacion(
+                dni          = str(d[0]),
+                nombre      = str(d[1]),
+                fechaIni      = str(d[2]),
+                fechaFin    = str(d[3]),
+                conclusion  = str(d[4]),
+                index    = float(d[5])
+
+            )
+            db.session.add(evaluacion)
+            db.session.commit()
+        except:
+            pass
+
+
 
 def populate_proyectos():
     data = load_data('testbed/proyectos.csv')
@@ -232,4 +272,7 @@ if __name__ == '__main__':
     populate_balances()
     populate_clientes()
     populate_recibos()
+
+    populate_empleados()
+    populate_evaluaciones()
 

@@ -1,11 +1,11 @@
 Dni, Nombre, Puesto, Sueldo, FechaInicio,Duracion,Activo
-31548406L,’Carles Valdivia’,2000, ‘Director de recursos humanos’,4 años ,25-03-2007,1
-03515632J,’Oier Segovia’,2000, ‘Director de contabilidad’,’4 años’ ,07-02-2005,1
-74349447S,’Pablo Hernández’,2000, ‘Director de almacén’,’4 años’ ,11-01-2005,1
-16631029M,’Diego López’,2000, ‘Director de investigación’,’4 años’ ,05-07-2006,1
-33861103C,’Juan Antonio Oviedo’,3000, ‘Coordinador de junta de accionistas ’,’4 años’ ,05-07-2006,1
-19107340K,’Jacobo Moreno’,2000, ‘Subdirector de recursos humanos’,’2 años’,15-02-2005,1 
-76582304D,’Pedro Pablo Jiménez’,2000, ‘Subdirector de contabilidad’,’2 años’,21-02-2005,1 
-‘21279166A’,’Antonio Jose Moya’,2000, ‘Subdirector de contabilidad’,’4 años’ ,07-02-2002,0
-‘06670544S’,’Ibon Martín’,2000, ‘Subirector de contabilidad’,’4 años, 3 meses’ ,01-02-2001,0
-‘12345678Z’,’Alfredo Pérez Mejías’,3000, ‘Coordinador regional’,’4 años’ ,05-07-2006,1
+31548406L,Carles Valdivia     , Director de recursos humanos,2000,4 años ,25-03-2007,1
+03515632J,Oier Segovia     , Director de contabilidad,2000,4 años ,07-02-2005,1
+74349447S,Pablo Hernández    , Director de almacén,2000,4 años ,11-01-2005,1
+16631029M,Diego López       , Director de investigación,2000,4 años ,05-07-2006,1
+33861103C,Juan Antonio Oviedo , Coordinador de junta de accionistas ,3000,4 años ,05-07-2006,1
+19107340K,Jacobo Moreno    , Subdirector de recursos humanos ,2000,2 años,15-02-2005,1 
+76582304D,Pedro Pablo Jiménez , Subdirector de contabilidad,2000,2 años,21-02-2005,1 
+21279166A,Antonio Jose Moya  , Subdirector de contabilidad,2000,4 años ,07-02-2002,0
+06670544S,Ibon Martín         , Subirector de contabilidad,2000,4 años,01-02-2001,0
+12345678Z,Alfredo Pérez Mejías, Coordinador regional,3000,4 años ,05-07-2006,1
