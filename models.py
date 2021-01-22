@@ -660,8 +660,8 @@ class Lote(db.Model):
 
     id = db.Column(db.Integer(), primary_key=True)
     idproducto = db.Column(db.String(), db.ForeignKey('producto.id'), nullable=False)
-    fechaProd = db.Column(db.String())
-    fechaCad = db.Column(db.String())
+    fechaProd = db.Column(db.Date())
+    fechaCad = db.Column(db.Date())
     cantidad = db.Column(db.Integer)
     estado = db.Column(db.Enum(LotesEstados))
 
