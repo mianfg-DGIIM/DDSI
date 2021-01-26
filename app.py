@@ -983,6 +983,7 @@ def api_empleado_delete(dni):
         empleado = Empleado.query.filter_by(dni=dni).first()
         
         empleado.actividad = 0
+        db.session.commit()
         response['category'] = 'success'
         response['message'] = f"Empleado dado de baja con DNI: {empleado.dni}"
         response['data'] = {
@@ -994,6 +995,9 @@ def api_empleado_delete(dni):
 
     return jsonify(response)
 
+
+
+    
 
 # ==== EMPLEADOS ====
 
@@ -1866,7 +1870,6 @@ def api_materiasprimas_add():
         valid = False
         reason = "Debe insertar el nombre de la materia prima"
 
-    print(valid, reason)
     if valid:
         try:
             materiaprima=Materiaprima(
@@ -2020,7 +2023,7 @@ def api_lotes_add():
                 fechaProd	   = fechaProd,
                 fechaCad       = fechaCad,
                 cantidad       = cantidad,
-                estado         = 'ALMACENADO' 
+                estado         = 'ALMACENADO'       #TODO 
             )
 
             db.session.add(lote)
@@ -2084,21 +2087,21 @@ def api_lotes_edit(id):
 @app.route('/api/lotes/modify/<id>', methods=['POST', 'GET'])
 def api_lotes_modify(id):
     response = {}
-    print("wow")
-    try:
-        print("dentro")
-        lote = Lote.query.filter_by(id=id).first()
-        lote.estado = 'REPARTIDO'
-        print(lote)     
-        db.session.commit()
-        response['category'] = 'success'
-        response['message'] = f"Lote desactivado con ID: {lote.id}"
-        response['data'] = {
-            'redirect':     f"/lotes"
-        }
-    except Exception as e:
-        response['category'] = 'error'
-        response['message'] = "Server deletion error: " + str(e)
+
+    #try:
+
+    lote = Lote.query.filter_by(id=id).first()
+    lote.estado = 'REPARTIDO'
+
+    db.session.commit()
+    response['category'] = 'success'
+    response['message'] = f"Lote desactivado con ID: {lote.id}"
+    response['data'] = {
+        'redirect':     f"/lotes"
+    }
+    #except Exception as e:
+    #    response['category'] = 'error'
+    #    response['message'] = "Server deletion error: " + str(e)
 
     return jsonify(response)
 

@@ -657,7 +657,7 @@ class LotesEstados(enum.Enum):
     def __str__(self):
         keys = {
             0: "Repartido",
-            1: "Almacenado",
+            1: "Almacenado"
         }
         
         return keys[self.value]             

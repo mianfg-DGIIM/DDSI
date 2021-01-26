@@ -14,7 +14,6 @@ function deleteItem(table, id) {
 
 
 function modifyItem(table, id) {
-    print("bro")
     post('/api/'+table+'/modify/'+id, {}, function(response) {
         if (response.success) {
             if (response.data.category === "success") {

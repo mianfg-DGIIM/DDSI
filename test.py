@@ -206,13 +206,12 @@ def populate_materiasprimas():
 
     for d in data:
         try:
-            print("aqui")
             materiaprima = Materiaprima(
                 nombre      = d[1],
                 caracteristicas = d[2],
                 zonaAlmacenaje   = d[3],
             )
-            print(materiaprima)
+
             db.session.add(materiaprima)
             db.session.commit()
         except:
