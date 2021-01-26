@@ -57,10 +57,7 @@ class Evaluacion(db.Model):
     @classmethod
     def validate(self, dni, nombre,fechaIni, fechaFin, conclusion, index):
         good_dni = Empleado.query.filter_by(dni=dni).first()
-        if good_dni is not None:
-            good_nombre = (nombre == Empleado.query.filter_by(dni=dni).first().nombre)
-        else:
-            good_nombre = False
+        good_nombre = (nombre is None)
         if(fechaFin):
             good_date = fechaIni < fechaFin
         else:
@@ -71,13 +68,13 @@ class Evaluacion(db.Model):
         if not good_dni:
             reason = reason + " No existe un empleado con ese dni"
         if not good_nombre:
-            reason = reason + " El nombre no es coherente con el DNI dado"
+            reason = reason + " El nombre no puede ser vacío"
         if not good_date:
             reason = reason + " Fecha incoherente"
         if not good_index:
             reason = reason + " Índice fuera de rango"
 
-        return good_date and good_index and good_dni, reason
+        return good_date and good_index and good_dni and good_nombre , reason
 
 
 class Empleado(db.Model):
