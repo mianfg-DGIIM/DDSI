@@ -208,10 +208,11 @@ def populate_materiasprimas():
     for d in data:
         try:
             materiaprima = Materiaprima(
-                nombre      = d[0],
-                caracteristicas = d[1],
-                zonaAlmacenaje   = d[2]
+                nombre      = d[1],
+                caracteristicas = d[2],
+                zonaAlmacenaje   = d[3],
             )
+
             db.session.add(materiaprima)
             db.session.commit()
         except:
@@ -223,12 +224,13 @@ def populate_mercancias():
     for d in data:
         try:
             mercancia = Mercancia(
-                numRegistro      = int(d[0]),
-                nombreM = d[1],
+              #  numRegistro      = int(d[0]),
+                idmp = d[1],
                 cantidad   = int(d[2]),
                 tipo      = MercanciaTipos(int(d[3])),
                 idpp      = d[4]
             )
+
             db.session.add(mercancia)
             db.session.commit()
         except:
@@ -239,19 +241,19 @@ def populate_lotes():
 
     for d in data:
         t_d = lambda d, i: int(d.split('/')[i])
-        try:
-            proceso_productivo = ProcesoProductivo(
-                id              = d[0],
-                nombre          = d[1],
-                descripcion     = d[2],
-                fechaProd	= datetime.datetime(t_d(d[3], 2), t_d(d[3], 1), t_d(d[3], 0)),
-                fechaCad		= datetime.datetime(t_d(d[4], 2), t_d(d[4], 1), t_d(d[4], 0)),
-                cantidad         = int(d[6])
-            )
-            db.session.add(lote)
-            db.session.commit()
-        except:
-            pass
+        #try:
+        lote = Lote(
+          #  id              = d[0],
+            idproducto       = d[1],
+            fechaProd	     = datetime.datetime(t_d(d[2], 2), t_d(d[2], 1), t_d(d[2], 0)),
+            fechaCad		 = datetime.datetime(t_d(d[3], 2), t_d(d[3], 1), t_d(d[3], 0)),
+            cantidad         = int(d[4]),
+            estado           = LotesEstados(1)
+        )
+        db.session.add(lote)
+        db.session.commit()
+        #except:
+         #   pass
 
 
 
@@ -260,14 +262,17 @@ if __name__ == '__main__':
     populate_proyectos()
     populate_productos()
     populate_procesos_productivos()
+    populate_materiasprimas()
+    populate_mercancias()
+    populate_recibos()
+    populate_lotes()
     populate_nominas()
     populate_facturas()
-    populate_recibos()
+
     populate_balances()
     populate_clientes()
     populate_recibos()
-    populate_materiasprimas()
-    populate_mercancias()
-    populate_lotes()
+
     populate_empleados()
     populate_evaluaciones()
+
