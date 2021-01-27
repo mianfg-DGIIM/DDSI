@@ -12,6 +12,7 @@ def populate_empleados():
 
     for d in data:
         
+        try
             empleado = Empleado(
                 dni          = str(d[0]),
                 nombre      = str(d[1]),
@@ -24,7 +25,7 @@ def populate_empleados():
             )
             db.session.add(empleado)
             db.session.commit()
-        
+        except:
             pass
 
 def populate_evaluaciones():
