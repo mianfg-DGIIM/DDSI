@@ -903,7 +903,7 @@ def api_empleados_add():
     duracion = data['duracion']
     actividad = EmpleadoEstados(int(data['actividad']))
 
-    valid, reason = Empleado.validate(dni,nombre, sueldo,puesto)
+    valid, reason = Empleado.validate(dni,nombre, sueldo,puesto,False)
 
     response = {}
 
@@ -946,7 +946,7 @@ def api_empleados_edit(dni):
     actividad = EmpleadoEstados(int(data['actividad']))
 
     # server-side validation
-    valid, reason = Empleado.validate(dni,nombre,sueldo,puesto)
+    valid, reason = Empleado.validate(dni,nombre,sueldo,puesto,True)
 
     response = {}
 
@@ -982,7 +982,7 @@ def api_empleado_delete(dni):
     try:
         empleado = Empleado.query.filter_by(dni=dni).first()
         
-        empleado.actividad = 0
+        empleado.actividad = EmpleadoEstados.INACTIVO
         db.session.commit()
         response['category'] = 'success'
         response['message'] = f"Empleado dado de baja con DNI: {empleado.dni}"
@@ -1011,7 +1011,7 @@ def api_evaluaciones_add():
     conclusion = data['conclusion']
     index = data['index']
 
-    valid, reason = Evaluacion.validate(dni,nombre, fechaIni,fechaFin,conclusion,index)
+    valid, reason = Evaluacion.validate(dni,nombre, fechaIni,fechaFin,conclusion,index,False)
 
     response = {}
     if valid:
@@ -1055,7 +1055,7 @@ def api_evaluaciones_edit(id):
 
     response = {}
 
-    valid, reason = Evaluacion.validate(dni,nombre,fechaIni,fechaFin,conclusion,index)
+    valid, reason = Evaluacion.validate(dni,nombre,fechaIni,fechaFin,conclusion,index,True)
 
     if valid:
         try:
