@@ -2002,18 +2002,17 @@ def api_lotes_add():
     
     valid,reason = Lote.validate(idproducto, fechaProd, fechaCad)
     
-
-    if(fechaProd==""):
-       valid = False
-       reason = "Debe insertar una fecha de produccion"
-    if(fechaCad==""):
-       valid = False
-       reason = "Debe insertar una fecha de caducidad"   
-    response = {}
     if(float('0'+cantidad)==0):
        valid = False
        reason = "Debe insertar una cantidad"
-       
+    if(fechaCad==""):
+       valid = False
+       reason = "Debe insertar una fecha de caducidad"   
+    if(fechaProd==""):
+        valid = False
+        reason = "Debe insertar una fecha de produccion"
+        
+    response = {}
 
     if valid:
 

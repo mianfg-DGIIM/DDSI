@@ -67,7 +67,7 @@ class Evaluacion(db.Model):
         reason = ""
         if not good_dni:
             reason = reason + " No existe un empleado con ese dni"
-        if not good_nombre:
+        if good_nombre:
             reason = reason + " El nombre no puede ser vacío"
         if not good_date:
             reason = reason + " Fecha incoherente"
