@@ -6,6 +6,7 @@
         <tr>
             <th>Numero de Registro</th>
             <th>ID de la materia</th>
+            <td><strong>Tipo de transacción</strong></td>
             <th></th>
         </tr>
     </thead>
@@ -14,6 +15,7 @@
         <tr>
             <td>{{ mercancia.numRegistro }}</td>
             <td>{{ mercancia.idmp }}</td>
+            <td>{{ mercancia.tipo.verbose }}</td>
             <td align="right">
                 <a href="/mercancias/{{ mercancia.numRegistro }}"><i class="fa fa-fw fa-search mr-2"></i></a>
                 
@@ -25,6 +27,7 @@
         <tr>
             <td><strong>Numero de Registro</strong></td>
             <td><strong>ID de la materia</strong></td>
+            <td><strong>Tipo de transacción</strong></td>
             <td></td>
         </tr>
     </tfoot>
