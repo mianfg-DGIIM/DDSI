@@ -12,7 +12,7 @@ def populate_empleados():
 
     for d in data:
         
-        try
+        try:
             empleado = Empleado(
                 dni          = str(d[0]),
                 nombre      = str(d[1]),
