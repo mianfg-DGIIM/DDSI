@@ -55,8 +55,8 @@ class Evaluacion(db.Model):
         }
 
     @classmethod
-    def validate(self, dni, nombre,fechaIni, fechaFin, conclusion, index):
-        good_dni = Empleado.query.filter_by(dni=dni).first()
+    def validate(self, dni, nombre,fechaIni, fechaFin, conclusion, index,edit):
+        good_dni = Empleado.query.filter_by(dni=dni).first() or edit 
         good_nombre = (nombre is None)
         if(fechaFin):
             good_date = fechaIni < fechaFin
@@ -118,8 +118,8 @@ class Empleado(db.Model):
         }
 
     @classmethod
-    def validate(self, dni,nombre, sueldo,puesto):
-        good_dni = (len(dni) == 9)  and (not Empleado.query.filter_by(dni=dni).first())
+    def validate(self, dni,nombre, sueldo,puesto,edit):
+        good_dni = ((len(dni) == 9)  and (not Empleado.query.filter_by(dni=dni).first())) or edit
         good_name = not (nombre == "")
         good_money = (float(sueldo) >= 0)
         good_pos = (not (puesto==""))
@@ -128,7 +128,7 @@ class Empleado(db.Model):
         if not good_dni:
             reason = reason + " DNI invalido"
         if not good_name:
-            reason = reason + " Ya existe un empleado con ese DNI"
+            reason = reason + " El nombre no puede ser vacío"
         if not good_money:
             reason = reason + " El sueldo no puede ser negativo"
         if not good_pos:
