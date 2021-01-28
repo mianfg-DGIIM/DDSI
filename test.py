@@ -12,7 +12,7 @@ def populate_empleados():
 
     for d in data:
         
-        try
+        try:
             empleado = Empleado(
                 dni          = str(d[0]),
                 nombre      = str(d[1]),
@@ -258,6 +258,10 @@ def populate_lotes():
 
 
 if __name__ == '__main__':
+    #Empleados y evaluaciones 
+    populate_empleados()
+    populate_evaluaciones()
+
     # I+D y Producción
     populate_proyectos()
     populate_productos()
@@ -273,6 +277,4 @@ if __name__ == '__main__':
     populate_clientes()
     populate_recibos()
 
-    populate_empleados()
-    populate_evaluaciones()
 
