@@ -358,8 +358,7 @@ class Recibo(db.Model):
         else:
             b1 = True
         b2 = len(CIF_pro) == 9
-        #b3 = Mercancia.query.filter_by(NumeroRegistro = NumeroRegistro).first() != None
-        b3 = True
+        b3 = Mercancia.query.filter_by(numRegistro = NumeroRegistro).first() != None
         b4 = len(CIF_pro) > 0 and len(NumeroRegistro) > 0 and len(FechaCom) > 0 and len(ImporteCom) > 0
         reason = ""
 
@@ -367,8 +366,8 @@ class Recibo(db.Model):
             reason = reason + "Número de registro ya usado para un recibo. "
         if not b2:
             reason = reason + "Longitud de CIF no apropiada. "
-        #if not b3:
-            #reason = reason + "Número de registro no asignado a ninguna mercancía. "
+        if not b3:
+            reason = reason + "Número de registro no asignado a ninguna mercancía. "
         if not b4:
             reason = reason + "Todos los campos tienen que ser rellenados. "
         
@@ -412,8 +411,7 @@ class Factura(db.Model):
         else:
             b1 = True
         b2 = len(CIF_cli) == 9
-        #b3 = Lote.query.filter_by(IDlote = IDlote).first() != None
-        b3 = True
+        b3 = Lote.query.filter_by(id = IDlote).first() != None
         b4 = len(CIF_cli) > 0 and len(IDlote) > 0 and len(FechaVen) > 0 and len(ImporteVen) > 0
         reason = ""
         print("Longitud id lote: ", len(IDlote))
@@ -426,8 +424,8 @@ class Factura(db.Model):
             reason = reason + "ID de lote ya usado. "
         if not b2:
             reason = reason + "Longitud de CIF no apropiada. "
-        #if not b3:
-            #reason = reason + "Identificador no asignado a ningún lote. "
+        if not b3:
+            reason = reason + "Identificador no asignado a ningún lote. "
         if not b4:
             reason = reason + "Todos los campos tienen que ser rellenados. "
         
@@ -470,8 +468,7 @@ class Nomina(db.Model):
         else:
             b1 = True
         b2 = len(DNI) == 9
-        #b3 = Empleado.query.filter_by(dni = dni).first() != None
-        b3 = True
+        b3 = Empleado.query.filter_by(dni = DNI).first() != None
         b4 = len(IBAN) > 0 and len(fecha) > 0 and len(sueldo) > 0 and len(DNI) > 0
         reason = ""
 
@@ -479,8 +476,8 @@ class Nomina(db.Model):
             reason = reason + "Nómina ya registrada. "
         if not b2:
             reason = reason + "Longitud de DNI no apropiada. "
-        #if not b3:
-            #reason = reason + "DNI no asignado a ningún empleado. "
+        if not b3 and b2:
+            reason = reason + "DNI no asignado a ningún empleado. "
         if not b4:
             reason = reason + "Todos los campos tienen que ser rellenados. "
 

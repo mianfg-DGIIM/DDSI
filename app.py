@@ -2233,12 +2233,6 @@ def api_recibos_add():
         balance = round(d['balance'] - float(ImporteCom),2)
 
 
-    
-    if valid:
-        print("Genial")
-    else:
-        print("Muy Mal")
-
 
     response = {}
 
@@ -2286,7 +2280,6 @@ def api_facturas_add():
     valid, reason = Factura.validate(CIF_cli, IDlote, FechaVen, ImporteVen)
     if valid:
         IDlote = int(IDlote)
-        print("IDlote2: ", IDlote)
         ImporteVen = float(ImporteVen)
      
     qry = BalanceCuentas.query.order_by(BalanceCuentas.IdOp.desc()).first()
@@ -2298,7 +2291,6 @@ def api_facturas_add():
         IdOp = d['IdOp'] + 1
         balance = round(float(ImporteVen) + d['balance'],2)
 
-    print("IDlote1: ", IDlote)
     
 
     response = {}
