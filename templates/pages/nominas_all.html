@@ -18,7 +18,10 @@
             <td>{{ nomina.fecha }}</td>
             <td>{{ nomina.IBAN }}</td>
             <td>{{ nomina.sueldo }}</td>
-            <td><a href="/nominas/{{ nomina.DNI }}/{{ nomina.fecha }}">Ver</a> · <a href="/nominas/{{ nomina.DNI }}/{{ nomina.fecha }}/edit">Editar</a></td>
+            <td align="right">
+                <a href="/nominas/{{ nomina.DNI }}/{{ nomina.fecha }}"><i class="fa fa-fw fa-search mr-2"></i></a>
+                <a href="/nominas/{{ nomina.DNI }}/{{ nomina.fecha }}/edit" ><i class="fa fa-fw fa-pencil mr-2"></i></a>
+            </td>
         </tr>
         {% endfor %}
     </tbody>

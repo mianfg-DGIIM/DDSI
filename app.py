@@ -22,8 +22,8 @@ from models import *
 def home():
     data = {
         'breadcrumb_title':         'Página principal',
-        'breadcrumb_button':        '<i class="fas fa-fw fa-info-circle fa-sm text-white-50 mr-2"></i>Sobre el proyecto',
-        'breadcrumb_button_url':    '#'
+        'breadcrumb_button':        '<i class="fab fa-fw fa-github fa-sm text-white-50 mr-2"></i>Ver código en GitHub',
+        'breadcrumb_button_url':    'https://github.com/mianfg/pharmagiim'
     }
     return render_template('pages/home.html', data=data)
 
@@ -593,7 +593,7 @@ def materiasprimas_add():
     data = {
         'title':                    "Añadir materia prima",
         'breadcrumb_title':         "Almacenaje",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Materias primas',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-vial mr-2"></i>Materias primas',
         'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a materias primas',
         'breadcrumb_button_url':    '/materiasprimas',
         'database_name':            'materiaprima',
@@ -622,7 +622,7 @@ def materiasprimas_all():
     data = {
         'title':                    "Materias primas",
         'breadcrumb_title':         "Almacenaje",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Materias primas',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-vial mr-2"></i>Materias primas',
         'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Añadir materia prima',
         'breadcrumb_button_url':    '/materiasprimas/add',
         'database_name':            'materiaprima',
@@ -651,7 +651,7 @@ def materiasprimas_detail(id):
     data = {
         'title':                    f"Materia prima #{id}",
         'breadcrumb_title':         "Almacenaje",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Materias primas',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-vial mr-2"></i>Materias primas',
         'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a materias primas',
         'breadcrumb_button_url':    '/materiasprimas',
         'database_name':            'materiaprima',
@@ -681,7 +681,7 @@ def materiasprimas_edit(id, api_resp=None):
     data = {
         'title':                    f"Editar materia prima #{id}",
         'breadcrumb_title':         "Almacenaje",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Materias primas',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-vial mr-2"></i>Materias primas',
         'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a materias primas',
         'breadcrumb_button_url':    '/materiasprimas',
         'database_name':            'materiaprima',
@@ -707,7 +707,7 @@ def mercancias_add():
     data = {
         'title':                    "Añadir mercancia",
         'breadcrumb_title':         "Almacenaje",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Mercancias',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-dolly-flatbed mr-2"></i>Mercancias',
         'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a mercancias',
         'breadcrumb_button_url':    '/mercancias',
         'database_name':            'mercancia',
@@ -734,7 +734,7 @@ def mercancias_all():
     data = {
         'title':                    "Mercancias",
         'breadcrumb_title':         "Almacenaje",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Mercancias',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-dolly-flatbed mr-2"></i>Mercancias',
         'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Añadir mercancia',
         'breadcrumb_button_url':    '/mercancias/add',
         'database_name':            'mercancia',
@@ -759,7 +759,7 @@ def mercancias_detail(numRegistro):
     data = {
         'title':                    f"Mercancia #{numRegistro}",
         'breadcrumb_title':         "Almacenaje",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Mercancia',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-dolly-flatbed mr-2"></i>Mercancia',
         'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a mercancias',
         'breadcrumb_button_url':    '/mercancias',
         'database_name':            'mercancia',
@@ -785,7 +785,7 @@ def lotes_add():
     data = {
         'title':                    "Añadir lote",
         'breadcrumb_title':         "Almacenaje",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Lotes',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-box-open mr-2"></i>Lotes',
         'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a lotes',
         'breadcrumb_button_url':    '/lotes',
         'database_name':            'lote',
@@ -810,7 +810,7 @@ def lotes_all():
     data = {
         'title':                    "Lotes",
         'breadcrumb_title':         "Almacenaje",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Lotes',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-box-open mr-2"></i>Lotes',
         'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Añadir lote',
         'breadcrumb_button_url':    '/lotes/add',
         'database_name':            'lote',
@@ -835,7 +835,7 @@ def lotes_detail(id):
     data = {
         'title':                    f"Lote #{id}",
         'breadcrumb_title':         "Almacenaje",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Lotes',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-box-open mr-2"></i>Lotes',
         'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a lotes',
         'breadcrumb_button_url':    '/lotes',
         'database_name':            'lote',
@@ -864,7 +864,7 @@ def lotes_edit(id, api_resp=None):
     data = {
         'title':                    f"Editar lote #{id}",
         'breadcrumb_title':         "Almacenaje",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Lotes',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-box-open mr-2"></i>Lotes',
         'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a lotes',
         'breadcrumb_button_url':    '/lotes',
         'database_name':            'lote',
@@ -1602,7 +1602,7 @@ def nominas_add(api_resp=None):
     data = {
         'title':                    "Añadir nómina",
         'breadcrumb_title':         "Contabilidad",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Nóminas',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-file-invoice-dollar mr-2"></i>Nóminas',
         'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a nóminas',
         'breadcrumb_button_url':    '/nominas',
         'database_name':            'nomina',
@@ -1630,7 +1630,7 @@ def nomina_all():
     data = {
         'title':                    "Nóminas",
         'breadcrumb_title':         "Contabilidad",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Nóminas',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-file-invoice-dollar mr-2"></i>Nóminas',
         'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Añadir nómina',
         'breadcrumb_button_url':    '/nominas/add',
         'database_name':            'nomina',
@@ -1667,7 +1667,7 @@ def nominas_edit(DNI, fecha, api_resp=None):
     data = {
         'title':                    f"Editar nómina",
         'breadcrumb_title':         "Contabilidad",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Nóminas',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-file-invoice-dollar mr-2"></i>Nóminas',
         'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a nóminas',
         'breadcrumb_button_url':    '/nominas',
         'database_name':            'nomina',
@@ -1700,7 +1700,7 @@ def nomina_detail(DNI, fecha):
     data = {
         'title':                    f"Nómina",
         'breadcrumb_title':         "Contabilidad",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Nóminas',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-file-invoice-dollar mr-2"></i>Nóminas',
         'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a nóminas',
         'breadcrumb_button_url':    '/nominas',
         'database_name':            'nomina',
@@ -1724,7 +1724,7 @@ def recibos_add(api_resp=None):
     data = {
         'title':                    "Añadir recibos",
         'breadcrumb_title':         "Contabilidad",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Recibos',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-receipt mr-2"></i>Recibos',
         'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a recibos',
         'breadcrumb_button_url':    '/recibos',
         'database_name':            'recibo',
@@ -1751,7 +1751,7 @@ def recibos_all():
     data = {
         'title':                    "Recibos",
         'breadcrumb_title':         "Contabilidad",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Recibos',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-receipt mr-2"></i>Recibos',
         'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Añadir recibo',
         'breadcrumb_button_url':    '/recibos/add',
         'database_name':            'recibo',
@@ -1774,7 +1774,7 @@ def facturas_add(api_resp=None):
     data = {
         'title':                    "Añadir factura",
         'breadcrumb_title':         "Contabilidad",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Facturas',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-file-invoice mr-2"></i>Facturas',
         'breadcrumb_button':        '<i class="fas fa-fw fa-arrow-left fa-sm text-white-50 mr-2"></i>Volver a facturas',
         'breadcrumb_button_url':    '/facturas',
         'database_name':            'factura',
@@ -1802,7 +1802,7 @@ def facturas_all():
     data = {
         'title':                    "Facturas",
         'breadcrumb_title':         "Contabilidad",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Facturas',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-file-invoice mr-2"></i>Facturas',
         'breadcrumb_button':        '<i class="fas fa-fw fa-plus fa-sm text-white-50 mr-2"></i>Añadir factura',
         'breadcrumb_button_url':    '/facturas/add',
         'database_name':            'factura',
@@ -1831,7 +1831,7 @@ def balanceCuentas_all():
     data = {
         'title':                    "Balance de cuentas",
         'breadcrumb_title':         "Contabilidad",
-        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-user mr-2"></i>Balances',
+        'breadcrumb_subtitle':      '<i class="fas fa-fw fa-coins mr-2"></i>Balances',
         'database_name':            'balanceCuentas',
         'database_name_plural':     'balancesCuentas',
         'card_title':               "Listado de operaciones",
